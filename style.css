@@ -1,5 +1,5 @@
   :root {
-  --panel-width: 150px;
+  --panel-width: 175px;
   --transition-duration: 0.3s;
   --transition-timing: cubic-bezier(0.16, 1, 0.3, 1);
   }
