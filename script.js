@@ -86,16 +86,11 @@ for (i = 0; i < coll.length; i++) {
     var content = this.nextElementSibling;
     
     while (content) {
-      if (content.nodeName === "DIV") {
-        if (content.style.display === "block") {
-          content.style.display = "none"
-        } else {
-          content.style.display = "block"
-        }
+      if (content.nodeName === "DIV" && content.classList.contains("content")) {
+        content.classList.toggle("show");
+        break; // Only toggle the first content div found
       }
       content = content.nextElementSibling;
     }
-
-
   });
 }
