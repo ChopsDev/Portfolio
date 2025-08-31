@@ -156,7 +156,6 @@
   color: white;
   margin: 0px 22px 30px 20px;
   transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), padding 0.4s ease;
-  padding: 0 2% 0 2%;
   }
 
   .content.show {
@@ -199,11 +198,11 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-bottom: 2.5vh;
     }
   
 .tilting-game-mask > .button-content h2,
-.tilting-game-mask > .button-content h3 {
+.tilting-game-mask > .button-content h3,
+.tilting-game-mask > .button-content a {
   margin: 0;
   padding: 0;
   line-height: 1;
@@ -215,6 +214,16 @@
 
 .tilting-game-mask > .button-content h3{
   font-size: clamp(2px, 2.5vw, 35px);
+}
+
+.tilting-game-mask > .button-content a{
+
+  color: #1e65ff;
+      font-family: "Rowdies", sans-serif;
+      font-weight: 200;
+      font-size: clamp(2px, 2.5vw, 35px);
+      text-shadow: 1px 1px 2px #0055ff;
+    text-decoration: none;
 }
 
     /* Content's Info */
@@ -285,7 +294,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.2em; /* Space between title and subtitle */
-  padding-bottom: 2.5vh;
   }
 
   .stepping-stones-mask > .button-content h2 {
@@ -299,6 +307,16 @@
   margin: 0;
   font-size: clamp(2px, 2.5vw, 35px);
   font-weight: 400;
+  line-height: 1; /* Keep consistent spacing */
+  }
+
+  .stepping-stones-mask > .button-content a {
+  color: #F90000;
+  text-decoration: none;
+  font-family: 'Silkscreen';
+  text-align: justify;
+  font-size: clamp(2px, 2.5vw, 35px);
+  font-weight: 200;
   line-height: 1; /* Keep consistent spacing */
   }
 
