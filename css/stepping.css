@@ -9,7 +9,7 @@
   }
 
   .stepping-stones-mask img {
-  width: 175px;
+  width: clamp(100px, 15vw, 175px);
   height: auto;
   margin-right: 2.75vw;
   margin-left: 1.75vw;
@@ -28,14 +28,14 @@
   margin: 0;
   font-size: clamp(4px, 6vw, 95px);
   font-weight: 400;
-  line-height: 1; /* Reduce spacing between lines */
+  line-height: 1;
   }
 
   .stepping-stones-mask > .button-content h3 {
   margin: 0;
   font-size: clamp(2px, 2.5vw, 35px);
   font-weight: 400;
-  line-height: 1; /* Keep consistent spacing */
+  line-height: 1;
   }
 
   .stepping-stones-mask > .button-content a {

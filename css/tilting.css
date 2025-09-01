@@ -1,15 +1,15 @@
 .tilting-game-mask {
-    max-width: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    max-width: 100%;
     background: linear-gradient(349deg, #a8c8f5, #6b9eff 66%);
     overflow: hidden;
     border-radius: 12px 12px 0 0;
     }
   
     .tilting-game-mask img {
-    width: 175px;
+    width: clamp(100px, 15vw, 175px);
     height: auto;
     margin-right: 2.75vw;
     margin-left: 1.75vw;
@@ -22,7 +22,7 @@
     text-align: left;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    gap: 0.2em;
     }
   
 .tilting-game-mask > .button-content h2,
@@ -94,6 +94,35 @@
     transform: translateY(-1px);
     }
   
+    .tilting-game > .content > .flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    }
+
     .tilting-game > .content > .flex-container > div {
     flex: 1;
+    }
+
+    .tilting-game > .content > .flex-container > div img {
+    max-width: 100%;
+    height: auto;
+    }
+
+    .tilting-game > .content > .flex-container > div:last-child {
+    flex: 2;
+    text-align: left;
+    }
+
+    /* Responsive layout */
+    @media (max-width: 768px) {
+    .tilting-game > .content > .flex-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .tilting-game > .content > .flex-container > div {
+        width: 100%;
+        text-align: center;
+    }
     }

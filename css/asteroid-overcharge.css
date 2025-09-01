@@ -1,0 +1,134 @@
+.asteroid-overcharge-mask {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 100%;
+  background: linear-gradient(141deg, #0a0a0a, #1a1a1a, #0f0f0f);
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+}
+
+.asteroid-overcharge-mask img {
+  width: clamp(100px, 15vw, 175px);
+  height: auto;
+  margin-right: 2.75vw;
+  margin-left: 1.75vw;
+}
+
+/* Image mask functionality - simple background image overlay */
+.asteroid-overcharge-mask.has-image {
+  background-image: var(--mask-image), linear-gradient(141deg, #0a0a0a, #1a1a1a, #0f0f0f);
+  background-size: cover, cover;
+  background-position: center, center;
+  background-blend-mode: overlay;
+}
+
+.asteroid-overcharge-mask > .button-content {
+  flex: 1;
+  font-family: 'Eater', cursive;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+}
+
+.asteroid-overcharge-mask > .button-content h2 {
+  margin: 0;
+  font-size: clamp(4px, 4.5vw, 95px);
+  font-weight: 400;
+  line-height: 1;
+  color: #cccccc;
+  font-family: 'Eater', cursive;
+}
+
+.asteroid-overcharge-mask > .button-content h3 {
+  margin: 0;
+  font-size: clamp(2px, 2.5vw, 35px);
+  font-weight: 400;
+  line-height: 1;
+  color: #888888;
+  font-family: 'Silkscreen', monospace;
+}
+
+.asteroid-overcharge-mask > .button-content a {
+  color: #aaaaaa;
+  text-decoration: none;
+  font-family: 'Silkscreen', monospace;
+  text-align: justify;
+  font-size: clamp(2px, 2.5vw, 35px);
+  font-weight: 200;
+  line-height: 1;
+}
+
+/* Content's Info */
+.asteroid-overcharge > .content {
+  background: linear-gradient(323deg, rgba(20,20,20,1) 14%, rgba(0,0,0,1) 89%);
+  border-radius: 0 0 12px 12px;
+}
+
+.asteroid-overcharge > .content.show {
+  padding-top: 2%;
+  padding-bottom: 2%;
+  padding-left: 2%;
+  padding-right: 2%;
+}
+
+.asteroid-overcharge > .content p {
+  font-family: 'Silkscreen', monospace;
+  font-size: 18px;
+  letter-spacing: -1px;
+  text-align: justify;
+  color: #cccccc;
+}
+
+.asteroid-overcharge > .content a {
+  color: #aaaaaa;
+  text-decoration: none;
+  font-family: 'Silkscreen', monospace;
+  font-size: 25px;
+  text-align: justify;
+  background-color: rgba(170, 170, 170, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.asteroid-overcharge > .content a:hover {
+  text-decoration-color: #aaaaaa;
+  background-color: rgba(170, 170, 170, 0.2);
+  transform: translateY(-1px);
+}
+
+.asteroid-overcharge > .content > .flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.asteroid-overcharge > .content > .flex-container > div {
+  flex: 1;
+}
+
+.asteroid-overcharge > .content > .flex-container > div img {
+  max-width: 100%;
+  height: auto;
+}
+
+.asteroid-overcharge > .content > .flex-container > div:last-child {
+  flex: 2;
+  text-align: left;
+}
+
+/* Responsive layout */
+@media (max-width: 768px) {
+  .asteroid-overcharge > .content > .flex-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .asteroid-overcharge > .content > .flex-container > div {
+    width: 100%;
+    text-align: center;
+  }
+}

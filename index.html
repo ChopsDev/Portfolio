@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/tilting.css">
   <link rel="stylesheet" href="css/stepping.css">
   <link rel="stylesheet" href="css/gpu.css">
+  <link rel="stylesheet" href="css/asteroid-overcharge.css">
   <link rel="stylesheet" href="css/itch-widgets.css">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,6 +22,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Rowdies:wght@300;400;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Wavefont:wght,ROND,YELA@4..1000,0,100&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Eater&display=swap" rel="stylesheet">
 
 </head>
 <body class="no-scroll">
@@ -115,15 +117,24 @@
       </div> -->
 
 
-      <div class="empty"> 
-        <div class="collapsible button-like">
+      <div class="asteroid-overcharge"> 
+        <div class="asteroid-overcharge-mask collapsible button-like" data-mask-image="asteroid-overcharge-logo.png">
+          <img src="images/asteroid-overcharge-icon.png">
           <div class="button-content">
-            <h2>???</h2>
-            <h3>???</h3>
+            <h2>Asteroid Overcharge</h2>
+            <h3>2020 - 2021</h3>
           </div>
         </div>
         <div class="content">
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+          <p>For my first assignment in "Introduction to Gameplay Programming," I was given instructions to improve on the original Asteroids (1980) game for my Game Development Course.</p>
+          <br>
+          <p>This was the first game I had ever made in game maker. In which I choose to add a rogue like element to it (I'm very indie of me). The game itself isn't too special, but the back-end of the game was where I learned the most.</p>
+          <br>
+          <div class="itch-widget">
+            <iframe frameborder="0" src="https://itch.io/embed/3650676" width="552" height="167">
+              <a href="https://chopsdev.itch.io/asteroid-overcharge">Asteroid Overcharge by Chops</a>
+            </iframe>
+          </div>
         </div>
       </div>
 
@@ -162,5 +173,6 @@
 </div>
 
 <script src="script.js"></script>
+<script src="js/asteroid-mask.js"></script>
 </body>
 </html>
