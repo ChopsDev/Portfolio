@@ -1,0 +1,111 @@
+ .stepping-stones-mask {
+  display: flex;
+  align-items: center; /* Centers content vertically */
+  justify-content: flex-start; /* Ensures image and text are horizontally aligned */
+  max-width: 100%;
+  background: linear-gradient(141deg, #191919, #191919, #2e1919);
+  overflow: hidden;
+  }
+
+  .stepping-stones-mask img {
+  width: 175px;
+  height: auto;
+  margin-right: 2.75vw;
+  margin-left: 1.75vw;
+  }
+
+  .stepping-stones-mask > .button-content {
+  flex: 1;
+  font-family: 'Silkscreen';
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em; /* Space between title and subtitle */
+  }
+
+  .stepping-stones-mask > .button-content h2 {
+  margin: 0;
+  font-size: clamp(4px, 6vw, 95px);
+  font-weight: 400;
+  line-height: 1; /* Reduce spacing between lines */
+  }
+
+  .stepping-stones-mask > .button-content h3 {
+  margin: 0;
+  font-size: clamp(2px, 2.5vw, 35px);
+  font-weight: 400;
+  line-height: 1; /* Keep consistent spacing */
+  }
+
+  .stepping-stones-mask > .button-content a {
+  color: #F90000;
+  text-decoration: none;
+  font-family: 'Silkscreen';
+  text-align: justify;
+  font-size: clamp(2px, 2.5vw, 35px);
+  font-weight: 200;
+  line-height: 1; /* Keep consistent spacing */
+  }
+
+  /* Content's Info */
+  .stepping-stones > .content{
+  background: linear-gradient(323deg, rgba(48,0,0,1) 14%, rgba(0,0,0,1) 89%);
+  }
+
+  .stepping-stones > .content.show{
+  padding-top: 2%;
+  padding-bottom: 2%;
+  padding-left: 2%;
+  padding-right: 2%;
+  }
+
+  .stepping-stones > .content p{
+  font-family: 'Silkscreen';
+  font-size: 18px;
+  letter-spacing: -1px;
+  text-align: justify;
+  }
+
+  .stepping-stones > .content a{
+  color: #F90000;
+  text-decoration: none;
+  font-family: 'Silkscreen';
+  font-size: 25px;
+  text-align: justify;
+  }
+
+  .stepping-stones > .content > .flex-container{
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start; /* Align items at the top */
+  }
+
+  .stepping-stones > .content > .flex-container > div {
+  flex: 1; /* Allows equal distribution */
+  }
+
+  .stepping-stones > .content > .flex-container > div img {
+  max-width: 100%; /* Ensure images scale properly */
+  height: auto;
+  }
+
+  .stepping-stones > .content > .flex-container > div:last-child {
+  flex: 2; /* Make the text container take up more space */
+  text-align: left; /* Ensure proper text alignment */
+  }
+
+  /* Responsive layout: Stack items when screen width is small */
+  @media (max-width: 768px) {
+    .stepping-stones > .content > .flex-container {
+    flex-direction: column; /* Stack items vertically */
+    align-items: center; /* Center items */
+    }
+
+    .stepping-stones > .content > .flex-container > div {
+    width: 100%; /* Make items take full width */
+    text-align: center; /* Center text */
+    }
+  }
+
+
+  

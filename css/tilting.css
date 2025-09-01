@@ -1,0 +1,93 @@
+.tilting-game-mask {
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: linear-gradient(349deg, #b5cff8, #75acff 66%);
+    overflow: hidden;
+    }
+  
+    .tilting-game-mask img {
+    width: 175px;
+    height: auto;
+    margin-right: 2.75vw;
+    margin-left: 1.75vw;
+    }
+  
+    .tilting-game-mask > .button-content {
+    flex: 1;
+    font-family: "Lexend", sans-serif;
+    font-weight: 900;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    }
+  
+.tilting-game-mask > .button-content h2,
+.tilting-game-mask > .button-content h3,
+.tilting-game-mask > .button-content a {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.tilting-game-mask > .button-content h2{
+  font-size: clamp(4px, 6vw, 95px);
+}
+
+.tilting-game-mask > .button-content h3{
+  font-size: clamp(2px, 2.5vw, 35px);
+}
+
+.tilting-game-mask > .button-content a{
+
+  color: #1e65ff;
+      font-family: "Rowdies", sans-serif;
+      font-weight: 200;
+      font-size: clamp(2px, 2.5vw, 35px);
+      text-shadow: 1px 1px 2px #0055ff;
+    text-decoration: none;
+}
+
+    /* Content's Info */
+  .tilting-game > .content{
+    background: linear-gradient(108deg, #a3d4ff 0%, #6492ce 100%);
+    }
+
+  .tilting-game > .content.show{
+    padding-top: 2%;
+    padding-bottom: 2%;
+    padding-left: 2%;
+    padding-right: 2%;
+    }
+  
+    .tilting-game > .content p{
+    color: #ffffff;
+      font-family: "Rowdies", sans-serif;
+      font-weight: 400;
+      font-size: 22px;
+    letter-spacing: 1px;
+    text-shadow: 2px 2px #acc7ff;
+    text-align: justify;
+    }
+  
+    .tilting-game > .content a{
+    color: #1e65ff;
+      font-family: "Rowdies", sans-serif;
+      font-weight: 700;
+      font-size: 31px;
+      text-shadow: 1px 1px 2px #0055ff;
+    text-decoration: none;
+    text-align: justify;
+    }
+  
+    .tilting-game > .content > .flex-container{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start; /* Align items at the top */
+    }
+  
+    .tilting-game > .content > .flex-container > div {
+    flex: 1;
+    }
