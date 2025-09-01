@@ -5,6 +5,7 @@
   max-width: 100%;
   background: linear-gradient(141deg, #191919, #191919, #2e1919);
   overflow: hidden;
+  border-radius: 12px 12px 0 0;
   }
 
   .stepping-stones-mask img {
@@ -50,6 +51,7 @@
   /* Content's Info */
   .stepping-stones > .content{
   background: linear-gradient(323deg, rgba(48,0,0,1) 14%, rgba(0,0,0,1) 89%);
+  border-radius: 0 0 12px 12px;
   }
 
   .stepping-stones > .content.show{
@@ -72,6 +74,17 @@
   font-family: 'Silkscreen';
   font-size: 25px;
   text-align: justify;
+  background-color: rgba(249, 0, 0, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: inline-block;
+  }
+  
+  .stepping-stones > .content a:hover{
+  text-decoration-color: #F90000;
+  background-color: rgba(249, 0, 0, 0.2);
+  transform: translateY(-1px);
   }
 
   .stepping-stones > .content > .flex-container{
@@ -106,6 +119,3 @@
     text-align: center; /* Center text */
     }
   }
-
-
-  
