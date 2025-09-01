@@ -13,8 +13,8 @@ const HIDE_TEXT = "HIDE"
 function closeAll() {
   toggleScroll(false);
 
-  leftPanel.classList.remove('expanded');
-  rightPanel.classList.remove('expanded');
+  leftPanel.classList.remove('expanded', 'expanding');
+  rightPanel.classList.remove('expanded', 'expanding');
   leftHeading.classList.remove('slide-left');
   rightHeading.classList.remove('slide-right');
   leftContent.classList.remove('visible');
@@ -30,7 +30,7 @@ function expandLeft() {
   closeAll();
   toggleScroll(true);
   leftHeading.classList.add('slide-left');
-  leftPanel.classList.add('expanded');
+  leftPanel.classList.add('expanding', 'expanded');
   middle.classList.add('shrink');
 
   rightHeading.textContent = HIDE_TEXT
@@ -42,7 +42,7 @@ function expandRight() {
   closeAll();
   toggleScroll(true);
   rightHeading.classList.add('slide-right');
-  rightPanel.classList.add('expanded');
+  rightPanel.classList.add('expanding', 'expanded');
   middle.classList.add('shrink');
 
   leftHeading.textContent = HIDE_TEXT
