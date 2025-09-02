@@ -89,7 +89,7 @@
   background: rgba(120, 120, 120, 0.8);
   backdrop-filter: blur(30px);
   border-radius: 20px;
-  transition: background 0.3s ease;
+  transition: 0.3s ease;
   border: 1px solid rgba(160, 160, 160, 0.3);
 }
 
@@ -97,18 +97,6 @@
   padding: 0 15px;
   position: relative;
   z-index: 2;
-}
-
-.left-panel.expanded .panel-divider h2 span {
-  background: rgba(42, 42, 42, 0.8);
-  backdrop-filter: blur(30px);
-  border-radius: 20px;
-}
-
-.right-panel.expanded .panel-divider h2 span {
-  background: rgba(42, 42, 42, 0.8);
-  backdrop-filter: blur(30px);
-  border-radius: 20px;
 }
 
 /* Dropdown Content Styles */
