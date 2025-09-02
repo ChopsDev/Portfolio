@@ -17,6 +17,67 @@
   letter-spacing: 2px;
 }
 
+/* Dropdown Header Styles */
+.dropdown-header {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  outline: none;
+  border: none;
+}
+
+.dropdown-header:hover {
+  transform: scale(1.02);
+}
+
+.dropdown-header:focus,
+.dropdown-header:focus-visible,
+.dropdown-header:focus-within {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+.dropdown-header:active {
+  outline: none;
+  border: none;
+}
+
+.dropdown-header h2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  outline: none;
+  border: none;
+}
+
+.dropdown-header h2:focus,
+.dropdown-header h2:focus-visible,
+.dropdown-header h2:active {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+.dropdown-header h2 span:focus,
+.dropdown-header h2 span:focus-visible,
+.dropdown-header h2 span:active {
+  outline: none;
+  border: none;
+  box-shadow: none;
+}
+
+.dropdown-arrow {
+  font-size: 0.8em;
+  transition: transform 0.3s ease;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.dropdown-header.active .dropdown-arrow {
+  transform: rotate(180deg);
+  color: white;
+}
+
 .panel-divider h2::after {
   content: '';
   position: absolute;
@@ -41,3 +102,32 @@
 .right-panel.expanded .panel-divider h2 span {
   background: #2a2a2a;
 }
+
+/* Dropdown Content Styles */
+.dropdown-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.dropdown-content.show {
+  max-height: 5000px; /* Large enough to accommodate all content */
+}
+
+/* Animation for dropdown content */
+.dropdown-content > * {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+}
+
+.dropdown-content.show > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered animation for multiple items */
+.dropdown-content.show > *:nth-child(1) { transition-delay: 0.1s; }
+.dropdown-content.show > *:nth-child(2) { transition-delay: 0.2s; }
+.dropdown-content.show > *:nth-child(3) { transition-delay: 0.3s; }
+.dropdown-content.show > *:nth-child(4) { transition-delay: 0.4s; }

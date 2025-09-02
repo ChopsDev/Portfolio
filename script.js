@@ -94,3 +94,34 @@ for (i = 0; i < coll.length; i++) {
     }
   });
 }
+
+// Dropdown functionality for section headers
+var dropdownHeaders = document.getElementsByClassName("dropdown-header");
+
+// Initialize all dropdowns as open by default
+for (i = 0; i < dropdownHeaders.length; i++) {
+  var targetId = dropdownHeaders[i].getAttribute("data-target");
+  var dropdownContent = document.getElementById(targetId);
+  if (dropdownContent) {
+    dropdownContent.classList.add("show");
+    dropdownHeaders[i].classList.add("active");
+  }
+}
+
+for (i = 0; i < dropdownHeaders.length; i++) {
+  dropdownHeaders[i].addEventListener("click", function(e) {
+    // Prevent event bubbling to panel click handlers
+    e.stopPropagation();
+    
+    // Remove focus to prevent outline
+    this.blur();
+    
+    this.classList.toggle("active");
+    var targetId = this.getAttribute("data-target");
+    var dropdownContent = document.getElementById(targetId);
+    
+    if (dropdownContent) {
+      dropdownContent.classList.toggle("show");
+    }
+  });
+}
