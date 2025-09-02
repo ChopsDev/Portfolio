@@ -25,7 +25,7 @@
 
 .asteroid-overcharge-mask > .button-content {
   flex: 1;
-  font-family: 'Eater', cursive;
+  font-family: "Special Elite", system-ui;
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -34,11 +34,11 @@
 
 .asteroid-overcharge-mask > .button-content h2 {
   margin: 0;
+  font-family: "Special Elite", system-ui;
   font-size: clamp(4px, 4.5vw, 95px);
   font-weight: 400;
   line-height: 1;
   color: #cccccc;
-  font-family: 'Eater', cursive;
 }
 
 .asteroid-overcharge-mask > .button-content h3 {
