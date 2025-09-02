@@ -1,10 +1,16 @@
 .panel {
   /* Default transition for closing - linear and immediate */
-  transition: width 0.15s linear;
+  transition: width 0.15s linear, transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
   width: var(--panel-width);
   height: 100%;
   position: relative;
   cursor: pointer;
+  }
+
+.panel:not(.expanded):hover {
+  transform: scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  filter: brightness(1.1);
   }
 
 .panel.expanding {
@@ -52,11 +58,25 @@
 
   .left-panel {
   background-color: #333;
+  background-image: linear-gradient(135deg, #333 0%, #444 100%);
+  border-right: 2px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .left-panel:not(.expanded):hover {
+  background-image: linear-gradient(135deg, #444 0%, #555 100%);
+  border-right: 2px solid rgba(255, 255, 255, 0.2);
   }
 
   .right-panel {
   background-color: #555;
+  background-image: linear-gradient(135deg, #555 0%, #666 100%);
   margin-left: auto;
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .right-panel:not(.expanded):hover {
+  background-image: linear-gradient(135deg, #666 0%, #777 100%);
+  border-left: 2px solid rgba(255, 255, 255, 0.2);
   }
 
   .panel-content {
@@ -90,9 +110,28 @@
 
   .panel.expanded {
   cursor: default;
+  transform: none;
+  box-shadow: none;
+  filter: none;
+  }
+
+  .panel.expanded:hover {
+  transform: none;
+  box-shadow: none;
+  filter: none;
   }
 
   .left-panel.expanded,
   .right-panel.expanded {
   width: calc(100% - var(--panel-width));
+  background-image: none;
+  border: none;
+  }
+
+  .left-panel.expanded {
+  background-color: #2a2a2a;
+  }
+
+  .right-panel.expanded {
+  background-color: #2a2a2a;
   }
