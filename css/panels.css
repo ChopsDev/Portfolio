@@ -24,13 +24,13 @@
   .left-panel h1 {
   transform: translate(-50%, -50%) rotate(-90deg);
   font-family: "Archivo Black", serif;
-  font-size: 4.5vw;
+  font-size: clamp(1.5rem, 4.5vw, 3rem);
   }
 
   .right-panel h1 {
   transform: translate(-50%, -50%) rotate(90deg);
   font-family: "Archivo Black", serif;
-  font-size: 4.5vw;
+  font-size: clamp(1.5rem, 4.5vw, 3rem);
   }
 
   .panel h1.slide-left,

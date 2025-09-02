@@ -6,6 +6,12 @@
     background: linear-gradient(90deg, #353535, #191919, #000000);
     overflow: hidden;
     border-radius: 12px 12px 0 0;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+.GPU-mask:hover {
+    background: linear-gradient(90deg, #404040, #242424, #111111);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
     }
   
 .GPU-mask img {

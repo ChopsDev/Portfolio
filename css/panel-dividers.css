@@ -1,0 +1,43 @@
+/* Panel Dividers */
+.panel-divider {
+  margin: 30px 20px 20px 20px;
+  padding: 15px 0;
+  position: relative;
+}
+
+.panel-divider h2 {
+  color: white;
+  font-family: "Archivo Black", serif;
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  text-align: center;
+  margin: 0;
+  padding: 0 20px;
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.panel-divider h2::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.3);
+  z-index: 1;
+}
+
+.panel-divider h2 span {
+  padding: 0 15px;
+  position: relative;
+  z-index: 2;
+}
+
+.left-panel .panel-divider h2 span {
+  background: #333;
+}
+
+.right-panel .panel-divider h2 span {
+  background: #555;
+}
