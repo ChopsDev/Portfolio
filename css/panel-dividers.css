@@ -96,11 +96,15 @@
 }
 
 .left-panel.expanded .panel-divider h2 span {
-  background: #2a2a2a;
+  background: rgba(42, 42, 42, 0.8);
+  backdrop-filter: blur(30px);
+  border-radius: 20px;
 }
 
 .right-panel.expanded .panel-divider h2 span {
-  background: #2a2a2a;
+  background: rgba(42, 42, 42, 0.8);
+  backdrop-filter: blur(30px);
+  border-radius: 20px;
 }
 
 /* Dropdown Content Styles */
