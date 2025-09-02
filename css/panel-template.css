@@ -1,0 +1,295 @@
+/* 
+STANDARDIZED PANEL TEMPLATE
+Use this as a reference when creating new panels to ensure consistency
+*/
+
+/* MASK (Button/Header) Structure */
+.panel-name-mask {
+  /* Standard layout properties - DO NOT CHANGE */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+  
+  /* Customizable background - Change gradient colors as needed */
+  background: linear-gradient(141deg, #333333, #555555, #777777);
+}
+
+.panel-name-mask img {
+  /* Standard image sizing - DO NOT CHANGE */
+  width: clamp(100px, 15vw, 175px);
+  height: auto;
+  margin-right: 2.75vw;
+  margin-left: 1.75vw;
+}
+
+.panel-name-mask > .button-content {
+  /* Standard content layout - DO NOT CHANGE */
+  flex: 1;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  
+  /* Customizable font - Change as needed */
+  font-family: "Lexend", sans-serif;
+}
+
+.panel-name-mask > .button-content h2,
+.panel-name-mask > .button-content h3,
+.panel-name-mask > .button-content a {
+  /* Standard reset - DO NOT CHANGE */
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.panel-name-mask > .button-content h2 {
+  /* Standard sizing - DO NOT CHANGE */
+  font-size: clamp(4px, 6vw, 95px);
+  /* Customizable styling */
+  font-weight: 400;
+  color: #ffffff;
+}
+
+.panel-name-mask > .button-content h3 {
+  /* Standard sizing - DO NOT CHANGE */
+  font-size: clamp(2px, 2.5vw, 35px);
+  /* Customizable styling */
+  font-weight: 400;
+  color: #cccccc;
+}
+
+.panel-name-mask > .button-content a {
+  /* Standard sizing - DO NOT CHANGE */
+  font-size: clamp(2px, 2.5vw, 35px);
+  /* Customizable styling */
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 200;
+}
+
+/* CONTENT Structure */
+.panel-name > .content {
+  /* Standard border radius - DO NOT CHANGE */
+  border-radius: 0 0 12px 12px;
+  /* Customizable background - Change gradient colors as needed */
+  background: linear-gradient(323deg, #333333, #555555);
+}
+
+.panel-name > .content.show {
+  /* Standard padding - DO NOT CHANGE */
+  padding: 2% 2% 2% 2%;
+}
+
+.panel-name > .content p {
+  /* Standard text properties - DO NOT CHANGE */
+  text-align: justify;
+  color: #ffffff;
+  /* Customizable font styling */
+  font-family: "Lexend", sans-serif;
+  font-size: 18px;
+  letter-spacing: -1px;
+}
+
+.panel-name > .content a {
+  /* Standard link styling - DO NOT CHANGE */
+  text-decoration: none;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: inline-block;
+  /* Customizable styling */
+  color: #ffffff;
+  font-family: "Lexend", sans-serif;
+  font-size: 25px;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.panel-name > .content a:hover {
+  /* Standard hover effects - DO NOT CHANGE */
+  transform: translateY(-1px);
+  /* Customizable hover styling */
+  text-decoration-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* FLEX CONTAINER (if using images) */
+.panel-name > .content > .flex-container {
+  /* Standard flex layout - DO NOT CHANGE */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.panel-name > .content > .flex-container > div {
+  /* Standard flex distribution - DO NOT CHANGE */
+  flex: 1;
+}
+
+.panel-name > .content > .flex-container > div img {
+  /* Standard image scaling - DO NOT CHANGE */
+  max-width: 100%;
+  height: auto;
+}
+
+.panel-name > .content > .flex-container > div:last-child {
+  /* Standard text container sizing - DO NOT CHANGE */
+  flex: 2;
+  text-align: left;
+}
+
+/* RESPONSIVE LAYOUT - DO NOT CHANGE */
+@media (max-width: 768px) {
+  .panel-name > .content > .flex-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .panel-name > .content > .flex-container > div {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* 
+SPECIAL FEATURES (Optional)
+
+Image Mask Functionality (like asteroid-overcharge):
+.panel-name-mask.has-image {
+  background-image: var(--mask-image), linear-gradient(141deg, #333333, #555555, #777777);
+  background-size: cover, cover;
+  background-position: center, center;
+  background-blend-mode: overlay;
+}
+
+Right-aligned text (like GPU panel):
+.panel-name-mask > .button-content {
+  text-align: right;
+  padding-bottom: 2.5vh;
+}
+
+Custom image sizing (like GPU panel):
+.panel-name > .content > img {
+  width: 47.5%;
+  height: 47.5%;
+  object-fit: contain;
+  margin: 1%;
+}
+*/
+
+/* PLACEHOLDER PROJECT - Ready to use example */
+.placeholder-project-mask {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+  background: linear-gradient(141deg, #4a4a4a, #666666, #888888);
+}
+
+.placeholder-project-mask img {
+  width: clamp(100px, 15vw, 175px);
+  height: auto;
+  margin-right: 2.75vw;
+  margin-left: 1.75vw;
+}
+
+.placeholder-project-mask > .button-content {
+  flex: 1;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  font-family: "Lexend", sans-serif;
+}
+
+.placeholder-project-mask > .button-content h2,
+.placeholder-project-mask > .button-content h3,
+.placeholder-project-mask > .button-content a {
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+}
+
+.placeholder-project-mask > .button-content h2 {
+  font-size: clamp(4px, 6vw, 95px);
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.placeholder-project-mask > .button-content h3 {
+  font-size: clamp(2px, 2.5vw, 35px);
+  font-weight: 400;
+  color: #e0e0e0;
+}
+
+.placeholder-project > .content {
+  border-radius: 0 0 12px 12px;
+  background: linear-gradient(323deg, #3a3a3a, #555555);
+}
+
+.placeholder-project > .content.show {
+  padding: 2% 2% 2% 2%;
+}
+
+.placeholder-project > .content p {
+  text-align: justify;
+  color: #ffffff;
+  font-family: "Lexend", sans-serif;
+  font-size: 18px;
+  letter-spacing: -1px;
+}
+
+.placeholder-project > .content a {
+  text-decoration: none;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: inline-block;
+  color: #a0a0ff;
+  font-family: "Lexend", sans-serif;
+  font-size: 18px;
+  background-color: rgba(160, 160, 255, 0.1);
+}
+
+.placeholder-project > .content a:hover {
+  transform: translateY(-1px);
+  text-decoration-color: #a0a0ff;
+  background-color: rgba(160, 160, 255, 0.2);
+}
+
+.placeholder-project > .content > .flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.placeholder-project > .content > .flex-container > div {
+  flex: 1;
+}
+
+.placeholder-project > .content > .flex-container > div img {
+  max-width: 100%;
+  height: auto;
+}
+
+.placeholder-project > .content > .flex-container > div:last-child {
+  flex: 2;
+  text-align: left;
+}
+
+@media (max-width: 768px) {
+  .placeholder-project > .content > .flex-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .placeholder-project > .content > .flex-container > div {
+    width: 100%;
+    text-align: center;
+  }
+}

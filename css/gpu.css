@@ -8,8 +8,8 @@
     border-radius: 12px 12px 0 0;
     }
   
-    .GPU-mask img {
-    width: 175px;
+.GPU-mask img {
+    width: clamp(100px, 15vw, 175px);
     height: auto;
     margin-right: 2.75vw;
     margin-left: 1.75vw;
@@ -46,6 +46,7 @@
     }
 
     .GPU > .content {
+    background: linear-gradient(90deg, #353535, #191919, #000000);
     border-radius: 0 0 12px 12px;
     }
 
@@ -56,15 +57,15 @@
     margin: 1%; 
     } 
 
-    .GPU > .content > p {
+    .GPU > .content.show {
+    padding: 2% 2% 2% 2%;
+    }
+
+    .GPU > .content p {
     font-family: "Lexend", sans-serif;
     font-weight: 500;
-    font-size: clamp(10px, 1vw, 1vw);
-
+    font-size: 18px;
+    color: #ffffff;
     text-align: justify;
-
-    padding-left: 15%;
-    padding-right: 15%;
-    padding-top: 2%;
-    padding-bottom: 1.5%;
+    letter-spacing: -1px;
     }
