@@ -117,6 +117,7 @@ for (i = 0; i < dropdownHeaders.length; i++) {
     this.blur();
     
     this.classList.toggle("active");
+    
     var targetId = this.getAttribute("data-target");
     var dropdownContent = document.getElementById(targetId);
     

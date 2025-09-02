@@ -23,6 +23,7 @@
   transition: all 0.3s ease;
   outline: none;
   border: none;
+  border-radius: 20px;
 }
 
 .dropdown-header:hover {
@@ -78,15 +79,18 @@
   color: white;
 }
 
+/* Remove the white line completely */
 .panel-divider h2::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.5);
-  z-index: 1;
+  display: none;
+}
+
+/* Add background color styling for closed state */
+.dropdown-header:not(.active) h2 span {
+  background: rgba(120, 120, 120, 0.8);
+  backdrop-filter: blur(30px);
+  border-radius: 20px;
+  transition: background 0.3s ease;
+  border: 1px solid rgba(160, 160, 160, 0.3);
 }
 
 .panel-divider h2 span {
