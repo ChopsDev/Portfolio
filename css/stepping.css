@@ -17,7 +17,7 @@
 
   .stepping-stones-mask > .button-content {
   flex: 1;
-  font-family: 'Silkscreen';
+  font-family: "Archivo Black", serif;
   text-align: left;
   display: flex;
   flex-direction: column;
@@ -41,7 +41,7 @@
   .stepping-stones-mask > .button-content a {
   color: #F90000;
   text-decoration: none;
-  font-family: 'Silkscreen';
+  font-family: "Archivo Black", serif;
   text-align: justify;
   font-size: clamp(2px, 2.5vw, 35px);
   font-weight: 200;
@@ -62,7 +62,7 @@
   }
 
   .stepping-stones > .content p{
-  font-family: 'Silkscreen';
+  font-family: "Archivo Black", serif;
   font-size: 18px;
   letter-spacing: -1px;
   text-align: justify;
@@ -71,7 +71,7 @@
   .stepping-stones > .content a{
   color: #F90000;
   text-decoration: none;
-  font-family: 'Silkscreen';
+  font-family: "Archivo Black", serif;
   font-size: 25px;
   text-align: justify;
   background-color: rgba(249, 0, 0, 0.1);
