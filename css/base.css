@@ -62,7 +62,7 @@ body.allow-scroll {
 .landing-page h1 {
   font-family: "Archivo Black", serif;
   font-size: clamp(3rem, 8vw, 5rem);
-  margin: 0 0 2rem 0;
+  margin: 0 0 1rem 0;
   color: #333;
   letter-spacing: -2px;
 }
@@ -71,14 +71,14 @@ body.allow-scroll {
   font-family: "Lexend", sans-serif;
   font-size: clamp(1rem, 2.5vw, 1.2rem);
   font-weight: 300;
-  margin: 0 0 3rem 0;
+  margin: 0 0 2rem 0;
   color: #666;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
 
 .about {
-  margin: 0 0 4rem 0;
+  margin: 0 0 2.5rem 0;
 }
 
 .about p {
