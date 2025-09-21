@@ -81,14 +81,19 @@
     text-transform: uppercase;
   }
 
-  .bio {
+  .about {
+    margin: 2rem 0 3rem 0;
+  }
+
+  .about-text {
     font-family: "Lexend", sans-serif;
-    font-size: clamp(0.9rem, 2vw, 1rem);
+    font-size: clamp(0.85rem, 1.8vw, 0.95rem);
     font-weight: 300;
-    margin: 0 0 4rem 0;
-    color: #888888;
-    line-height: 1.8;
-    max-width: 400px;
+    color: #666666;
+    line-height: 1.7;
+    max-width: 450px;
+    margin: 0;
+    text-align: left;
   }
 
   .games {
@@ -145,17 +150,6 @@
     background: rgba(255, 255, 255, 0.05);
   }
 
-  .icon {
-    font-size: 1.5rem;
-    margin-bottom: 0.8rem;
-    filter: grayscale(1);
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
-  }
-
-  .game-card:hover .icon {
-    opacity: 1;
-  }
 
   .game-card h3 {
     font-family: "Lexend", sans-serif;
@@ -173,22 +167,6 @@
     color: #999999;
     text-transform: uppercase;
     letter-spacing: 1px;
-  }
-
-  .hint {
-    font-family: "Lexend", sans-serif;
-    font-size: clamp(0.7rem, 1.5vw, 0.85rem);
-    font-weight: 300;
-    margin: 0;
-    color: #666666;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    opacity: 0.5;
-    transition: opacity 0.3s ease;
-  }
-
-  .hint:hover {
-    opacity: 0.8;
   }
 
   /* Responsive adjustments */
