@@ -51,7 +51,7 @@
   visibility: hidden;
   }
 
-  /* Landing Page Styles - Minimalist Black/White/Grey */
+  /* Landing Page */
   .landing-page {
     display: flex;
     flex-direction: column;
@@ -60,21 +60,14 @@
     height: 100%;
     max-width: 500px;
     text-align: center;
-    color: #ffffff;
     padding: 2rem;
-    animation: fadeInUp 1s ease-out;
   }
 
-  .intro-section {
-    margin-bottom: 4rem;
-  }
-
-  .name {
+  .landing-page h1 {
     font-family: "Archivo Black", serif;
     font-size: clamp(3rem, 8vw, 5rem);
     margin: 0 0 1.5rem 0;
     color: #333333;
-    font-weight: 900;
     letter-spacing: -2px;
   }
 
@@ -92,28 +85,29 @@
     font-family: "Lexend", sans-serif;
     font-size: clamp(0.9rem, 2vw, 1rem);
     font-weight: 300;
-    margin: 0;
+    margin: 0 0 4rem 0;
     color: #888888;
     line-height: 1.8;
     max-width: 400px;
   }
 
-  .games-showcase {
+  .games {
     margin-bottom: 3rem;
   }
 
-  .showcase-title {
+  .games-title {
     font-family: "Lexend", sans-serif;
     font-size: clamp(0.8rem, 2vw, 1rem);
     font-weight: 400;
     color: #333333;
-    margin-bottom: 2rem;
     letter-spacing: 3px;
     text-transform: uppercase;
     position: relative;
+    display: block;
+    margin-bottom: 2rem;
   }
 
-  .showcase-title::after {
+  .games-title::after {
     content: '';
     position: absolute;
     bottom: -8px;
@@ -137,57 +131,33 @@
     align-items: center;
     justify-content: center;
     padding: 1.5rem 1rem;
-    background: transparent;
     border: 1px solid #333333;
     transition: all 0.3s ease;
     cursor: pointer;
     width: 120px;
     height: 120px;
     position: relative;
-    flex-shrink: 0;
-  }
-
-  .game-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: #ffffff;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .game-card:hover::before {
-    opacity: 0.05;
   }
 
   .game-card:hover {
     border-color: #666666;
     transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.05);
   }
 
-  .game-icon {
+  .icon {
     font-size: 1.5rem;
     margin-bottom: 0.8rem;
     filter: grayscale(1);
     opacity: 0.7;
     transition: opacity 0.3s ease;
-    position: relative;
-    z-index: 1;
   }
 
-  .game-card:hover .game-icon {
+  .game-card:hover .icon {
     opacity: 1;
   }
 
-  .game-info {
-    position: relative;
-    z-index: 1;
-  }
-
-  .game-info h3 {
+  .game-card h3 {
     font-family: "Lexend", sans-serif;
     font-size: 0.85rem;
     font-weight: 500;
@@ -196,7 +166,7 @@
     letter-spacing: 0.5px;
   }
 
-  .game-info span {
+  .game-card span:last-child {
     font-family: "Lexend", sans-serif;
     font-size: 0.7rem;
     font-weight: 300;
@@ -205,16 +175,7 @@
     letter-spacing: 1px;
   }
 
-  .explore-hint {
-    opacity: 0.5;
-    transition: opacity 0.3s ease;
-  }
-
-  .explore-hint:hover {
-    opacity: 0.8;
-  }
-
-  .explore-hint p {
+  .hint {
     font-family: "Lexend", sans-serif;
     font-size: clamp(0.7rem, 1.5vw, 0.85rem);
     font-weight: 300;
@@ -222,17 +183,12 @@
     color: #666666;
     letter-spacing: 1px;
     text-transform: uppercase;
+    opacity: 0.5;
+    transition: opacity 0.3s ease;
   }
 
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  .hint:hover {
+    opacity: 0.8;
   }
 
   /* Responsive adjustments */
