@@ -1,215 +1,187 @@
-  :root {
+:root {
   --panel-width: 175px;
   --transition-duration: 0.3s;
-  --transition-timing: cubic-bezier(0.16, 1, 0.3, 1);
-  }
+}
 
-  html,
-  body {
+html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  }
+}
 
-  body.no-scroll {
+body.no-scroll {
   overflow: hidden;
-  }
+}
 
-  body.allow-scroll {
+body.allow-scroll {
   overflow: auto;
-  }
+}
 
-  .container {
+.container {
   display: flex;
-  flex-direction: row;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  }
+  background: #ffffff;
+}
 
   
-  /*  // === Middle Panels == */
-
-  .middle {
+/* Middle Section */
+.middle {
   flex: 1;
-  width: 0px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1vw;
-  }
+}
 
-  .middle.shrink {
-  flex: 0 0 0;
+.middle.shrink {
+  flex: 0;
   overflow: hidden;
   opacity: 0;
   width: 0;
-  }
+}
 
-  .middle.shrink .landing-page {
-  display: none !important;
+.middle.shrink .landing-page {
+  display: none;
   visibility: hidden;
-  }
+}
 
-  /* Landing Page */
+/* Landing Page */
+.landing-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  max-width: 500px;
+  text-align: center;
+  padding: 2rem;
+}
+
+.landing-page h1 {
+  font-family: "Archivo Black", serif;
+  font-size: clamp(3rem, 8vw, 5rem);
+  margin: 0 0 1rem 0;
+  color: #333;
+  letter-spacing: -2px;
+}
+
+.tagline {
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-weight: 300;
+  margin: 0 0 2rem 0;
+  color: #666;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.about {
+  margin: 0 0 2rem 0;
+}
+
+.about p {
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(0.9rem, 1.8vw, 1rem);
+  font-weight: 300;
+  color: #555;
+  line-height: 1.6;
+  max-width: 400px;
+  margin: 0;
+}
+
+.games {
+  margin-bottom: 2rem;
+}
+
+.games-title {
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  font-weight: 400;
+  color: #333;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.games-grid {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.game-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.2rem 0.8rem;
+  border: 1px solid #ddd;
+  width: 110px;
+  height: 110px;
+}
+
+.game-card h3 {
+  font-family: "Lexend", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  margin: 0 0 0.2rem 0;
+  color: #333;
+  text-align: center;
+}
+
+.game-card span:last-child {
+  font-family: "Lexend", sans-serif;
+  font-size: 0.65rem;
+  font-weight: 300;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 800px) {
+  body.no-scroll {
+    overflow: auto;
+  }
+  
+  .container {
+    overflow: auto;
+  }
+  
+  .middle {
+    overflow-y: auto;
+    align-items: flex-start;
+    padding-top: 2rem;
+  }
+  
   .landing-page {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    max-width: 500px;
-    text-align: center;
-    padding: 2rem;
+    max-width: 350px;
+    padding: 1.5rem;
+    height: auto;
+    min-height: calc(100vh - 4rem);
   }
-
-  .landing-page h1 {
-    font-family: "Archivo Black", serif;
-    font-size: clamp(3rem, 8vw, 5rem);
-    margin: 0 0 1.5rem 0;
-    color: #333333;
-    letter-spacing: -2px;
-  }
-
-  .tagline {
-    font-family: "Lexend", sans-serif;
-    font-size: clamp(1rem, 2.5vw, 1.3rem);
-    font-weight: 300;
-    margin: 0 0 1rem 0;
-    color: #cccccc;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-
-  .about {
-    margin: 2rem 0 3rem 0;
-  }
-
-  .about-text {
-    font-family: "Lexend", sans-serif;
-    font-size: clamp(0.85rem, 1.8vw, 0.95rem);
-    font-weight: 300;
-    color: #666666;
-    line-height: 1.7;
-    max-width: 450px;
-    margin: 0;
-    text-align: left;
-  }
-
-  .games {
-    margin-bottom: 3rem;
-  }
-
-  .games-title {
-    font-family: "Lexend", sans-serif;
-    font-size: clamp(0.8rem, 2vw, 1rem);
-    font-weight: 400;
-    color: #333333;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    position: relative;
-    display: block;
-    margin-bottom: 2rem;
-  }
-
-  .games-title::after {
-    content: '';
-    position: absolute;
-    bottom: -8px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 120px;
-    height: 1px;
-    background-color: #666666;
-  }
-
+  
   .games-grid {
-    display: flex;
-    gap: 2rem;
-    justify-content: center;
-    flex-wrap: wrap;
+    gap: 1rem;
   }
-
+  
   .game-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem 1rem;
-    border: 1px solid #333333;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    width: 120px;
-    height: 120px;
-    position: relative;
+    width: 90px;
+    height: 90px;
+    padding: 0.8rem 0.6rem;
   }
+}
 
-  .game-card:hover {
-    border-color: #666666;
-    transform: translateY(-2px);
-    background: rgba(255, 255, 255, 0.05);
+@media (max-width: 600px) {
+  .middle {
+    display: none;
   }
-
-
-  .game-card h3 {
-    font-family: "Lexend", sans-serif;
-    font-size: 0.85rem;
-    font-weight: 500;
-    margin: 0 0 0.3rem 0;
-    color: #333333;
-    letter-spacing: 0.5px;
+  
+  .landing-page {
+    display: none;
+    visibility: hidden;
   }
-
-  .game-card span:last-child {
-    font-family: "Lexend", sans-serif;
-    font-size: 0.7rem;
-    font-weight: 300;
-    color: #999999;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  /* Responsive adjustments */
-  @media (max-width: 800px) {
-    body.no-scroll {
-      overflow: auto !important;
-    }
-    
-    .container {
-      overflow: auto !important;
-    }
-    
-    .middle {
-      overflow-y: auto !important;
-      align-items: flex-start !important;
-      padding-top: 2rem;
-    }
-    
-    .landing-page {
-      max-width: 400px;
-      padding: 1.5rem;
-      height: auto;
-      min-height: calc(100vh - 4rem);
-    }
-    
-    .games-grid {
-      gap: 1.5rem;
-    }
-    
-    .game-card {
-      width: 100px;
-      height: 100px;
-      padding: 1rem 0.8rem;
-    }
-  }
-
-  @media (max-width: 600px) {
-    .middle {
-      display: none;
-    }
-    
-    .landing-page {
-      display: none !important;
-      visibility: hidden;
-    }
-  }
+}
