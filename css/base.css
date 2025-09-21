@@ -92,8 +92,8 @@ body.allow-scroll {
 }
 
 .games {
-  margin-bottom: 3rem;
-  padding-top: 1rem;
+  margin-bottom: 2rem;
+  padding-top: 0.5rem;
 }
 
 .games-title {
@@ -103,7 +103,7 @@ body.allow-scroll {
   color: #333;
   letter-spacing: 2px;
   text-transform: uppercase;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   display: block;
 }
 
