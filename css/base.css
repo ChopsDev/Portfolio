@@ -193,9 +193,25 @@
 
   /* Responsive adjustments */
   @media (max-width: 800px) {
+    body.no-scroll {
+      overflow: auto !important;
+    }
+    
+    .container {
+      overflow: auto !important;
+    }
+    
+    .middle {
+      overflow-y: auto !important;
+      align-items: flex-start !important;
+      padding-top: 2rem;
+    }
+    
     .landing-page {
       max-width: 400px;
       padding: 1.5rem;
+      height: auto;
+      min-height: calc(100vh - 4rem);
     }
     
     .games-grid {
@@ -217,11 +233,5 @@
     .landing-page {
       display: none !important;
       visibility: hidden;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .intro-section {
-      margin-bottom: 3rem;
     }
   }
