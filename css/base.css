@@ -125,14 +125,63 @@ body.allow-scroll {
   align-items: center;
 }
 
-.games-grid .itch-widget {
-  width: 208px;
-  height: 167px;
+.game-link {
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease;
 }
 
-.games-grid .itch-widget iframe {
-  width: 100%;
-  height: 100%;
+.game-link:hover {
+  transform: translateY(-2px);
+}
+
+.game-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  border: 1px solid #ddd;
+  width: 180px;
+  height: 120px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.game-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  border-color: #fa5c5c;
+}
+
+.game-card h3 {
+  font-family: "Lexend", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  text-align: center;
+}
+
+.game-card span {
+  font-family: "Lexend", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.game-card p {
+  font-family: "Lexend", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: #999;
+  text-align: center;
+  margin: 0;
 }
 
 /* Responsive Design */
@@ -152,36 +201,41 @@ body.allow-scroll {
   }
   
   .landing-page {
+    flex-direction: column;
     max-width: 450px;
     padding: 2rem;
     height: auto;
     min-height: calc(100vh - 6rem);
-  }
-  
-  .landing-page h1 {
-    margin-bottom: 1.5rem;
-  }
-  
-  .tagline {
-    margin-bottom: 2.5rem;
-  }
-  
-  .about {
-    margin-bottom: 3rem;
-  }
-  
-  .games-title {
-    margin-bottom: 2rem;
-  }
-  
-  .games-grid {
     gap: 2rem;
   }
   
-  .game-card {
-    width: 110px;
-    height: 110px;
-    padding: 1.4rem 1rem;
+  .landing-left {
+    text-align: center;
+  }
+  
+  .landing-left h1 {
+    margin-bottom: 1rem;
+  }
+  
+  .landing-left .tagline {
+    margin-bottom: 1.5rem;
+  }
+  
+  .about {
+    margin-bottom: 2rem;
+  }
+  
+  .games-title {
+    margin-bottom: 1.5rem;
+  }
+  
+  .games-grid {
+    gap: 1rem;
+  }
+  
+  .games-grid .itch-widget {
+    width: 180px;
+    height: 145px;
   }
 }
 
