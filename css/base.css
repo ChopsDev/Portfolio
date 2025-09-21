@@ -1,6 +1,7 @@
 :root {
   --panel-width: 175px;
-  --transition-duration: 0.3s;
+  --transition-duration: 0.15s;
+  --transition-timing: ease-out;
 }
 
 html, body {
@@ -53,15 +54,15 @@ body.allow-scroll {
   align-items: center;
   justify-content: center;
   height: 100%;
-  max-width: 500px;
+  max-width: 600px;
   text-align: center;
-  padding: 2rem;
+  padding: 3rem;
 }
 
 .landing-page h1 {
   font-family: "Archivo Black", serif;
   font-size: clamp(3rem, 8vw, 5rem);
-  margin: 0 0 1rem 0;
+  margin: 0 0 2rem 0;
   color: #333;
   letter-spacing: -2px;
 }
@@ -70,14 +71,14 @@ body.allow-scroll {
   font-family: "Lexend", sans-serif;
   font-size: clamp(1rem, 2.5vw, 1.2rem);
   font-weight: 300;
-  margin: 0 0 2rem 0;
+  margin: 0 0 3rem 0;
   color: #666;
   letter-spacing: 1px;
   text-transform: uppercase;
 }
 
 .about {
-  margin: 0 0 2rem 0;
+  margin: 0 0 4rem 0;
 }
 
 .about p {
@@ -85,13 +86,13 @@ body.allow-scroll {
   font-size: clamp(0.9rem, 1.8vw, 1rem);
   font-weight: 300;
   color: #555;
-  line-height: 1.6;
-  max-width: 400px;
+  line-height: 1.8;
+  max-width: 500px;
   margin: 0;
 }
 
 .games {
-  margin-bottom: 2rem;
+  margin-bottom: 3rem;
 }
 
 .games-title {
@@ -101,12 +102,12 @@ body.allow-scroll {
   color: #333;
   letter-spacing: 2px;
   text-transform: uppercase;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2.5rem;
 }
 
 .games-grid {
   display: flex;
-  gap: 1.5rem;
+  gap: 2.5rem;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -116,10 +117,10 @@ body.allow-scroll {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 1.2rem 0.8rem;
+  padding: 1.8rem 1.2rem;
   border: 1px solid #ddd;
-  width: 110px;
-  height: 110px;
+  width: 130px;
+  height: 130px;
 }
 
 .game-card h3 {
@@ -154,24 +155,40 @@ body.allow-scroll {
   .middle {
     overflow-y: auto;
     align-items: flex-start;
-    padding-top: 2rem;
+    padding-top: 3rem;
   }
   
   .landing-page {
-    max-width: 350px;
-    padding: 1.5rem;
+    max-width: 450px;
+    padding: 2rem;
     height: auto;
-    min-height: calc(100vh - 4rem);
+    min-height: calc(100vh - 6rem);
+  }
+  
+  .landing-page h1 {
+    margin-bottom: 1.5rem;
+  }
+  
+  .tagline {
+    margin-bottom: 2.5rem;
+  }
+  
+  .about {
+    margin-bottom: 3rem;
+  }
+  
+  .games-title {
+    margin-bottom: 2rem;
   }
   
   .games-grid {
-    gap: 1rem;
+    gap: 2rem;
   }
   
   .game-card {
-    width: 90px;
-    height: 90px;
-    padding: 0.8rem 0.6rem;
+    width: 110px;
+    height: 110px;
+    padding: 1.4rem 1rem;
   }
 }
 
