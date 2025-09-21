@@ -93,6 +93,7 @@ body.allow-scroll {
 
 .games {
   margin-bottom: 3rem;
+  padding-top: 1rem;
 }
 
 .games-title {
@@ -102,7 +103,8 @@ body.allow-scroll {
   color: #333;
   letter-spacing: 2px;
   text-transform: uppercase;
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
+  display: block;
 }
 
 .games-grid {
