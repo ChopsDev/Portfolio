@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chops - Game Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a1a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0a0;
+            --accent: #00ff88;
+            --accent-dim: #00cc6a;
+            --border: #333333;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.1;
+        }
+
+        .bg-grid {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 136, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 136, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Main container */
+        .container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        /* Hero section */
+        .hero {
+            text-align: center;
+            max-width: 800px;
+            margin-bottom: 4rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text-primary), var(--accent));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-weight: 300;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero .description {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 3rem;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        /* Navigation cards */
+        .nav-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            width: 100%;
+            max-width: 900px;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .nav-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-card:hover::before {
+            left: 100%;
+        }
+
+        .nav-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
+        }
+
+        .nav-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        .nav-card p {
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .nav-card .tech-stack {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            color: var(--accent-dim);
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        .footer {
+            position: absolute;
+            bottom: 2rem;
+            display: flex;
+            gap: 2rem;
+            animation: fadeInUp 1s ease-out 0.8s both;
+        }
+
+        .footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--accent);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .nav-cards {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .footer {
+                position: relative;
+                margin-top: 3rem;
+                bottom: auto;
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+        }
+
+        /* Cursor effect */
+        .cursor-glow {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="bg-grid"></div>
+    </div>
+    
+    <div class="cursor-glow" id="cursorGlow"></div>
+    
+    <div class="container">
+        <div class="hero">
+            <h1>Chops</h1>
+            <p class="subtitle">Game Developer & Creative Coder</p>
+            <p class="description">
+                Crafting interactive experiences through code, design, and storytelling. 
+                Passionate about minimalist aesthetics and meaningful gameplay mechanics.
+            </p>
+        </div>
+        
+        <div class="nav-cards">
+            <a href="index.html" class="nav-card">
+                <h3>Game Portfolio</h3>
+                <p>Explore my game development projects, from minimalist 2D platformers to experimental interactive experiences.</p>
+                <div class="tech-stack">Unity • GameMaker • Godot</div>
+            </a>
+            
+            <a href="#" class="nav-card">
+                <h3>About Me</h3>
+                <p>Learn about my journey as a developer, my creative process, and the stories behind my projects.</p>
+                <div class="tech-stack">Creative • Storyteller • Problem Solver</div>
+            </a>
+            
+            <a href="#" class="nav-card">
+                <h3>Contact</h3>
+                <p>Let's collaborate on something amazing. Always open to discussing new ideas and opportunities.</p>
+                <div class="tech-stack">Available for Projects</div>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <a href="https://chopsdev.itch.io/">itch.io</a>
+            <a href="https://github.com/ChopsDev">GitHub</a>
+            <a href="https://www.youtube.com/@ChopsDev">YouTube</a>
+        </div>
+    </div>
+
+    <script>
+        // Cursor glow effect
+        const cursorGlow = document.getElementById('cursorGlow');
+        let mouseX = 0, mouseY = 0;
+        let glowX = 0, glowY = 0;
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        document.addEventListener('mouseenter', () => {
+            cursorGlow.style.opacity = '1';
+        });
+
+        document.addEventListener('mouseleave', () => {
+            cursorGlow.style.opacity = '0';
+        });
+
+        function animateGlow() {
+            glowX += (mouseX - glowX) * 0.1;
+            glowY += (mouseY - glowY) * 0.1;
+            
+            cursorGlow.style.left = glowX - 10 + 'px';
+            cursorGlow.style.top = glowY - 10 + 'px';
+            
+            requestAnimationFrame(animateGlow);
+        }
+
+        animateGlow();
+
+        // Add subtle parallax effect to cards
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.nav-card');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            cards.forEach((card, index) => {
+                const xOffset = (x - 0.5) * 10 * (index + 1);
+                const yOffset = (y - 0.5) * 10 * (index + 1);
+                card.style.transform = `translateX(${xOffset}px) translateY(${yOffset}px)`;
+            });
+        });
+
+        // Reset card positions when mouse leaves
+        document.addEventListener('mouseleave', () => {
+            const cards = document.querySelectorAll('.nav-card');
+            cards.forEach(card => {
+                card.style.transform = 'translateX(0) translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>
