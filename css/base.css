@@ -1,47 +1,250 @@
-  :root {
+:root {
   --panel-width: 175px;
-  --transition-duration: 0.3s;
-  --transition-timing: cubic-bezier(0.16, 1, 0.3, 1);
-  }
+  --transition-duration: 0.15s;
+  --transition-timing: ease-out;
+}
 
-  html,
-  body {
+html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  }
+}
 
-  body.no-scroll {
+body.no-scroll {
   overflow: hidden;
-  }
+}
 
-  body.allow-scroll {
+body.allow-scroll {
   overflow: auto;
-  }
+}
 
-  .container {
+.container {
   display: flex;
-  flex-direction: row;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  }
+  background: #ffffff;
+}
 
   
-  /*  // === Middle Panels == */
-
-  .middle {
+/* Middle Section */
+.middle {
   flex: 1;
-  width: 0px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1vw;
-  }
+}
 
-  .middle.shrink {
-  flex: 0 0 0;
+.middle.shrink {
+  flex: 0;
   overflow: hidden;
   opacity: 0;
+  width: 0;
+}
+
+.middle.shrink .landing-page {
+  display: none;
+  visibility: hidden;
+}
+
+/* Landing Page */
+.landing-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  max-width: 1000px;
+  padding: 3rem;
+  gap: 4rem;
+}
+
+.landing-left {
+  flex: 1;
+  text-align: left;
+}
+
+.landing-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.landing-left h1 {
+  font-family: "Archivo Black", serif;
+  font-size: clamp(3rem, 8vw, 5rem);
+  margin: 0 0 1rem 0;
+  color: #333;
+  letter-spacing: -2px;
+}
+
+.landing-left .tagline {
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-weight: 300;
+  margin: 0 0 2rem 0;
+  color: #666;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.about {
+  margin: 0;
+}
+
+.about p {
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(0.9rem, 1.8vw, 1rem);
+  font-weight: 300;
+  color: #555;
+  line-height: 1.8;
+  margin: 0;
+}
+
+.games {
+  margin-bottom: 0;
+  padding-top: 0;
+}
+
+.games-title {
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(0.8rem, 2vw, 0.9rem);
+  font-weight: 400;
+  color: #333;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  display: block;
+  text-align: center;
+}
+
+.games-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.game-link {
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease;
+}
+
+.game-link:hover {
+  transform: scale(1.05);
+}
+
+.game-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  border: 1px solid #e0e0e0;
+  width: 180px;
+  height: 120px;
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.game-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.game-card h3 {
+  font-family: "Lexend", sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.5rem 0;
+  color: #333;
+  text-align: center;
+}
+
+.game-card span {
+  font-family: "Lexend", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 300;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.game-card p {
+  font-family: "Lexend", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: #999;
+  text-align: center;
+  margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 800px) {
+  body.no-scroll {
+    overflow: auto;
   }
   
+  .container {
+    overflow: auto;
+  }
+  
+  .middle {
+    overflow-y: auto;
+    align-items: flex-start;
+    padding-top: 3rem;
+  }
+  
+  .landing-page {
+    flex-direction: column;
+    max-width: 450px;
+    padding: 2rem;
+    height: auto;
+    min-height: calc(100vh - 6rem);
+    gap: 2rem;
+  }
+  
+  .landing-left {
+    text-align: center;
+  }
+  
+  .landing-left h1 {
+    margin-bottom: 1rem;
+  }
+  
+  .landing-left .tagline {
+    margin-bottom: 1.5rem;
+  }
+  
+  .about {
+    margin-bottom: 2rem;
+  }
+  
+  .games-title {
+    margin-bottom: 1.5rem;
+  }
+  
+  .games-grid {
+    gap: 1rem;
+  }
+  
+  .games-grid .itch-widget {
+    width: 180px;
+    height: 145px;
+  }
+}
+
+@media (max-width: 600px) {
+  .middle {
+    display: none;
+  }
+  
+  .landing-page {
+    display: none;
+    visibility: hidden;
+  }
+}
