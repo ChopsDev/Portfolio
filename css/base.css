@@ -53,7 +53,7 @@ body.allow-scroll {
   align-items: center;
   justify-content: center;
   height: 100%;
-  max-width: 1000px;
+  max-width: 1100px;
   padding: 3rem;
   gap: 4rem;
 }
@@ -82,10 +82,14 @@ body.allow-scroll {
   font-family: "Lexend", sans-serif;
   font-size: clamp(1rem, 2.5vw, 1.2rem);
   font-weight: 300;
-  margin: 0 0 2rem 0;
+  margin: 0 0 0 0;
   color: #666;
   letter-spacing: 1px;
   text-transform: uppercase;
+}
+
+hr {
+  margin-top: 0.75rem;
 }
 
 .about {
