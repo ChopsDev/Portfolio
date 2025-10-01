@@ -38,7 +38,7 @@
   font-size: clamp(4px, 4.5vw, 95px);
   font-weight: 400;
   line-height: 1;
-  color: #cccccc;
+  color: #ffffff;
 }
 
 .asteroid-overcharge-mask > .button-content h3 {
@@ -46,7 +46,7 @@
   font-size: clamp(2px, 2.5vw, 35px);
   font-weight: 400;
   line-height: 1;
-  color: #888888;
+  color: #ffffff;
   font-family: "Archivo Black", serif;
 }
 
