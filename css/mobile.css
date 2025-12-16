@@ -1,0 +1,283 @@
+/* ===== MOBILE LAYOUT ===== */
+/* Panels sticky top/bottom with flip-flop expansion */
+
+@media (max-width: 768px) {
+  /* ----- Base Layout Changes ----- */
+
+  .container {
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  body {
+    overflow: hidden;
+  }
+
+  body.no-scroll {
+    overflow: hidden;
+  }
+
+  body.allow-scroll {
+    overflow: hidden;
+  }
+
+  /* ----- Panel Styles for Mobile ----- */
+
+  .panel {
+    width: 100% !important;
+    height: 70px !important;
+    min-height: 70px;
+    max-height: 70px;
+    position: relative;
+    cursor: pointer;
+    flex: 0 0 70px !important;
+    overflow: hidden;
+  }
+
+  /* Left panel sticky at top */
+  .left-panel {
+    order: 1;
+  }
+
+  /* Right panel sticky at bottom */
+  .right-panel {
+    order: 3;
+  }
+
+  /* Panel hover effects on mobile */
+  .panel:not(.expanded):active {
+    filter: brightness(1.1);
+  }
+
+  .panel:not(.expanded):hover {
+    transform: none;
+    box-shadow: none;
+    filter: none;
+  }
+
+  /* Panel heading - horizontal on mobile */
+  .panel h1 {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none !important;
+    writing-mode: horizontal-tb;
+    text-align: center;
+    padding: 20px;
+    font-size: clamp(1.2rem, 5vw, 1.8rem);
+    margin: 0;
+  }
+
+  /* When panel is expanded on mobile */
+  .panel.expanded {
+    height: auto !important;
+    max-height: none;
+    flex: 1 1 auto !important;
+    overflow-y: auto;
+  }
+
+  .panel.expanded h1 {
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+
+  /* Panel content - hidden when collapsed */
+  .panel-content {
+    position: relative;
+    padding: 0 15px 20px;
+  }
+
+  .panel:not(.expanded) .panel-content {
+    display: none;
+  }
+
+  /* ----- Middle Section (Landing Page) ----- */
+
+  .middle {
+    width: 100%;
+    flex: 1;
+    order: 2;
+    overflow-y: auto;
+    min-height: 0;
+  }
+
+  /* Hide middle when a panel is expanded */
+  .middle.shrink {
+    display: none !important;
+    flex: 0;
+    min-width: 0;
+  }
+
+  /* ----- Landing Page Mobile Layout ----- */
+
+  .landing-page {
+    flex-direction: column;
+    padding: 30px 20px;
+    gap: 30px;
+    max-width: 100%;
+    min-height: auto;
+    height: auto;
+    width: 100%;
+  }
+
+  .landing-left {
+    text-align: center;
+  }
+
+  .landing-left h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  .landing-right {
+    width: 100%;
+  }
+
+  .games-grid {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+  }
+
+  .game-card {
+    width: 140px;
+    height: 100px;
+    padding: 1rem 0.5rem;
+  }
+
+  .game-card h3 {
+    font-size: 0.85rem;
+  }
+
+  /* ----- Collapsible adjustments ----- */
+
+  .collapsible {
+    margin: 15px 10px 0 10px;
+    padding: 15px;
+    min-height: 100px;
+  }
+
+  .content {
+    margin: 0 10px 20px 10px;
+  }
+
+  /* ----- Panel dividers ----- */
+
+  .panel-divider {
+    margin: 20px 10px 15px 10px;
+    padding: 10px 0;
+  }
+
+  .panel-divider h2 {
+    font-size: clamp(1rem, 4vw, 1.5rem);
+    padding: 0 10px;
+  }
+
+  /* ----- Flex containers (project layouts) ----- */
+
+  .flex-container {
+    flex-direction: column;
+  }
+
+  .flex-container > div {
+    width: 100%;
+  }
+
+  /* ----- Images ----- */
+
+  .GPU > .content > img {
+    width: 100%;
+    height: auto;
+    margin: 10px 0;
+  }
+
+  /* ----- Project masks/buttons ----- */
+
+  .stepping-stones-mask img,
+  .tilting-game-mask img,
+  .asteroid-overcharge-mask img {
+    width: clamp(60px, 20vw, 100px);
+  }
+
+  .stepping-stones-mask > .button-content h2,
+  .tilting-game-mask > .button-content h2,
+  .asteroid-overcharge-mask > .button-content h2,
+  .GPU-mask > .button-content h2,
+  .spotify-playlists-mask > .button-content h2 {
+    font-size: clamp(16px, 5vw, 30px);
+  }
+
+  .stepping-stones-mask > .button-content h3,
+  .tilting-game-mask > .button-content h3,
+  .asteroid-overcharge-mask > .button-content h3,
+  .GPU-mask > .button-content h3,
+  .spotify-playlists-mask > .button-content h3 {
+    font-size: clamp(10px, 3vw, 18px);
+  }
+
+  /* ----- Itch widgets ----- */
+
+  .itch-widget {
+    width: 100%;
+  }
+
+  .itch-widget iframe {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* ----- Spotify grid ----- */
+
+  .spotify-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ----- 375px Minimum Width Adjustments ----- */
+@media (max-width: 400px) {
+  .landing-left h1 {
+    font-size: 1.8rem;
+  }
+
+  .landing-left .tagline {
+    font-size: 0.85rem;
+  }
+
+  .about p {
+    font-size: 0.85rem;
+  }
+
+  .game-card {
+    width: 120px;
+    height: 90px;
+  }
+
+  .game-card h3 {
+    font-size: 0.75rem;
+  }
+
+  .game-card span {
+    font-size: 0.65rem;
+  }
+
+  .collapsible {
+    margin: 10px 5px 0 5px;
+    padding: 12px;
+    min-height: 80px;
+  }
+
+  .content {
+    margin: 0 5px 15px 5px;
+  }
+
+  .spotify-grid iframe {
+    height: 400px;
+  }
+
+  .panel h1 {
+    padding: 20px 15px;
+    font-size: clamp(1rem, 5vw, 1.5rem);
+  }
+}

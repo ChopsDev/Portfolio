@@ -74,7 +74,10 @@ function toggleScroll(toggle){
 }
 
 // Clicking "Game Dev" (left panel)
-leftPanel.addEventListener('click', () => {
+leftPanel.addEventListener('click', (e) => {
+  // Don't trigger panel expansion when clicking on content inside
+  if (e.target.closest('.collapsible, .dropdown-header, .content')) return;
+
   if (rightPanel.classList.contains('expanded')) {
     closeAll();
   } else if (!leftPanel.classList.contains('expanded')) {
@@ -82,8 +85,11 @@ leftPanel.addEventListener('click', () => {
   }
 });
 
-// Clicking "Photography" (right panel)
-rightPanel.addEventListener('click', () => {
+// Clicking "Other Projects" (right panel)
+rightPanel.addEventListener('click', (e) => {
+  // Don't trigger panel expansion when clicking on content inside
+  if (e.target.closest('.collapsible, .dropdown-header, .content')) return;
+
   if (leftPanel.classList.contains('expanded')) {
     closeAll();
   } else if (!rightPanel.classList.contains('expanded')) {
