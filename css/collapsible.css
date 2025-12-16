@@ -22,13 +22,14 @@
   background-color: #222222;
   color: white;
   margin: 0px 22px 30px 20px;
+  padding: 0 2%;
   transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), padding 0.4s ease;
   border-radius: 0 0 12px 12px;
   }
 
   .content.show {
   max-height: 2000px; /* Large enough to accommodate content */
-  padding: 2% 2% 2% 2%;
+  padding: 2%;
   }
 
   /* Text animation effects for content */
@@ -41,8 +42,7 @@
   .content iframe,
   .content .spotify-grid {
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
+  transition: opacity 0.4s ease 0.1s;
   }
 
   .content.show p,
@@ -54,15 +54,7 @@
   .content.show iframe,
   .content.show .spotify-grid {
   opacity: 1;
-  transform: translateY(0);
   }
-
-  /* Staggered animation for multiple elements */
-  .content.show p:nth-child(1) { transition-delay: 0.3s; }
-  .content.show p:nth-child(2) { transition-delay: 0.4s; }
-  .content.show p:nth-child(3) { transition-delay: 0.5s; }
-  .content.show img:nth-child(1) { transition-delay: 0.35s; }
-  .content.show img:nth-child(2) { transition-delay: 0.45s; }
 
   .button-like { 
   transition: transform 0.15s ease-out;
