@@ -103,8 +103,16 @@
   flex: 1;
 }
 
-.sync-or-sink > .content > .flex-container > div img {
-  max-width: 100%;
+.sync-or-sink > .content > .flex-container > .image-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  flex: 1;
+  min-width: 45%;
+}
+
+.sync-or-sink > .content > .flex-container > .image-gallery img {
+  width: 100%;
   height: auto;
   border-radius: 8px;
 }
