@@ -100,11 +100,24 @@
 .dropdown-content {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  margin: 0 2.75vh;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0);
+  border: 1px solid rgba(255, 255, 255, 0);
+  padding: 0 15px;
+  transition:
+    max-height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    padding 0.3s ease,
+    background 0.3s ease,
+    border 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .dropdown-content.show {
   max-height: 5000px; /* Large enough to accommodate all content */
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 15px;
 }
 
 /* Animation for dropdown content */
