@@ -35,13 +35,100 @@
   <div class="panel left-panel">
     <h1>GAME DEV</h1>
     <div class="panel-content">
+      <div class="panel-divider dropdown-header" data-target="personal-projects">
+        <h2><span>Personal Projects</span><span class="dropdown-arrow">▼</span></h2>
+      </div>
+      <div class="dropdown-content" id="personal-projects">
+        <div class="stepping-stones">
+          <div class="stepping-stones-mask collapsible button-like">
+            <img src="images/stepping-stones-logo.png">
+            <div class="button-content">
+              <h2>Stepping Stones</h2>
+              <h3>2023 - 2024</h3>
+            </div>
+          </div>
+          <div class="content">
+            <div class="flex-container">
+              <div>
+                <img src="images/stepping-stones-preview1.png">
+              </div>
+              <div>
+                <img src="images/stepping-stones-preview2.png">
+              </div>
+              <div>
+                <p>Stepping Stones is a minimalist 2D platformer built in Unity, which I created while battling cancer and was inspired by
+                  <a href="https://store.steampowered.com/app/360740/Downwell/">Downwell</a>
+                </p>
+                <br>
+
+                <p>The project lasted about 5–6 months and gave me the chance to design and program a complete game loop.
+                </p>
+                <br>
+
+                <p>The core gameplay is simple: players jump left and right, aiming for height or speed depending on the chosen height.
+                  Despite the basic nature of the game the controls are responsive and snappy, creating an enjoyable replay loop.
+                  High scores are saved, and coins collected during jumps can unlock cosmetic variations for added progression.
+                </p>
+                <br>
+
+                <p>The art style is intentionally minimalist. I created all sprites and animations myself,
+                  drawing heavily from Downwell's approach to clean UI/UX and impactful presentation.
+                </p>
+                <br>
+
+                <p>On the technical side, the project features a custom camera scaling system that affects FOV, jump speed,
+                  and sound design. Touch controls and resolution scaling were also built in which means making a mobile port is possible but not implemented.
+                  The jumping is fully code driven and the whole game is framerate independent
+                </p>
+                <br>
+
+                <p><strong>DevLog:</strong>
+                  <a href="https://www.youtube.com/watch?v=l5yagwpIa4I&t=30s">I Got Cancer... So I Made a Game</a>
+                </p>
+                <br>
+                <div class="itch-widget">
+                  <iframe frameborder="0" src="https://itch.io/embed/2451691?bg_color=151515&amp;fg_color=d7d7d7" width="552" height="167">
+                    <a href="https://chopsdev.itch.io/stepping-stones">Stepping Stones by Chops</a>
+                  </iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tilting-game">
+          <div class="tilting-game-mask collapsible button-like">
+            <img src="images/tilting-trouble-logo.png">
+            <div class="button-content">
+              <h2>Tilting Game</h2>
+              <h3>2021 - 2022</h3>
+            </div>
+          </div>
+          <div class="content">
+            <div class="flex-container">
+              <div>
+                <p>Tilting Game was made as a way for me to make a simple game from my childhood. At the time, I wasn't great at thinking small, so I needed something with an existing foundation. That's when I remembered Labyrinth which was a physics-based game built around trial and error, where the goal was simply to reach the end without falling into holes.</p>
+                <br>
+                <p>The game itself is solid and, with a somewhat replayable experience designed with speedrunners in mind. It also includes customization which let players change both the ball and the background skybox. While the feature is poorly implemented, figuring out how to add it taught me how to properly implement customization in future projects.</p>
+                <br>
+                <p>Making this game was a good learning experience for me, as it was my first time working in a 3D environment. It introduced me to <a href="https://www.blender.org/">Blender</a> for asset creation and allowed me to experiment with world-space UI in Unity, a concept I hadn't explored before.</p>
+                <br>
+                <div class="itch-widget">
+                  <iframe width="552" height="167" frameborder="0"
+                    src="https://itch.io/embed/1430214">
+                    <a href="https://chopsdev.itch.io/some-tilting-game">Tilting Board Game by Chops</a>
+                  </iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="panel-divider dropdown-header" data-target="uni-assignments">
         <h2><span>Uni Assignments</span><span class="dropdown-arrow">▼</span></h2>
       </div>
       <div class="dropdown-content" id="uni-assignments">
-
-
-
         <div class="asteroid-overcharge">
           <div class="asteroid-overcharge-mask collapsible button-like">
             <img src="images/asteroid-overcharge-logo.png">
@@ -104,107 +191,11 @@
         </div>
       </div>
 
-
-      <div class="panel-divider dropdown-header" data-target="personal-projects">
-        <h2><span>Personal Projects</span><span class="dropdown-arrow">▼</span></h2>
+      <div class="panel-divider dropdown-header" data-target="toys-prototypes">
+        <h2><span>Toys/Prototypes</span><span class="dropdown-arrow">▼</span></h2>
       </div>
-      <div class="dropdown-content" id="personal-projects">
-        <!-- make a repo and add a note that you had not yet learnt how to use git at that stage so they just have a single commit -->
-      <div class="stepping-stones"> 
-        <div class="stepping-stones-mask collapsible button-like active">
-          <img src="images/stepping-stones-logo.png">
-          <div class="button-content">
-            <h2>Stepping Stones</h2>
-            <h3>2023 - 2024</h3>
-          </div>
-        </div>
-        <div class="content show">
-          <div class="flex-container">
-            <div>
-              <img src="images/stepping-stones-preview1.png">
-            </div>
-            <div>
-              <img src="images/stepping-stones-preview2.png">
-            </div>
-            <div>
-              <p>Stepping Stones is a minimalist 2D platformer built in Unity, which I created while battling cancer and was inspired by 
-                <a href="https://store.steampowered.com/app/360740/Downwell/">Downwell</a>
-              </p>
-              <br>
-
-              <p>The project lasted about 5–6 months and gave me the chance to design and program a complete game loop.
-              </p>
-              <br>
-
-              <p>The core gameplay is simple: players jump left and right, aiming for height or speed depending on the chosen height. 
-                Despite the basic nature of the game the controls are responsive and snappy, creating an enjoyable replay loop. 
-                High scores are saved, and coins collected during jumps can unlock cosmetic variations for added progression.
-              </p>
-              <br>
-
-              <p>The art style is intentionally minimalist. I created all sprites and animations myself, 
-                drawing heavily from Downwell’s approach to clean UI/UX and impactful presentation.
-              </p>
-              <br>
-
-              <p>On the technical side, the project features a custom camera scaling system that affects FOV, jump speed, 
-                and sound design. Touch controls and resolution scaling were also built in which means making a mobile port is possible but not implemented. 
-                The jumping is fully code driven and the whole game is framerate independent
-              </p>
-              <br>
-
-              <p><strong>DevLog:</strong> 
-                <a href="https://www.youtube.com/watch?v=l5yagwpIa4I&t=30s">I Got Cancer... So I Made a Game</a>
-              </p>
-              <br>
-              <div class="itch-widget">
-                <iframe frameborder="0" src="https://itch.io/embed/2451691?bg_color=151515&amp;fg_color=d7d7d7" width="552" height="167">
-                  <a href="https://chopsdev.itch.io/stepping-stones">Stepping Stones by Chops</a>
-                </iframe>
-              </div>
-            </div>
-
-            
-          </div>
-        </div>
+      <div class="dropdown-content" id="toys-prototypes">
       </div>
-
-
-      <!-- make a repo and add a note that you had not yet learnt how to use git at that stage so they just have a single commit -->
-      <div class="tilting-game">
-        <div class="tilting-game-mask collapsible button-like">
-          <img src="images/tilting-trouble-logo.png">
-          <div class="button-content">
-            <h2>Tilting Game</h2>
-            <h3>2021 - 2022</h3>
-          </div>
-        </div>
-        <div class="content">
-          <div class="flex-container">
-            <div>
-              <p>Tilting Game was made as a way for me to make a simple game from my childhood. At the time, I wasn't great at thinking small, so I needed something with an existing foundation. That's when I remembered Labyrinth which was a physics-based game built around trial and error, where the goal was simply to reach the end without falling into holes.</p>
-              <br>
-              <p>The game itself is solid and, with a somewhat replayable experience designed with speedrunners in mind. It also includes customization which let players change both the ball and the background skybox. While the feature is poorly implemented, figuring out how to add it taught me how to properly implement customization in future projects.</p>
-              <br>
-              <p>Making this game was a good learning experience for me, as it was my first time working in a 3D environment. It introduced me to <a href="https://www.blender.org/">Blender</a> for asset creation and allowed me to experiment with world-space UI in Unity, a concept I hadn't explored before.</p>
-              <br>
-              <div class="itch-widget">
-                <iframe width="552" height="167" frameborder="0" 
-                  src="https://itch.io/embed/1430214">
-                  <a href="https://chopsdev.itch.io/some-tilting-game">Tilting Board Game by Chops</a>
-                </iframe>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-
-      
-      </div>
-
-      
 
     </div>
   </div>
