@@ -30,18 +30,19 @@ body.allow-scroll {
 /* Middle Section */
 .middle {
   flex: 1;
-  min-width: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  transition: flex 0.15s ease-out, opacity 0.15s ease-out;
+  transition: flex 0.15s ease-out, opacity 0.2s ease-out 0.1s, min-width 0.15s ease-out;
 }
 
 .middle.shrink {
   flex: 0;
+  min-width: 0;
   opacity: 0;
   pointer-events: none;
+  transition: flex 0.15s ease-out, opacity 0s, min-width 0.15s ease-out;
 }
 
 /* Landing Page */
@@ -50,8 +51,7 @@ body.allow-scroll {
   align-items: center;
   justify-content: center;
   height: 100%;
-  width: 1100px;
-  min-width: 1100px;
+  max-width: 1100px;
   padding: 3rem;
   gap: 4rem;
 }
@@ -203,8 +203,7 @@ hr {
   
   .landing-page {
     flex-direction: column;
-    width: 450px;
-    min-width: 450px;
+    max-width: 450px;
     padding: 2rem;
     height: auto;
     min-height: calc(100vh - 6rem);
