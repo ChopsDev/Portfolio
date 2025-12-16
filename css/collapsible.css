@@ -37,7 +37,9 @@
   .content img,
   .content h2,
   .content h3,
-  .content h4 {
+  .content h4,
+  .content iframe,
+  .content .spotify-grid {
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease 0.2s, transform 0.6s ease 0.2s;
@@ -48,7 +50,9 @@
   .content.show img,
   .content.show h2,
   .content.show h3,
-  .content.show h4 {
+  .content.show h4,
+  .content.show iframe,
+  .content.show .spotify-grid {
   opacity: 1;
   transform: translateY(0);
   }
