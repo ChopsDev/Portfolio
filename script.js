@@ -9,8 +9,11 @@ const middle = document.querySelector('.middle');
 
 const HIDE_TEXT = "HIDE"
 
+// Show middle content on page load
+middle.classList.add('ready');
+
 // Function to close all panels and reset
-function closeAll() {
+function closeAll(keepMiddleShrunk = false) {
   toggleScroll(false);
 
   leftPanel.classList.remove('expanded', 'expanding');
@@ -19,7 +22,16 @@ function closeAll() {
   rightHeading.classList.remove('slide-right');
   leftContent.classList.remove('visible');
   rightContent.classList.remove('visible');
-  middle.classList.remove('shrink');
+
+  if (!keepMiddleShrunk) {
+    middle.classList.remove('shrink');
+    // Delay showing content until layout has settled
+    setTimeout(() => {
+      if (!middle.classList.contains('shrink')) {
+        middle.classList.add('ready');
+      }
+    }, 150);
+  }
 
   rightHeading.textContent = "OTHER PROJECTS"
   leftHeading.textContent = "GAME DEV"
@@ -27,11 +39,12 @@ function closeAll() {
 
 // Expand the left panel and shrink the middle
 function expandLeft() {
-  closeAll();
+  middle.classList.remove('ready');
+  middle.classList.add('shrink');
+  closeAll(true);
   toggleScroll(true);
   leftHeading.classList.add('slide-left');
   leftPanel.classList.add('expanding', 'expanded');
-  middle.classList.add('shrink');
 
   rightHeading.textContent = HIDE_TEXT
   leftContent.classList.add('visible');
@@ -39,11 +52,12 @@ function expandLeft() {
 
 // Expand the right panel and shrink the middle
 function expandRight() {
-  closeAll();
+  middle.classList.remove('ready');
+  middle.classList.add('shrink');
+  closeAll(true);
   toggleScroll(true);
   rightHeading.classList.add('slide-right');
   rightPanel.classList.add('expanding', 'expanded');
-  middle.classList.add('shrink');
 
   leftHeading.textContent = HIDE_TEXT
   rightContent.classList.add('visible');
