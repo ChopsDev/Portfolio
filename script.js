@@ -225,11 +225,12 @@ function checkZoomLevel() {
   }
 }
 
-// Check zoom on resize
-window.addEventListener('resize', checkZoomLevel);
-
-// Poll for Firefox compatibility
-setInterval(checkZoomLevel, 500);
+// Check zoom on resize (debounced for performance)
+let resizeTimeout;
+window.addEventListener('resize', function() {
+  clearTimeout(resizeTimeout);
+  resizeTimeout = setTimeout(checkZoomLevel, 100);
+});
 
 // Initial check
-setTimeout(checkZoomLevel, 100);
+checkZoomLevel();
