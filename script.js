@@ -97,18 +97,17 @@ rightPanel.addEventListener('click', (e) => {
   }
 });
 
-var coll = document.getElementsByClassName("collapsible");
-var i;
+const coll = document.getElementsByClassName("collapsible");
 
-for (i = 0; i < coll.length; i++) {
+for (let i = 0; i < coll.length; i++) {
   coll[i].addEventListener("click", function() {
     this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    
+    let content = this.nextElementSibling;
+
     while (content) {
       if (content.nodeName === "DIV" && content.classList.contains("content")) {
         content.classList.toggle("show");
-        break; // Only toggle the first content div found
+        break;
       }
       content = content.nextElementSibling;
     }
@@ -116,33 +115,47 @@ for (i = 0; i < coll.length; i++) {
 }
 
 // Dropdown functionality for section headers
-var dropdownHeaders = document.getElementsByClassName("dropdown-header");
+const dropdownHeaders = document.getElementsByClassName("dropdown-header");
 
-// Initialize all dropdowns as open by default
-for (i = 0; i < dropdownHeaders.length; i++) {
-  var targetId = dropdownHeaders[i].getAttribute("data-target");
-  var dropdownContent = document.getElementById(targetId);
+// Toggle dropdown function
+function toggleDropdown(header) {
+  header.classList.toggle("active");
+  const isExpanded = header.classList.contains("active");
+  header.setAttribute("aria-expanded", isExpanded);
+
+  const targetId = header.getAttribute("data-target");
+  const dropdownContent = document.getElementById(targetId);
+
   if (dropdownContent) {
-    dropdownContent.classList.add("show");
-    dropdownHeaders[i].classList.add("active");
+    dropdownContent.classList.toggle("show");
   }
 }
 
-for (i = 0; i < dropdownHeaders.length; i++) {
+// Initialize all dropdowns as open by default
+for (let i = 0; i < dropdownHeaders.length; i++) {
+  const targetId = dropdownHeaders[i].getAttribute("data-target");
+  const dropdownContent = document.getElementById(targetId);
+  if (dropdownContent) {
+    dropdownContent.classList.add("show");
+    dropdownHeaders[i].classList.add("active");
+    dropdownHeaders[i].setAttribute("aria-expanded", "true");
+  }
+}
+
+// Add click and keyboard event listeners
+for (let i = 0; i < dropdownHeaders.length; i++) {
   dropdownHeaders[i].addEventListener("click", function(e) {
-    // Prevent event bubbling to panel click handlers
     e.stopPropagation();
-
-    // Remove focus to prevent outline
     this.blur();
+    toggleDropdown(this);
+  });
 
-    this.classList.toggle("active");
-
-    var targetId = this.getAttribute("data-target");
-    var dropdownContent = document.getElementById(targetId);
-
-    if (dropdownContent) {
-      dropdownContent.classList.toggle("show");
+  // Keyboard accessibility - Enter and Space to toggle
+  dropdownHeaders[i].addEventListener("keydown", function(e) {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      e.stopPropagation();
+      toggleDropdown(this);
     }
   });
 }

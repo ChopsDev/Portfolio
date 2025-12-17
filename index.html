@@ -1,9 +1,23 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Website Portfolio</title>
+  <meta name="description" content="Bryn Carter - Indie game developer creating minimalist, responsive games. Explore projects like Stepping Stones, Asteroid Overcharge, and more.">
+  <meta name="author" content="Bryn Carter">
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Bryn Carter - Game Developer Portfolio">
+  <meta property="og:description" content="Indie game developer creating minimalist, responsive games. Everything starts as a bad prototype.">
+  <meta property="og:url" content="https://chopsdev.github.io/Website-Portfolio/">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bryn Carter - Game Developer Portfolio">
+  <meta name="twitter:description" content="Indie game developer creating minimalist, responsive games.">
+
+  <title>Bryn Carter | Game Developer Portfolio</title>
   <link rel="stylesheet" href="css/base.css">
   <link rel="stylesheet" href="css/panels.css">
   <link rel="stylesheet" href="css/panel-dividers.css">
@@ -35,10 +49,10 @@
   <div class="panel left-panel">
     <h1>GAME DEV</h1>
     <div class="panel-content">
-      <div class="panel-divider dropdown-header" data-target="personal-projects">
-        <h2><span>Personal Projects</span><span class="dropdown-arrow">▼</span></h2>
+      <div class="panel-divider dropdown-header" data-target="personal-projects" role="button" tabindex="0" aria-expanded="true" aria-controls="personal-projects">
+        <h2><span>Personal Projects</span><span class="dropdown-arrow" aria-hidden="true">▼</span></h2>
       </div>
-      <div class="dropdown-content" id="personal-projects">
+      <div class="dropdown-content" id="personal-projects" role="region" aria-labelledby="personal-projects-label">
         <div class="stepping-stones">
           <div class="stepping-stones-mask collapsible button-like">
             <img src="images/stepping-stones-logo.png">
@@ -125,10 +139,10 @@
         </div>
       </div>
 
-      <div class="panel-divider dropdown-header" data-target="uni-assignments">
-        <h2><span>Uni Assignments</span><span class="dropdown-arrow">▼</span></h2>
+      <div class="panel-divider dropdown-header" data-target="uni-assignments" role="button" tabindex="0" aria-expanded="true" aria-controls="uni-assignments">
+        <h2><span>Uni Assignments</span><span class="dropdown-arrow" aria-hidden="true">▼</span></h2>
       </div>
-      <div class="dropdown-content" id="uni-assignments">
+      <div class="dropdown-content" id="uni-assignments" role="region" aria-labelledby="uni-assignments-label">
         <div class="asteroid-overcharge">
           <div class="asteroid-overcharge-mask collapsible button-like">
             <img src="images/asteroid-overcharge-logo.png">
@@ -138,11 +152,11 @@
             </div>
           </div>
           <div class="content">
-            <p>For my first univerity assignment in "Introduction to Gameplay Programming," I was given instructions to improve on the original Asteroids (1980) game for my Game Development Course.</p>
+            <p>For my first university assignment in "Introduction to Gameplay Programming," I was given instructions to improve on the original Asteroids (1980) game for my Game Development Course.</p>
             <br>
             <p>This was the first game I had ever made in game maker. In which I choose to add a rogue like element to it (Ik very Indie of me). The game itself isn't too special but the back-end of the game relatively future proofed just in case I choose to work on it again.</p>
             <br>
-            <p>I had designed the backend of the game really well. Shoot me a message if you are intrested at looking at the <a href="https://github.com/ChopsDev/GD1P05_Assignment_1_Asteroid_Overcharge">repository</a></p>
+            <p>I had designed the backend of the game really well. Shoot me a message if you are interested in looking at the <a href="https://github.com/ChopsDev/GD1P05_Assignment_1_Asteroid_Overcharge">repository</a></p>
             <div class="itch-widget">
               <iframe frameborder="0" src="https://itch.io/embed/3650676" width="552" height="167">
                 <a href="https://chopsdev.itch.io/asteroid-overcharge">Asteroid Overcharge by Chops</a>
@@ -189,10 +203,11 @@
         </div>
       </div>
 
-      <div class="panel-divider dropdown-header" data-target="toys-prototypes">
-        <h2><span>Toys/Prototypes</span><span class="dropdown-arrow">▼</span></h2>
+      <div class="panel-divider dropdown-header" data-target="toys-prototypes" role="button" tabindex="0" aria-expanded="true" aria-controls="toys-prototypes">
+        <h2><span>Toys/Prototypes</span><span class="dropdown-arrow" aria-hidden="true">▼</span></h2>
       </div>
-      <div class="dropdown-content" id="toys-prototypes">
+      <div class="dropdown-content" id="toys-prototypes" role="region" aria-labelledby="toys-prototypes-label">
+        <p style="color: #888; text-align: center; padding: 20px;">Coming soon...</p>
       </div>
 
     </div>
@@ -254,10 +269,10 @@
     <h1>OTHER PROJECTS</h1>
     <div class="panel-content">
 
-      <div class="panel-divider dropdown-header" data-target="digital-art">
-        <h2><span>Digital Art</span><span class="dropdown-arrow">▼</span></h2>
+      <div class="panel-divider dropdown-header" data-target="digital-art" role="button" tabindex="0" aria-expanded="true" aria-controls="digital-art">
+        <h2><span>Digital Art</span><span class="dropdown-arrow" aria-hidden="true">▼</span></h2>
       </div>
-      <div class="dropdown-content" id="digital-art">
+      <div class="dropdown-content" id="digital-art" role="region" aria-labelledby="digital-art-label">
 
       <div class="GPU">
         <div class="GPU-mask collapsible button-like">
@@ -279,10 +294,10 @@
       </div>
       </div>
 
-      <div class="panel-divider dropdown-header" data-target="just-vibes">
-        <h2><span>Vibes</span><span class="dropdown-arrow">▼</span></h2>
+      <div class="panel-divider dropdown-header" data-target="just-vibes" role="button" tabindex="0" aria-expanded="true" aria-controls="just-vibes">
+        <h2><span>Vibes</span><span class="dropdown-arrow" aria-hidden="true">▼</span></h2>
       </div>
-      <div class="dropdown-content" id="just-vibes">
+      <div class="dropdown-content" id="just-vibes" role="region" aria-labelledby="just-vibes-label">
         <div class="spotify-playlists">
           <div class="spotify-playlists-mask collapsible button-like">
             <div class="button-content">
