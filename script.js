@@ -154,7 +154,27 @@ const easterEggMessages = [
   "Looking for something?",
   "This wasn't meant to be found.",
   "The void thanks you for visiting.",
-  "Some things are better left unzoomed."
+  "Some things are better left unzoomed.",
+  "You went too far.",
+  "It noticed you first.",
+  "This place doesn’t have a name.",
+  "You weren’t invited.",
+  "There’s no reason to be here.",
+  "You can leave. It won’t stop you.",
+  "You’re seeing behind the curtain.",
+  "This is not part of the experience.",
+  "Nothing ends here. It just watches.",
+  "You found the quiet part.",
+  "This space was supposed to stay empty.",
+  "It’s been waiting longer than you think.",
+  "You’re closer than you should be.",
+  "This isn’t content.",
+  "You crossed the line. Gently.",
+  "There’s no reward for this.",
+  "It doesn’t speak often.",
+  "You’re not meant to interact with this.",
+  "Some distances aren’t physical.",
+  "Now that you’ve seen it, zooming back won’t help."
 ];
 
 let easterEggOverlay = null;
