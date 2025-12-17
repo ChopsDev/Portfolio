@@ -168,7 +168,7 @@ for (let i = 0; i < dropdownHeaders.length; i++) {
   });
 }
 
-// Easter egg for extreme zoom out
+// Easter egg quotes
 const easterEggMessages = [
   "There's nothing out here.",
   "You've reached the end. It's just me.",
