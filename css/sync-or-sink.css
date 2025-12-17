@@ -45,13 +45,20 @@
 
 /* ===== SYNC OR SINK - SHOWCASE CONTENT ===== */
 .sos-showcase {
-  background: #0a0a14;
+  background: linear-gradient(135deg, #2d1f3d 0%, #1a1a2e 25%, #0f0f1a 50%, #1a1a2e 75%, #2d1f3d 100%);
   border-radius: 0 0 12px 12px;
   overflow: hidden;
+  padding: 3px;
 }
 
 .sos-showcase.show {
-  padding: 0;
+  padding: 3px;
+}
+
+.sos-showcase-inner {
+  background: #0a0a14;
+  border-radius: 0 0 10px 10px;
+  overflow: hidden;
 }
 
 /* ----- Hero Header (Compact) ----- */
