@@ -34,8 +34,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <!-- Consolidated Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Coiny&family=Fuzzy+Bubbles:wght@400;700&family=Lexend:wght@100..900&family=Libre+Barcode+39&family=Lilita+One&family=Luckiest+Guy&family=Rowdies:wght@300;400;700&family=Silkscreen:wght@400;700&family=Special+Elite&family=Syne+Mono&family=Wavefont:wght,ROND,YELA@4..1000,0,100&display=swap" rel="stylesheet">
+  <!-- Google Fonts - Only loading fonts that are actually used -->
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
 
 </head>
 <body class="no-scroll">
@@ -43,14 +43,18 @@
 <div class="container">
   <div class="panel left-panel">
     <h1>GAME DEV</h1>
+    <div class="panel-hint">
+      <span class="hint-arrow">→</span>
+      <span>Click</span>
+    </div>
     <div class="panel-content">
       <div class="panel-divider dropdown-header" data-target="personal-projects" role="button" tabindex="0" aria-expanded="true" aria-controls="personal-projects">
         <h2><span>Personal Projects</span><span class="dropdown-arrow" aria-hidden="true">▼</span></h2>
       </div>
       <div class="dropdown-content" id="personal-projects" role="region" aria-labelledby="personal-projects-label">
-        <div class="stepping-stones">
+        <div class="stepping-stones" id="stepping-stones">
           <div class="stepping-stones-mask collapsible button-like">
-            <img src="images/stepping-stones-logo.png">
+            <img src="images/stepping-stones-logo.png" alt="Stepping Stones logo" loading="lazy">
             <div class="button-content">
               <h2>Stepping Stones</h2>
               <h3>2023 - 2024</h3>
@@ -59,10 +63,10 @@
           <div class="content">
             <div class="flex-container">
               <div>
-                <img src="images/stepping-stones-preview1.png">
+                <img src="images/stepping-stones-preview1.png" alt="Stepping Stones gameplay screenshot" loading="lazy">
               </div>
               <div>
-                <img src="images/stepping-stones-preview2.png">
+                <img src="images/stepping-stones-preview2.png" alt="Stepping Stones gameplay screenshot" loading="lazy">
               </div>
               <div>
                 <p>Stepping Stones is a minimalist 2D platformer built in Unity, which I created while battling cancer and was inspired by
@@ -96,7 +100,7 @@
                 </p>
                 <br>
                 <div class="itch-widget">
-                  <iframe frameborder="0" src="https://itch.io/embed/2451691?bg_color=151515&amp;fg_color=d7d7d7" width="552" height="167">
+                  <iframe frameborder="0" src="https://itch.io/embed/2451691?bg_color=151515&amp;fg_color=d7d7d7" width="552" height="167" loading="lazy" title="Stepping Stones on itch.io">
                     <a href="https://chopsdev.itch.io/stepping-stones">Stepping Stones by Chops</a>
                   </iframe>
                 </div>
@@ -105,9 +109,9 @@
           </div>
         </div>
 
-        <div class="tilting-game">
+        <div class="tilting-game" id="tilting-game">
           <div class="tilting-game-mask collapsible button-like">
-            <img src="images/tilting-trouble-logo.png">
+            <img src="images/tilting-trouble-logo.png" alt="Tilting Game logo" loading="lazy">
             <div class="button-content">
               <h2>Tilting Game</h2>
               <h3>2021 - 2022</h3>
@@ -123,7 +127,7 @@
                 <p>Making this game was a good learning experience for me, as it was my first time working in a 3D environment. It introduced me to <a href="https://www.blender.org/">Blender</a> for asset creation and allowed me to experiment with world-space UI in Unity, a concept I hadn't explored before.</p>
                 <br>
                 <div class="itch-widget">
-                  <iframe width="552" height="167" frameborder="0"
+                  <iframe width="552" height="167" frameborder="0" loading="lazy" title="Tilting Game on itch.io"
                     src="https://itch.io/embed/1430214">
                     <a href="https://chopsdev.itch.io/some-tilting-game">Tilting Board Game by Chops</a>
                   </iframe>
@@ -138,9 +142,9 @@
         <h2><span>Uni Assignments</span><span class="dropdown-arrow" aria-hidden="true">▼</span></h2>
       </div>
       <div class="dropdown-content" id="uni-assignments" role="region" aria-labelledby="uni-assignments-label">
-        <div class="asteroid-overcharge">
+        <div class="asteroid-overcharge" id="asteroid-overcharge">
           <div class="asteroid-overcharge-mask collapsible button-like">
-            <img src="images/asteroid-overcharge-logo.png">
+            <img src="images/asteroid-overcharge-logo.png" alt="Asteroid Overcharge logo" loading="lazy">
             <div class="button-content">
               <h2>Asteroid Overcharge</h2>
               <h3>2025</h3>
@@ -153,16 +157,16 @@
             <br>
             <p>I had designed the backend of the game really well. Shoot me a message if you are interested in looking at the <a href="https://github.com/ChopsDev/GD1P05_Assignment_1_Asteroid_Overcharge">repository</a></p>
             <div class="itch-widget">
-              <iframe frameborder="0" src="https://itch.io/embed/3650676" width="552" height="167">
+              <iframe frameborder="0" src="https://itch.io/embed/3650676" width="552" height="167" loading="lazy" title="Asteroid Overcharge on itch.io">
                 <a href="https://chopsdev.itch.io/asteroid-overcharge">Asteroid Overcharge by Chops</a>
               </iframe>
             </div>
           </div>
         </div>
 
-        <div class="sync-or-sink">
+        <div class="sync-or-sink" id="sync-or-sink">
           <div class="sync-or-sink-mask collapsible button-like">
-            <img src="images/sync-or-sink-logo.png">
+            <img src="images/sync-or-sink-logo.png" alt="Sync Or Sink logo" loading="lazy">
             <div class="button-content">
               <h2>Sync Or Sink</h2>
               <h3>2025</h3>
@@ -171,8 +175,8 @@
           <div class="content">
             <div class="flex-container">
               <div class="image-gallery">
-                <img src="images/sync-or-sink-preview1.png">
-                <img src="images/sync-or-sink-preview2.png">
+                <img src="images/sync-or-sink-preview1.png" alt="Sync Or Sink gameplay screenshot" loading="lazy">
+                <img src="images/sync-or-sink-preview2.png" alt="Sync Or Sink gameplay screenshot" loading="lazy">
               </div>
               <div>
                 <p>Sync Or Sink is a stylized rhythm game developed in Unity as part of a multidisciplinary team project. I was responsible for core programming and technical systems across the game.</p>
@@ -188,7 +192,7 @@
                 </p>
                 <br>
                 <div class="itch-widget">
-                  <iframe height="167" frameborder="0" src="https://itch.io/embed/4030616" width="552">
+                  <iframe height="167" frameborder="0" src="https://itch.io/embed/4030616" width="552" loading="lazy" title="Sync Or Sink on itch.io">
                     <a href="https://kaylienufo.itch.io/sync-or-sink">Sync or Sink by KaylienUFO</a>
                   </iframe>
                 </div>
@@ -217,15 +221,30 @@
         
         <div class="about">
           <p>
-            I’m an indie game developer who likes exploring how simple mechanics can create depth. 
+            I'm an indie game developer who likes exploring how simple mechanics can create depth.
             My projects focus on designs that are responsive and playful.
           </p>
           <br>
           <p>
-            I enjoy playing around with ideas I come up with and turning them into small, 
+            I enjoy playing around with ideas I come up with and turning them into small,
             experiences that anyone can pick up and enjoy. Each game I make is a way for me
             to learn, push boundaries, and share something fun with anyone that wants to try them.
           </p>
+        </div>
+
+        <div class="contact-links">
+          <a href="https://github.com/ChopsDev" target="_blank" rel="noopener" class="contact-link" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          </a>
+          <a href="https://chopsdev.itch.io/" target="_blank" rel="noopener" class="contact-link" aria-label="itch.io">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M3.13 1.338C2.08 1.96.02 4.328 0 4.95v1.03c0 1.303 1.22 2.45 2.325 2.45 1.33 0 2.436-1.102 2.436-2.41 0 1.308 1.07 2.41 2.4 2.41 1.328 0 2.362-1.102 2.362-2.41 0 1.308 1.137 2.41 2.466 2.41h.024c1.33 0 2.466-1.102 2.466-2.41 0 1.308 1.034 2.41 2.363 2.41 1.33 0 2.4-1.102 2.4-2.41 0 1.308 1.106 2.41 2.435 2.41C22.78 8.43 24 7.282 24 5.98V4.95c-.02-.62-2.082-2.99-3.13-3.612-3.253-.114-5.508-.134-8.87-.134-3.362 0-5.617.02-8.87.134zm6.59 6.71c-.463.503-1.12.822-1.858.822-.74 0-1.396-.32-1.86-.823-.468.503-1.124.823-1.863.823-.156 0-.308-.014-.455-.042v8.16c0 2.756 1.4 4.674 4.46 4.674h7.81c3.06 0 4.46-1.918 4.46-4.675v-8.16c-.147.028-.3.043-.456.043-.74 0-1.395-.32-1.862-.823-.466.503-1.12.822-1.86.822-.74 0-1.395-.32-1.86-.822-.463.503-1.12.822-1.857.822-.738 0-1.394-.32-1.858-.822zm-1.028 4.39h6.616c.076 0 .14.067.14.152v5.12c0 .085-.064.153-.14.153H8.692c-.076 0-.14-.068-.14-.153v-5.12c0-.085.064-.152.14-.152z"/></svg>
+          </a>
+          <a href="https://www.youtube.com/@chopsdev" target="_blank" rel="noopener" class="contact-link" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          </a>
+          <a href="mailto:bryncarter.dev@gmail.com" class="contact-link" aria-label="Email">
+            <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </a>
         </div>
       </div>
       
@@ -262,6 +281,10 @@
   
   <div class="panel right-panel">
     <h1>OTHER PROJECTS</h1>
+    <div class="panel-hint">
+      <span class="hint-arrow">←</span>
+      <span>Click</span>
+    </div>
     <div class="panel-content">
 
       <div class="panel-divider dropdown-header" data-target="digital-art" role="button" tabindex="0" aria-expanded="true" aria-controls="digital-art">
@@ -269,7 +292,7 @@
       </div>
       <div class="dropdown-content" id="digital-art" role="region" aria-labelledby="digital-art-label">
 
-      <div class="GPU">
+      <div class="GPU" id="dead-gpu-layers">
         <div class="GPU-mask collapsible button-like">
           <div class="button-content">
             <h2>DEAD-GPU-LAYERS</h2>
@@ -278,12 +301,12 @@
         </div>
         <div class="content">
           <p>The weird thing about this panel isn't the art itself. it's that I had to work against my GPU as it was glitching out. The main issue I found when I worked around it is that the files would never look the same each time I moved or reopened the file. The GPU was constantly changing the project itself. So when I moved the screen or reopened it after a crash the design would take on a new shape or change where everything was placed.</p>
-          <img src="images/Dead GPU/1.png">
-          <img src="images/Dead GPU/2.png">
-          <img src="images/Dead GPU/3.png">
-          <img src="images/Dead GPU/4.png">
-          <img src="images/Dead GPU/5.png">
-          <img src="images/Dead GPU/6.png">
+          <img src="images/Dead GPU/1.png" alt="Dead GPU glitch art 1" loading="lazy">
+          <img src="images/Dead GPU/2.png" alt="Dead GPU glitch art 2" loading="lazy">
+          <img src="images/Dead GPU/3.png" alt="Dead GPU glitch art 3" loading="lazy">
+          <img src="images/Dead GPU/4.png" alt="Dead GPU glitch art 4" loading="lazy">
+          <img src="images/Dead GPU/5.png" alt="Dead GPU glitch art 5" loading="lazy">
+          <img src="images/Dead GPU/6.png" alt="Dead GPU glitch art 6" loading="lazy">
             
         </div>
       </div>
@@ -293,7 +316,7 @@
         <h2><span>Vibes</span><span class="dropdown-arrow" aria-hidden="true">▼</span></h2>
       </div>
       <div class="dropdown-content" id="just-vibes" role="region" aria-labelledby="just-vibes-label">
-        <div class="spotify-playlists">
+        <div class="spotify-playlists" id="spotify-playlists">
           <div class="spotify-playlists-mask collapsible button-like">
             <div class="button-content">
               <h2>Spotify Playlists</h2>
@@ -302,12 +325,12 @@
           </div>
           <div class="content">
             <div class="spotify-grid">
-              <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4JTeJd9Ck0MdAgyxokg0UU?utm_source=generator&theme=0" width="100%" height="500" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-              <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/3T1nh45G4wDSL3NUaoPjAJ?utm_source=generator&theme=0" width="100%" height="500" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-              <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/621RoGznHvl6KG6iRIIrAt?utm_source=generator&theme=0" width="100%" height="500" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-              <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4Edh406244EXPSTXwF3wOZ?utm_source=generator&theme=0" width="100%" height="500" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-              <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5rH6roxqvyvkDGWTNzWtaw?utm_source=generator&theme=0" width="100%" height="500" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-              <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4ERe5eETmZe1GeKGKsLB9r?utm_source=generator&theme=0" width="100%" height="500" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+              <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4JTeJd9Ck0MdAgyxokg0UU?utm_source=generator&theme=0" width="100%" height="500" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="Spotify Playlist 1"></iframe>
+              <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/3T1nh45G4wDSL3NUaoPjAJ?utm_source=generator&theme=0" width="100%" height="500" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="Spotify Playlist 2"></iframe>
+              <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/621RoGznHvl6KG6iRIIrAt?utm_source=generator&theme=0" width="100%" height="500" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="Spotify Playlist 3"></iframe>
+              <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4Edh406244EXPSTXwF3wOZ?utm_source=generator&theme=0" width="100%" height="500" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="Spotify Playlist 4"></iframe>
+              <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5rH6roxqvyvkDGWTNzWtaw?utm_source=generator&theme=0" width="100%" height="500" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="Spotify Playlist 5"></iframe>
+              <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/4ERe5eETmZe1GeKGKsLB9r?utm_source=generator&theme=0" width="100%" height="500" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy" title="Spotify Playlist 6"></iframe>
             </div>
           </div>
         </div>

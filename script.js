@@ -46,6 +46,10 @@ function expandLeft() {
   leftHeading.classList.add('slide-left');
   leftPanel.classList.add('expanding', 'expanded');
 
+  // Hide hints permanently after first interaction
+  leftPanel.classList.add('hint-hidden');
+  rightPanel.classList.add('hint-hidden');
+
   rightHeading.textContent = HIDE_TEXT
   leftContent.classList.add('visible');
 }
@@ -58,6 +62,10 @@ function expandRight() {
   toggleScroll(true);
   rightHeading.classList.add('slide-right');
   rightPanel.classList.add('expanding', 'expanded');
+
+  // Hide hints permanently after first interaction
+  leftPanel.classList.add('hint-hidden');
+  rightPanel.classList.add('hint-hidden');
 
   leftHeading.textContent = HIDE_TEXT
   rightContent.classList.add('visible');
