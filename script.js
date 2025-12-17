@@ -149,14 +149,12 @@ for (i = 0; i < dropdownHeaders.length; i++) {
 
 // Easter egg for extreme zoom out
 const easterEggMessages = [
-  "Bro... what are you doing way out here?",
-  "You've zoomed out so far you've entered the void.",
-  "Achievement Unlocked: Found Nothing!",
-  "Looking for something? Your social life isn't out here either.",
-  "Congrats! You've discovered the edge of my website. There's nothing here. Go back.",
-  "Did you really think there'd be something out here at this zoom?",
-  "You must be fun at parties. Who zooms out this far?",
-  "Error 404: Purpose for zooming this far not found."
+  "There's nothing out here.",
+  "You've reached the end. It's just me.",
+  "Looking for something?",
+  "This wasn't meant to be found.",
+  "The void thanks you for visiting.",
+  "Some things are better left unzoomed."
 ];
 
 let easterEggOverlay = null;
@@ -169,10 +167,8 @@ function createEasterEggOverlay() {
   easterEggOverlay.id = 'zoom-easter-egg';
   easterEggOverlay.innerHTML = `
     <div class="easter-egg-content">
-      <h1>Woah there.</h1>
-      <hr>
-      <p>${easterEggMessages[Math.floor(Math.random() * easterEggMessages.length)]}</p>
-      <small>Try zooming back in.</small>
+      <p class="easter-egg-message">${easterEggMessages[Math.floor(Math.random() * easterEggMessages.length)]}</p>
+      <p class="easter-egg-hint">Zoom in to return</p>
     </div>
   `;
   document.body.appendChild(easterEggOverlay);
