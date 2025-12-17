@@ -10,18 +10,20 @@
 /* Hint arrow animation for discoverability */
 .panel-hint {
   position: absolute;
-  bottom: 20px;
-  color: rgba(255, 255, 255, 0.6);
+  bottom: 30px;
+  color: #fff;
   font-family: "Lexend", sans-serif;
-  font-size: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 2px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
-  animation: pulse-hint 2s ease-in-out infinite;
+  gap: 8px;
+  animation: pulse-hint 1.5s ease-in-out infinite;
   pointer-events: none;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .left-panel .panel-hint {
@@ -35,7 +37,8 @@
 }
 
 .panel-hint .hint-arrow {
-  font-size: 1.2rem;
+  font-size: 1.8rem;
+  animation: bounce-arrow 1.5s ease-in-out infinite;
 }
 
 .left-panel .panel-hint .hint-arrow {
@@ -48,12 +51,21 @@
 
 @keyframes pulse-hint {
   0%, 100% {
-    opacity: 0.4;
+    opacity: 0.7;
     transform: translateX(-50%) translateY(0);
   }
   50% {
-    opacity: 0.8;
-    transform: translateX(-50%) translateY(-5px);
+    opacity: 1;
+    transform: translateX(-50%) translateY(-8px);
+  }
+}
+
+@keyframes bounce-arrow {
+  0%, 100% {
+    transform: rotate(-90deg) translateX(0);
+  }
+  50% {
+    transform: rotate(-90deg) translateX(5px);
   }
 }
 
@@ -61,14 +73,27 @@
   animation-name: pulse-hint-right;
 }
 
+.right-panel .panel-hint .hint-arrow {
+  animation-name: bounce-arrow-right;
+}
+
 @keyframes pulse-hint-right {
   0%, 100% {
-    opacity: 0.4;
+    opacity: 0.7;
     transform: translateX(50%) translateY(0);
   }
   50% {
-    opacity: 0.8;
-    transform: translateX(50%) translateY(-5px);
+    opacity: 1;
+    transform: translateX(50%) translateY(-8px);
+  }
+}
+
+@keyframes bounce-arrow-right {
+  0%, 100% {
+    transform: rotate(90deg) translateX(0);
+  }
+  50% {
+    transform: rotate(90deg) translateX(5px);
   }
 }
 
