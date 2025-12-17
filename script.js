@@ -132,17 +132,75 @@ for (i = 0; i < dropdownHeaders.length; i++) {
   dropdownHeaders[i].addEventListener("click", function(e) {
     // Prevent event bubbling to panel click handlers
     e.stopPropagation();
-    
+
     // Remove focus to prevent outline
     this.blur();
-    
+
     this.classList.toggle("active");
-    
+
     var targetId = this.getAttribute("data-target");
     var dropdownContent = document.getElementById(targetId);
-    
+
     if (dropdownContent) {
       dropdownContent.classList.toggle("show");
     }
   });
 }
+
+// Easter egg for extreme zoom out
+const easterEggMessages = [
+  "Bro... what are you doing way out here?",
+  "You've zoomed out so far you've entered the void.",
+  "Achievement Unlocked: Found Nothing!",
+  "Looking for something? Your social life isn't out here either.",
+  "Congrats! You've discovered the edge of my website. There's nothing here. Go back.",
+  "Did you really think there'd be something out here at this zoom?",
+  "You must be fun at parties. Who zooms out this far?",
+  "Error 404: Purpose for zooming this far not found."
+];
+
+let easterEggOverlay = null;
+let easterEggShown = false;
+
+function createEasterEggOverlay() {
+  if (easterEggOverlay) return;
+
+  easterEggOverlay = document.createElement('div');
+  easterEggOverlay.id = 'zoom-easter-egg';
+  easterEggOverlay.innerHTML = `
+    <div class="easter-egg-content">
+      <h1>Woah there.</h1>
+      <hr>
+      <p>${easterEggMessages[Math.floor(Math.random() * easterEggMessages.length)]}</p>
+      <small>Try zooming back in.</small>
+    </div>
+  `;
+  document.body.appendChild(easterEggOverlay);
+}
+
+function checkZoomLevel() {
+  // At 30% zoom, innerWidth becomes ~3.3x larger
+  // Your screen: 1920px at 100% → 6400px at 30%
+  // Trigger when innerWidth > 5500 (catches ~35% zoom on 1920px screens)
+  const isZoomedWayOut = window.innerWidth > 5500;
+
+  if (isZoomedWayOut && !easterEggShown) {
+    createEasterEggOverlay();
+    easterEggOverlay.classList.add('visible');
+    easterEggShown = true;
+  } else if (!isZoomedWayOut && easterEggShown) {
+    if (easterEggOverlay) {
+      easterEggOverlay.classList.remove('visible');
+    }
+    easterEggShown = false;
+  }
+}
+
+// Check zoom on resize
+window.addEventListener('resize', checkZoomLevel);
+
+// Poll for Firefox compatibility
+setInterval(checkZoomLevel, 500);
+
+// Initial check
+setTimeout(checkZoomLevel, 100);
