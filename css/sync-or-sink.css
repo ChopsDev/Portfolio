@@ -43,7 +43,7 @@
 }
 
 .sync-or-sink-mask > .button-content a {
-  color: #aaaaaa;
+  color: #ffffff;
   text-decoration: none;
   font-family: "Archivo Black", serif;
   text-align: justify;
@@ -70,11 +70,11 @@
   font-size: 18px;
   letter-spacing: -1px;
   text-align: justify;
-  color: #cccccc;
+  color: #ffffff;
 }
 
 .sync-or-sink > .content a {
-  color: #aaaaaa;
+  color: #ffffff;
   text-decoration: none;
   font-family: "Archivo Black", serif;
   font-size: 25px;
@@ -87,7 +87,7 @@
 }
 
 .sync-or-sink > .content a:hover {
-  text-decoration-color: #aaaaaa;
+  text-decoration-color: #ffffff;
   background-color: rgba(170, 170, 170, 0.2);
   transform: translateY(-1px);
 }
