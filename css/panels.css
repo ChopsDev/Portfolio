@@ -103,6 +103,38 @@
   display: none;
 }
 
+/* Scale down hints on smaller viewports / high zoom */
+@media (max-width: 1200px) {
+  .panel-hint {
+    font-size: 0.75rem;
+    bottom: 20px;
+    gap: 5px;
+  }
+
+  .panel-hint .hint-arrow {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .panel-hint {
+    font-size: 0.65rem;
+    bottom: 15px;
+    letter-spacing: 1px;
+  }
+
+  .panel-hint .hint-arrow {
+    font-size: 1.1rem;
+  }
+}
+
+/* Hide hints entirely when viewport is too narrow */
+@media (max-width: 600px) {
+  .panel-hint {
+    display: none;
+  }
+}
+
 .panel:not(.expanded):hover {
   transform: scale(1.02);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
