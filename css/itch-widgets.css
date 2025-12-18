@@ -1,30 +1,14 @@
 /* Itch.io Widget Styling */
 .itch-widget {
   margin: 15px 0;
-  border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
   position: relative;
-  background: linear-gradient(90deg, #3a3a3a 25%, #444 50%, #3a3a3a 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-@keyframes shimmer {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-/* Stop shimmer when iframe loads */
-.itch-widget:has(iframe:not([loading])) {
-  animation: none;
   background: transparent;
+  transition: transform 0.2s ease;
 }
 
 .itch-widget:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
 .itch-widget iframe {
