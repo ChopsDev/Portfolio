@@ -33,7 +33,7 @@ function closeAll(keepMiddleShrunk = false) {
     }, 150);
   }
 
-  rightHeading.textContent = "OTHER PROJECTS"
+  rightHeading.textContent = "OTHER"
   leftHeading.textContent = "GAME DEV"
 }
 
@@ -107,17 +107,39 @@ rightPanel.addEventListener('click', (e) => {
 
 const coll = document.getElementsByClassName("collapsible");
 
-for (let i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    let content = this.nextElementSibling;
+// Toggle collapsible function
+function toggleCollapsible(element) {
+  element.classList.toggle("active");
+  const isExpanded = element.classList.contains("active");
+  element.setAttribute("aria-expanded", isExpanded);
 
-    while (content) {
-      if (content.nodeName === "DIV" && content.classList.contains("content")) {
-        content.classList.toggle("show");
-        break;
-      }
-      content = content.nextElementSibling;
+  let content = element.nextElementSibling;
+
+  while (content) {
+    if (content.nodeName === "DIV" && content.classList.contains("content")) {
+      content.classList.toggle("show");
+      content.setAttribute("aria-hidden", !isExpanded);
+      break;
+    }
+    content = content.nextElementSibling;
+  }
+}
+
+for (let i = 0; i < coll.length; i++) {
+  // Add accessibility attributes
+  coll[i].setAttribute("role", "button");
+  coll[i].setAttribute("tabindex", "0");
+  coll[i].setAttribute("aria-expanded", "false");
+
+  coll[i].addEventListener("click", function() {
+    toggleCollapsible(this);
+  });
+
+  // Keyboard accessibility - Enter and Space to toggle
+  coll[i].addEventListener("keydown", function(e) {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      toggleCollapsible(this);
     }
   });
 }
@@ -242,3 +264,40 @@ window.addEventListener('resize', function() {
 
 // Initial check
 checkZoomLevel();
+
+// Escape key to close panels
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    if (leftPanel.classList.contains('expanded') || rightPanel.classList.contains('expanded')) {
+      closeAll();
+    }
+  }
+});
+
+// Add keyboard support for panel headings
+leftHeading.setAttribute('role', 'button');
+leftHeading.setAttribute('tabindex', '0');
+rightHeading.setAttribute('role', 'button');
+rightHeading.setAttribute('tabindex', '0');
+
+leftHeading.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    if (rightPanel.classList.contains('expanded')) {
+      closeAll();
+    } else if (!leftPanel.classList.contains('expanded')) {
+      expandLeft();
+    }
+  }
+});
+
+rightHeading.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    if (leftPanel.classList.contains('expanded')) {
+      closeAll();
+    } else if (!rightPanel.classList.contains('expanded')) {
+      expandRight();
+    }
+  }
+});

@@ -5,17 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="Bryn Carter - Indie game developer creating minimalist, responsive games. Explore projects like Stepping Stones, Asteroid Overcharge, and more.">
   <meta name="author" content="Bryn Carter">
+  <meta name="theme-color" content="#333333">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://chopsdev.github.io/Website-Portfolio/">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%23333'/><text x='50' y='68' font-family='Arial Black' font-size='50' fill='white' text-anchor='middle'>BC</text></svg>">
 
   <!-- Open Graph / Social Media -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="Bryn Carter - Game Developer Portfolio">
   <meta property="og:description" content="Indie game developer creating minimalist, responsive games. Everything starts as a bad prototype.">
   <meta property="og:url" content="https://chopsdev.github.io/Website-Portfolio/">
+  <meta property="og:site_name" content="Bryn Carter Portfolio">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Bryn Carter - Game Developer Portfolio">
   <meta name="twitter:description" content="Indie game developer creating minimalist, responsive games.">
+  <meta name="twitter:creator" content="@chopsdev">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Bryn Carter",
+    "url": "https://chopsdev.github.io/Website-Portfolio/",
+    "jobTitle": "Indie Game Developer",
+    "sameAs": [
+      "https://github.com/ChopsDev",
+      "https://chopsdev.itch.io/",
+      "https://www.youtube.com/@chops."
+    ]
+  }
+  </script>
 
   <title>Bryn Carter | Game Developer Portfolio</title>
   <link rel="stylesheet" href="css/base.css">
@@ -32,14 +56,19 @@
   <link rel="stylesheet" href="css/spotify.css">
   <link rel="stylesheet" href="css/mobile.css">
 
+  <!-- Font preconnect for faster loading -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <!-- Google Fonts - Only loading fonts that are actually used -->
-  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Lexend:wght@100..900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Lexend:wght@100..900&display=swap"></noscript>
 
 </head>
 <body class="no-scroll">
+
+<!-- Skip to main content for accessibility -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
 
 <div class="container">
   <div class="panel left-panel">
@@ -232,7 +261,7 @@
     </div>
   </div>
   
-  <div class="middle">
+  <div class="middle" id="main-content" role="main">
     <div class="landing-page">
       <div class="landing-left">
         <h1>Bryn Carter</h1>
@@ -246,23 +275,23 @@
           </p>
           <br>
           <p>
-            I enjoy playing around with ideas I come up with and turning them into small,
+            I enjoy playing around with ideas I come up with and turning them into small
             experiences that anyone can pick up and enjoy. Each game I make is a way for me
             to learn, push boundaries, and share something fun with anyone that wants to try them.
           </p>
         </div>
 
         <div class="contact-links">
-          <a href="https://github.com/ChopsDev" target="_blank" rel="noopener" class="contact-link" aria-label="GitHub">
+          <a href="https://github.com/ChopsDev" target="_blank" rel="noopener" class="contact-link" aria-label="GitHub" title="View my GitHub">
             <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
           </a>
-          <a href="https://chopsdev.itch.io/" target="_blank" rel="noopener" class="contact-link" aria-label="itch.io">
+          <a href="https://chopsdev.itch.io/" target="_blank" rel="noopener" class="contact-link" aria-label="itch.io" title="Play my games on itch.io">
             <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M3.13 1.338C2.08 1.96.02 4.328 0 4.95v1.03c0 1.303 1.22 2.45 2.325 2.45 1.33 0 2.436-1.102 2.436-2.41 0 1.308 1.07 2.41 2.4 2.41 1.328 0 2.362-1.102 2.362-2.41 0 1.308 1.137 2.41 2.466 2.41h.024c1.33 0 2.466-1.102 2.466-2.41 0 1.308 1.034 2.41 2.363 2.41 1.33 0 2.4-1.102 2.4-2.41 0 1.308 1.106 2.41 2.435 2.41C22.78 8.43 24 7.282 24 5.98V4.95c-.02-.62-2.082-2.99-3.13-3.612-3.253-.114-5.508-.134-8.87-.134-3.362 0-5.617.02-8.87.134zm6.59 6.71c-.463.503-1.12.822-1.858.822-.74 0-1.396-.32-1.86-.823-.468.503-1.124.823-1.863.823-.156 0-.308-.014-.455-.042v8.16c0 2.756 1.4 4.674 4.46 4.674h7.81c3.06 0 4.46-1.918 4.46-4.675v-8.16c-.147.028-.3.043-.456.043-.74 0-1.395-.32-1.862-.823-.466.503-1.12.822-1.86.822-.74 0-1.395-.32-1.86-.822-.463.503-1.12.822-1.857.822-.738 0-1.394-.32-1.858-.822zm-1.028 4.39h6.616c.076 0 .14.067.14.152v5.12c0 .085-.064.153-.14.153H8.692c-.076 0-.14-.068-.14-.153v-5.12c0-.085.064-.152.14-.152z"/></svg>
           </a>
-          <a href="https://www.youtube.com/@chops." target="_blank" rel="noopener" class="contact-link" aria-label="YouTube">
+          <a href="https://www.youtube.com/@chops." target="_blank" rel="noopener" class="contact-link" aria-label="YouTube" title="Watch my devlogs">
             <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
           </a>
-          <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="contact-link" aria-label="Email">
+          <a href="mailto:contact@chopsdev.com" class="contact-link" aria-label="Email" title="Send me an email">
             <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
           </a>
         </div>
