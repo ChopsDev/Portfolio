@@ -33,7 +33,7 @@ function closeAll(keepMiddleShrunk = false) {
     }, 150);
   }
 
-  rightHeading.textContent = "OTHER PROJECTS"
+  rightHeading.textContent = "OTHER"
   leftHeading.textContent = "GAME DEV"
 }
 
