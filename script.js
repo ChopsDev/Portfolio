@@ -205,6 +205,7 @@ const easterEggMessages = [
 
 let easterEggOverlay = null;
 let easterEggShown = false;
+let lastWidth = window.innerWidth;
 
 function createEasterEggOverlay() {
   if (easterEggOverlay) return;
@@ -220,11 +221,22 @@ function createEasterEggOverlay() {
   document.body.appendChild(easterEggOverlay);
 }
 
+function triggerReactivePulse() {
+  if (!easterEggOverlay) return;
+  const message = easterEggOverlay.querySelector('.easter-egg-message');
+  if (message) {
+    message.classList.remove('reactive');
+    void message.offsetWidth;
+    message.classList.add('reactive');
+  }
+}
+
 function checkZoomLevel() {
   // At 30% zoom, innerWidth becomes ~3.3x larger
   // Your screen: 1920px at 100% → 6400px at 30%
   // Trigger when innerWidth > 3800 (catches ~50% zoom on 1920px screens)
   const isZoomedWayOut = window.innerWidth > 3800;
+  const widthChanged = Math.abs(window.innerWidth - lastWidth) > 50;
 
   if (isZoomedWayOut && !easterEggShown) {
     createEasterEggOverlay();
@@ -235,14 +247,18 @@ function checkZoomLevel() {
       easterEggOverlay.classList.remove('visible');
     }
     easterEggShown = false;
+  } else if (isZoomedWayOut && easterEggShown && widthChanged) {
+    triggerReactivePulse();
   }
+
+  lastWidth = window.innerWidth;
 }
 
 // Check zoom on resize (debounced for performance)
 let resizeTimeout;
 window.addEventListener('resize', function() {
   clearTimeout(resizeTimeout);
-  resizeTimeout = setTimeout(checkZoomLevel, 100);
+  resizeTimeout = setTimeout(checkZoomLevel, 30);
 });
 
 // Initial check

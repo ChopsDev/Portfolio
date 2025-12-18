@@ -15,28 +15,6 @@ html, body {
   height: 100%;
 }
 
-/* Skip to content link for accessibility */
-.skip-link {
-  position: absolute;
-  top: -100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--focus-color);
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0 0 8px 8px;
-  text-decoration: none;
-  font-family: "Lexend", sans-serif;
-  font-weight: 500;
-  z-index: 100000;
-  transition: top 0.2s ease;
-}
-
-.skip-link:focus {
-  top: 0;
-  outline: none;
-}
-
 /* Global focus styles for accessibility */
 *:focus-visible {
   outline: 2px solid var(--focus-color);
@@ -422,7 +400,6 @@ hr {
 @media print {
   .panel,
   .panel-hint,
-  .skip-link,
   #zoom-easter-egg {
     display: none !important;
   }
@@ -566,6 +543,17 @@ hr {
   letter-spacing: 0;
   animation: breathe 6s ease-in-out infinite;
   text-shadow: 0 0 60px rgba(255, 255, 255, 0.08);
+  transition: text-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.easter-egg-message.reactive {
+  animation: reactivePulse 0.25s ease-out;
+}
+
+@keyframes reactivePulse {
+  0% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.04); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.9; }
 }
 
 @keyframes breathe {
