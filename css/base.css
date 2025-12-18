@@ -517,7 +517,8 @@ hr {
   z-index: 99999;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 1s ease;
+  transform: scale(1.05);
+  transition: opacity 1.5s ease, transform 1.5s ease, visibility 0s 1.5s;
   overflow: hidden;
 }
 
@@ -544,6 +545,8 @@ hr {
 #zoom-easter-egg.visible {
   opacity: 1;
   visibility: visible;
+  transform: scale(1);
+  transition: opacity 1s ease, transform 1s ease, visibility 0s;
 }
 
 .easter-egg-content {

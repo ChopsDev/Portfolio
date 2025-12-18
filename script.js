@@ -197,7 +197,7 @@ const easterEggMessages = [
   "The void thanks you for visiting.",
   "Some things are better left unzoomed.",
   "You went too far.",
-  "There’s no reason to be here.",
+  "There’s no reason to be zoomed out here.",
   "This is not part of the experience.",
   "You found the quiet place.",
   "You’re not meant to be out this far.",
