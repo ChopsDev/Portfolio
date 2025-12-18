@@ -526,14 +526,23 @@ hr {
   transition: opacity 1s ease, transform 1s ease, visibility 0s;
 }
 
-#zoom-easter-egg.reactive {
-  animation: bgPulse 0.15s ease-out;
+#zoom-easter-egg.reactive::after {
+  animation: bgPulse 0.2s ease-out;
+}
+
+#zoom-easter-egg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+  opacity: 0;
+  pointer-events: none;
 }
 
 @keyframes bgPulse {
-  0% { background: #080808; }
-  50% { background: #101010; }
-  100% { background: #080808; }
+  0% { opacity: 0; transform: scale(0.8); }
+  50% { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.5); }
 }
 
 .easter-egg-content {
