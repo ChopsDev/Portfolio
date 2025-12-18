@@ -526,6 +526,16 @@ hr {
   transition: opacity 1s ease, transform 1s ease, visibility 0s;
 }
 
+#zoom-easter-egg.reactive {
+  animation: bgPulse 0.15s ease-out;
+}
+
+@keyframes bgPulse {
+  0% { background: #080808; }
+  50% { background: #101010; }
+  100% { background: #080808; }
+}
+
 .easter-egg-content {
   text-align: center;
   padding: 4rem;

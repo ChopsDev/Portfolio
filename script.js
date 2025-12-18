@@ -224,6 +224,11 @@ function createEasterEggOverlay() {
 function triggerReactivePulse() {
   if (!easterEggOverlay) return;
   const message = easterEggOverlay.querySelector('.easter-egg-message');
+
+  easterEggOverlay.classList.remove('reactive');
+  void easterEggOverlay.offsetWidth;
+  easterEggOverlay.classList.add('reactive');
+
   if (message) {
     message.classList.remove('reactive');
     void message.offsetWidth;
