@@ -193,31 +193,14 @@ for (let i = 0; i < dropdownHeaders.length; i++) {
 // Easter egg quotes
 const easterEggMessages = [
   "There's nothing out here.",
-  "You've reached the end. It's just me.",
   "Looking for something?",
-  "This wasn't meant to be found.",
   "The void thanks you for visiting.",
   "Some things are better left unzoomed.",
   "You went too far.",
-  "It noticed you first.",
-  "This place doesn’t have a name.",
-  "You weren’t invited.",
   "There’s no reason to be here.",
-  "You can leave. It won’t stop you.",
-  "You’re seeing behind the curtain.",
   "This is not part of the experience.",
-  "Nothing ends here. It just watches.",
-  "You found the quiet part.",
-  "This space was supposed to stay empty.",
-  "It’s been waiting longer than you think.",
-  "You’re closer than you should be.",
-  "This isn’t content.",
-  "You crossed the line. Gently.",
-  "There’s no reward for this.",
-  "It doesn’t speak often.",
-  "You’re not meant to interact with this.",
-  "Some distances aren’t physical.",
-  "Now that you’ve seen it, zooming back won’t help."
+  "You found the quiet place.",
+  "You’re not meant to be out this far.",
 ];
 
 let easterEggOverlay = null;
@@ -240,8 +223,8 @@ function createEasterEggOverlay() {
 function checkZoomLevel() {
   // At 30% zoom, innerWidth becomes ~3.3x larger
   // Your screen: 1920px at 100% → 6400px at 30%
-  // Trigger when innerWidth > 5500 (catches ~35% zoom on 1920px screens)
-  const isZoomedWayOut = window.innerWidth > 5500;
+  // Trigger when innerWidth > 3800 (catches ~50% zoom on 1920px screens)
+  const isZoomedWayOut = window.innerWidth > 3800;
 
   if (isZoomedWayOut && !easterEggShown) {
     createEasterEggOverlay();
@@ -274,14 +257,13 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-// Add keyboard support for panel headings
-leftHeading.setAttribute('role', 'button');
-leftHeading.setAttribute('tabindex', '0');
-rightHeading.setAttribute('role', 'button');
-rightHeading.setAttribute('tabindex', '0');
+// Add keyboard support for panels
+leftPanel.setAttribute('tabindex', '0');
+rightPanel.setAttribute('tabindex', '0');
 
-leftHeading.addEventListener('keydown', function(e) {
+leftPanel.addEventListener('keydown', function(e) {
   if (e.key === 'Enter' || e.key === ' ') {
+    if (e.target.closest('.collapsible, .dropdown-header, .content')) return;
     e.preventDefault();
     if (rightPanel.classList.contains('expanded')) {
       closeAll();
@@ -291,8 +273,9 @@ leftHeading.addEventListener('keydown', function(e) {
   }
 });
 
-rightHeading.addEventListener('keydown', function(e) {
+rightPanel.addEventListener('keydown', function(e) {
   if (e.key === 'Enter' || e.key === ' ') {
+    if (e.target.closest('.collapsible, .dropdown-header, .content')) return;
     e.preventDefault();
     if (leftPanel.classList.contains('expanded')) {
       closeAll();
