@@ -1,295 +1,556 @@
-/* 
-STANDARDIZED PANEL TEMPLATE
-Use this as a reference when creating new panels to ensure consistency
+/*
+################################################################################
+##                                                                            ##
+##                      REUSABLE PANEL ITEM SYSTEM                            ##
+##                                                                            ##
+##                    Documentation & Quick Start Guide                       ##
+##                                                                            ##
+################################################################################
+
+TABLE OF CONTENTS
+=================
+1. Overview
+2. Quick Start (Copy & Paste)
+3. Using Preset Themes
+4. Custom Colors & Variables
+5. Layout Variations
+6. Complete Examples
+7. Troubleshooting
+
+================================================================================
+1. OVERVIEW
+================================================================================
+
+This system lets you add new project panels WITHOUT creating a new CSS file.
+Instead of writing 100+ lines of CSS for each project, you just:
+
+  1. Copy the HTML template
+  2. Pick a theme OR set custom colors
+  3. Add your content
+
+The JavaScript (collapsible behavior) works automatically - no changes needed.
+
+
+================================================================================
+2. QUICK START (Copy & Paste)
+================================================================================
+
+STEP 1: Find where you want to add the panel in index.html
+         (inside a .dropdown-content section)
+
+STEP 2: Copy this template and paste it there:
+
+--------------------------------------------------------------------------------
+
+<div class="panel-item theme-blue">
+  <div class="panel-item-mask collapsible button-like">
+    <img src="images/your-logo.png" alt="Project logo">
+    <div class="button-content">
+      <h2>Project Name</h2>
+      <h3>2025</h3>
+    </div>
+  </div>
+  <div class="content">
+    <p>Write your project description here.</p>
+    <br>
+    <p>Add more paragraphs as needed.</p>
+    <br>
+    <p><a href="https://your-link.com">Check it out</a></p>
+  </div>
+</div>
+
+--------------------------------------------------------------------------------
+
+STEP 3: Change "theme-blue" to your preferred theme (see Section 3)
+
+STEP 4: Update the content (image, title, subtitle, description, links)
+
+Done! Refresh the page to see your new panel.
+
+
+================================================================================
+3. USING PRESET THEMES
+================================================================================
+
+Themes automatically set the accent color and background gradients.
+Just add the theme class to your panel-item div:
+
+  <div class="panel-item theme-red">
+
+AVAILABLE THEMES:
+-----------------
+  theme-red      - Red accent (#F90000) - matches Stepping Stones
+  theme-blue     - Teal accent (#4ECDC4)
+  theme-purple   - Purple accent (#9B59B6)
+  theme-green    - Green accent (#2ECC71)
+  theme-orange   - Orange accent (#E67E22)
+  theme-pink     - Pink accent (#E91E63)
+  theme-yellow   - Yellow accent (#F1C40F)
+  theme-gray     - Gray accent (#95A5A6) - neutral/minimal
+
+
+================================================================================
+4. CUSTOM COLORS & VARIABLES
+================================================================================
+
+For full control, use inline CSS variables instead of a theme class.
+
+BASIC (just change accent color):
+---------------------------------
+<div class="panel-item" style="--accent: #FF6B6B; --accent-rgb: 255, 107, 107;">
+
+Note: You need BOTH --accent (hex) and --accent-rgb (comma-separated RGB values)
+      The RGB version is used for transparent backgrounds on links.
+
+ADVANCED (customize everything):
+--------------------------------
+<div class="panel-item" style="
+  --accent: #FF6B6B;
+  --accent-rgb: 255, 107, 107;
+  --mask-bg: linear-gradient(141deg, #1a1a2a, #2a2a3a, #3a3a4a);
+  --content-bg: linear-gradient(323deg, #0a0a1a, #1a1a2a);
+  --font: 'Lexend', sans-serif;
+">
+
+ALL AVAILABLE VARIABLES:
+------------------------
+  --accent        Accent color for links (hex, e.g., #FF6B6B)
+  --accent-rgb    Same color as RGB (e.g., 255, 107, 107)
+  --mask-bg       Background gradient for the clickable header
+  --content-bg    Background gradient for the expanded content area
+  --font          Font family (default: "Archivo Black", serif)
+
+
+================================================================================
+5. LAYOUT VARIATIONS
+================================================================================
+
+NO LOGO/IMAGE (text-only header):
+---------------------------------
+Remove the <img> tag and add "no-image" class to the mask:
+
+<div class="panel-item-mask no-image collapsible button-like">
+  <div class="button-content">
+    <h2>Project Name</h2>
+    <h3>Subtitle</h3>
+  </div>
+</div>
+
+
+RIGHT-ALIGNED TEXT:
+-------------------
+Add "text-right" class to the mask:
+
+<div class="panel-item-mask text-right collapsible button-like">
+
+
+WITH PREVIEW IMAGES (side-by-side layout):
+------------------------------------------
+Use .flex-container to put images next to text:
+
+<div class="content">
+  <div class="flex-container">
+    <div>
+      <img src="images/preview1.png" alt="Preview 1">
+    </div>
+    <div>
+      <img src="images/preview2.png" alt="Preview 2">
+    </div>
+    <div>
+      <p>Your description text goes here.</p>
+      <br>
+      <p><a href="#">Link</a></p>
+    </div>
+  </div>
+</div>
+
+
+IMAGE GALLERY (grid of images):
+-------------------------------
+For multiple images displayed as a grid, add the "image-gallery" class:
+
+<div class="content">
+  <p>Description text.</p>
+  <div class="image-gallery">
+    <img src="images/img1.png" alt="Image 1">
+    <img src="images/img2.png" alt="Image 2">
+    <img src="images/img3.png" alt="Image 3">
+    <img src="images/img4.png" alt="Image 4">
+  </div>
+</div>
+
+
+WITH ITCH.IO EMBED:
+-------------------
+Add the itch widget inside your content:
+
+<div class="content">
+  <p>Your description.</p>
+  <br>
+  <div class="itch-widget">
+    <iframe frameborder="0" src="https://itch.io/embed/YOUR_GAME_ID"
+            width="552" height="167" loading="lazy">
+      <a href="https://you.itch.io/your-game">Game Name</a>
+    </iframe>
+  </div>
+</div>
+
+
+================================================================================
+6. COMPLETE EXAMPLES
+================================================================================
+
+EXAMPLE A: Simple project with theme
+------------------------------------
+<div class="panel-item theme-green">
+  <div class="panel-item-mask collapsible button-like">
+    <img src="images/my-game-logo.png" alt="My Game logo">
+    <div class="button-content">
+      <h2>My Game</h2>
+      <h3>2025</h3>
+    </div>
+  </div>
+  <div class="content">
+    <p>A simple platformer about jumping over things.</p>
+    <br>
+    <p><a href="https://itch.io/my-game">Play on itch.io</a></p>
+  </div>
+</div>
+
+
+EXAMPLE B: Project with custom colors and preview images
+--------------------------------------------------------
+<div class="panel-item" style="--accent: #00CED1; --accent-rgb: 0, 206, 209;">
+  <div class="panel-item-mask collapsible button-like">
+    <img src="images/project-logo.png" alt="Project logo">
+    <div class="button-content">
+      <h2>Cool Project</h2>
+      <h3>Work in Progress</h3>
+    </div>
+  </div>
+  <div class="content">
+    <div class="flex-container">
+      <div>
+        <img src="images/screenshot1.png" alt="Screenshot">
+      </div>
+      <div>
+        <p>This project explores procedural generation in a roguelike context.</p>
+        <br>
+        <p>Built with Unity and C#.</p>
+        <br>
+        <p><a href="https://github.com/you/project">View on GitHub</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+EXAMPLE C: Text-only header (no logo)
+-------------------------------------
+<div class="panel-item theme-purple">
+  <div class="panel-item-mask no-image collapsible button-like">
+    <div class="button-content">
+      <h2>Music Experiments</h2>
+      <h3>Ongoing</h3>
+    </div>
+  </div>
+  <div class="content">
+    <p>Various audio experiments and soundtracks I've created.</p>
+  </div>
+</div>
+
+
+EXAMPLE D: Art gallery with multiple images
+-------------------------------------------
+<div class="panel-item theme-pink">
+  <div class="panel-item-mask no-image collapsible button-like">
+    <div class="button-content">
+      <h2>Pixel Art Collection</h2>
+      <h3>2024 - 2025</h3>
+    </div>
+  </div>
+  <div class="content">
+    <p>A collection of pixel art pieces I've created for various projects.</p>
+    <div class="image-gallery">
+      <img src="images/art1.png" alt="Art piece 1">
+      <img src="images/art2.png" alt="Art piece 2">
+      <img src="images/art3.png" alt="Art piece 3">
+      <img src="images/art4.png" alt="Art piece 4">
+    </div>
+  </div>
+</div>
+
+
+================================================================================
+7. TROUBLESHOOTING
+================================================================================
+
+PANEL DOESN'T EXPAND WHEN CLICKED:
+----------------------------------
+- Make sure you have "collapsible" class on the mask div
+- Make sure the .content div is the NEXT sibling after the mask
+- Check browser console for JavaScript errors
+
+COLORS NOT SHOWING:
+-------------------
+- Verify panel-template.css is linked in index.html
+- Check that theme class is spelled correctly (theme-red, not red)
+- For custom colors, make sure you set BOTH --accent AND --accent-rgb
+
+LINK COLORS WRONG:
+------------------
+- The --accent-rgb must match --accent but as RGB values
+- Example: --accent: #FF0000 needs --accent-rgb: 255, 0, 0
+
+LAYOUT LOOKS BROKEN:
+--------------------
+- Make sure flex-container divs are structured correctly
+- The last div in flex-container gets 2x width (for text)
+- On mobile (<768px), everything stacks vertically automatically
+
+FONTS NOT LOADING:
+------------------
+- Custom fonts must be loaded in index.html via Google Fonts
+- Default font (Archivo Black) is already loaded
+
+
+================================================================================
+
+For reference, see existing panels in index.html:
+- Stepping Stones, Tilting Game, etc. use the OLD system (separate CSS files)
+- Example Project in "Toys/Prototypes" uses the NEW system (this file)
+
+Both systems work side by side - use whichever you prefer!
+
+################################################################################
 */
 
-/* MASK (Button/Header) Structure */
-.panel-name-mask {
-  /* Standard layout properties - DO NOT CHANGE */
+/* ============================================
+   BASE PANEL ITEM STYLES
+   ============================================ */
+
+/* Default CSS Variables */
+.panel-item {
+  --accent: #4ECDC4;
+  --accent-rgb: 78, 205, 196;
+  --mask-bg: linear-gradient(141deg, #2a2a2a, #3a3a3a, #4a4a4a);
+  --content-bg: linear-gradient(323deg, #1a1a1a, #2a2a2a);
+  --font: "Archivo Black", serif;
+}
+
+/* MASK (Clickable Header) */
+.panel-item-mask {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   max-width: 100%;
   overflow: hidden;
   border-radius: 12px 12px 0 0;
-  
-  /* Customizable background - Change gradient colors as needed */
-  background: linear-gradient(141deg, #333333, #555555, #777777);
+  background: var(--mask-bg);
 }
 
-.panel-name-mask img {
-  /* Standard image sizing - DO NOT CHANGE */
+.panel-item-mask img {
   width: clamp(100px, 15vw, 175px);
   height: auto;
   margin-right: 2.75vw;
   margin-left: 1.75vw;
 }
 
-.panel-name-mask > .button-content {
-  /* Standard content layout - DO NOT CHANGE */
+.panel-item-mask > .button-content {
   flex: 1;
   text-align: left;
   display: flex;
   flex-direction: column;
   gap: 0.2em;
-  
-  /* Customizable font - Change as needed */
-  font-family: "Lexend", sans-serif;
+  font-family: var(--font);
 }
 
-.panel-name-mask > .button-content h2,
-.panel-name-mask > .button-content h3,
-.panel-name-mask > .button-content a {
-  /* Standard reset - DO NOT CHANGE */
+.panel-item-mask > .button-content h2,
+.panel-item-mask > .button-content h3,
+.panel-item-mask > .button-content a {
   margin: 0;
   padding: 0;
   line-height: 1;
 }
 
-.panel-name-mask > .button-content h2 {
-  /* Standard sizing - DO NOT CHANGE */
+.panel-item-mask > .button-content h2 {
   font-size: clamp(4px, 6vw, 95px);
-  /* Customizable styling */
   font-weight: 400;
   color: #ffffff;
 }
 
-.panel-name-mask > .button-content h3 {
-  /* Standard sizing - DO NOT CHANGE */
+.panel-item-mask > .button-content h3 {
   font-size: clamp(2px, 2.5vw, 35px);
-  /* Customizable styling */
   font-weight: 400;
   color: #cccccc;
 }
 
-.panel-name-mask > .button-content a {
-  /* Standard sizing - DO NOT CHANGE */
+.panel-item-mask > .button-content a {
   font-size: clamp(2px, 2.5vw, 35px);
-  /* Customizable styling */
-  color: #ffffff;
+  color: var(--accent);
   text-decoration: none;
   font-weight: 200;
 }
 
-/* CONTENT Structure */
-.panel-name > .content {
-  /* Standard border radius - DO NOT CHANGE */
+/* CONTENT (Expandable Area) */
+.panel-item > .content {
   border-radius: 0 0 12px 12px;
-  /* Customizable background - Change gradient colors as needed */
-  background: linear-gradient(323deg, #333333, #555555);
+  background: var(--content-bg);
 }
 
-.panel-name > .content.show {
-  /* Standard padding - DO NOT CHANGE */
-  padding: 2% 2% 2% 2%;
+.panel-item > .content.show {
+  padding: 2%;
 }
 
-.panel-name > .content p {
-  /* Standard text properties - DO NOT CHANGE */
+.panel-item > .content p {
   text-align: justify;
   color: #ffffff;
-  /* Customizable font styling */
-  font-family: "Lexend", sans-serif;
+  font-family: var(--font);
   font-size: 18px;
   letter-spacing: -1px;
 }
 
-.panel-name > .content a {
-  /* Standard link styling - DO NOT CHANGE */
+.panel-item > .content a {
   text-decoration: none;
   padding: 2px 6px;
   border-radius: 4px;
   transition: all 0.2s ease;
   display: inline-block;
-  /* Customizable styling */
-  color: #ffffff;
-  font-family: "Lexend", sans-serif;
+  color: var(--accent);
+  font-family: var(--font);
   font-size: 25px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(var(--accent-rgb), 0.1);
 }
 
-.panel-name > .content a:hover {
-  /* Standard hover effects - DO NOT CHANGE */
+.panel-item > .content a:hover {
   transform: translateY(-1px);
-  /* Customizable hover styling */
-  text-decoration-color: #ffffff;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(var(--accent-rgb), 0.2);
 }
 
-/* FLEX CONTAINER (if using images) */
-.panel-name > .content > .flex-container {
-  /* Standard flex layout - DO NOT CHANGE */
+/* FLEX CONTAINER (Images + Text Layout) */
+.panel-item > .content > .flex-container {
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
 }
 
-.panel-name > .content > .flex-container > div {
-  /* Standard flex distribution - DO NOT CHANGE */
+.panel-item > .content > .flex-container > div {
   flex: 1;
 }
 
-.panel-name > .content > .flex-container > div img {
-  /* Standard image scaling - DO NOT CHANGE */
+.panel-item > .content > .flex-container > div img {
   max-width: 100%;
   height: auto;
 }
 
-.panel-name > .content > .flex-container > div:last-child {
-  /* Standard text container sizing - DO NOT CHANGE */
+.panel-item > .content > .flex-container > div:last-child {
   flex: 2;
   text-align: left;
 }
 
-/* RESPONSIVE LAYOUT - DO NOT CHANGE */
+/* Responsive Layout */
 @media (max-width: 768px) {
-  .panel-name > .content > .flex-container {
+  .panel-item > .content > .flex-container {
     flex-direction: column;
     align-items: center;
   }
 
-  .panel-name > .content > .flex-container > div {
+  .panel-item > .content > .flex-container > div {
     width: 100%;
     text-align: center;
   }
 }
 
-/* 
-SPECIAL FEATURES (Optional)
-
-Image Mask Functionality (like asteroid-overcharge):
-.panel-name-mask.has-image {
-  background-image: var(--mask-image), linear-gradient(141deg, #333333, #555555, #777777);
-  background-size: cover, cover;
-  background-position: center, center;
-  background-blend-mode: overlay;
+/* ============================================
+   MODIFIER: NO IMAGE (Text-only mask)
+   ============================================ */
+.panel-item-mask.no-image > .button-content {
+  padding-left: 2vw;
 }
 
-Right-aligned text (like GPU panel):
-.panel-name-mask > .button-content {
+/* ============================================
+   MODIFIER: RIGHT-ALIGNED TEXT
+   ============================================ */
+.panel-item-mask.text-right > .button-content {
   text-align: right;
+  padding-right: 2vw;
   padding-bottom: 2.5vh;
 }
 
-Custom image sizing (like GPU panel):
-.panel-name > .content > img {
+/* ============================================
+   MODIFIER: IMAGE GALLERY (for content)
+   ============================================ */
+.panel-item > .content .image-gallery img {
   width: 47.5%;
-  height: 47.5%;
+  height: auto;
   object-fit: contain;
   margin: 1%;
 }
-*/
 
-/* PLACEHOLDER PROJECT - Ready to use example */
-.placeholder-project-mask {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  max-width: 100%;
-  overflow: hidden;
-  border-radius: 12px 12px 0 0;
-  background: linear-gradient(141deg, #4a4a4a, #666666, #888888);
+/* ============================================
+   PRESET THEME CLASSES
+   ============================================ */
+
+/* Red Theme */
+.panel-item.theme-red {
+  --accent: #F90000;
+  --accent-rgb: 249, 0, 0;
+  --mask-bg: linear-gradient(141deg, #191919, #191919, #2e1919);
+  --content-bg: linear-gradient(323deg, rgba(48, 0, 0, 1) 14%, rgba(0, 0, 0, 1) 89%);
 }
 
-.placeholder-project-mask img {
-  width: clamp(100px, 15vw, 175px);
-  height: auto;
-  margin-right: 2.75vw;
-  margin-left: 1.75vw;
+/* Blue/Teal Theme */
+.panel-item.theme-blue {
+  --accent: #4ECDC4;
+  --accent-rgb: 78, 205, 196;
+  --mask-bg: linear-gradient(141deg, #1a2a2a, #2a3a3a, #3a4a4a);
+  --content-bg: linear-gradient(323deg, #0a1a1a, #1a2a2a);
 }
 
-.placeholder-project-mask > .button-content {
-  flex: 1;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  gap: 0.2em;
-  font-family: "Lexend", sans-serif;
+/* Purple Theme */
+.panel-item.theme-purple {
+  --accent: #9B59B6;
+  --accent-rgb: 155, 89, 182;
+  --mask-bg: linear-gradient(141deg, #1a1a2a, #2a2a3a, #3a3a4a);
+  --content-bg: linear-gradient(323deg, #0a0a1a, #1a1a2a);
 }
 
-.placeholder-project-mask > .button-content h2,
-.placeholder-project-mask > .button-content h3,
-.placeholder-project-mask > .button-content a {
-  margin: 0;
-  padding: 0;
-  line-height: 1;
+/* Green Theme */
+.panel-item.theme-green {
+  --accent: #2ECC71;
+  --accent-rgb: 46, 204, 113;
+  --mask-bg: linear-gradient(141deg, #1a2a1a, #2a3a2a, #3a4a3a);
+  --content-bg: linear-gradient(323deg, #0a1a0a, #1a2a1a);
 }
 
-.placeholder-project-mask > .button-content h2 {
-  font-size: clamp(4px, 6vw, 95px);
-  font-weight: 600;
-  color: #ffffff;
+/* Orange Theme */
+.panel-item.theme-orange {
+  --accent: #E67E22;
+  --accent-rgb: 230, 126, 34;
+  --mask-bg: linear-gradient(141deg, #2a1a0a, #3a2a1a, #4a3a2a);
+  --content-bg: linear-gradient(323deg, #1a0a00, #2a1a0a);
 }
 
-.placeholder-project-mask > .button-content h3 {
-  font-size: clamp(2px, 2.5vw, 35px);
-  font-weight: 400;
-  color: #e0e0e0;
+/* Pink Theme */
+.panel-item.theme-pink {
+  --accent: #E91E63;
+  --accent-rgb: 233, 30, 99;
+  --mask-bg: linear-gradient(141deg, #2a1a1a, #3a2a2a, #4a3a3a);
+  --content-bg: linear-gradient(323deg, #1a0a0a, #2a1a1a);
 }
 
-.placeholder-project > .content {
-  border-radius: 0 0 12px 12px;
-  background: linear-gradient(323deg, #3a3a3a, #555555);
+/* Yellow Theme */
+.panel-item.theme-yellow {
+  --accent: #F1C40F;
+  --accent-rgb: 241, 196, 15;
+  --mask-bg: linear-gradient(141deg, #2a2a1a, #3a3a2a, #4a4a3a);
+  --content-bg: linear-gradient(323deg, #1a1a0a, #2a2a1a);
 }
 
-.placeholder-project > .content.show {
-  padding: 2% 2% 2% 2%;
-}
-
-.placeholder-project > .content p {
-  text-align: justify;
-  color: #ffffff;
-  font-family: "Lexend", sans-serif;
-  font-size: 18px;
-  letter-spacing: -1px;
-}
-
-.placeholder-project > .content a {
-  text-decoration: none;
-  padding: 2px 6px;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-  display: inline-block;
-  color: #a0a0ff;
-  font-family: "Lexend", sans-serif;
-  font-size: 18px;
-  background-color: rgba(160, 160, 255, 0.1);
-}
-
-.placeholder-project > .content a:hover {
-  transform: translateY(-1px);
-  text-decoration-color: #a0a0ff;
-  background-color: rgba(160, 160, 255, 0.2);
-}
-
-.placeholder-project > .content > .flex-container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
-}
-
-.placeholder-project > .content > .flex-container > div {
-  flex: 1;
-}
-
-.placeholder-project > .content > .flex-container > div img {
-  max-width: 100%;
-  height: auto;
-}
-
-.placeholder-project > .content > .flex-container > div:last-child {
-  flex: 2;
-  text-align: left;
-}
-
-@media (max-width: 768px) {
-  .placeholder-project > .content > .flex-container {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .placeholder-project > .content > .flex-container > div {
-    width: 100%;
-    text-align: center;
-  }
+/* Gray/Neutral Theme */
+.panel-item.theme-gray {
+  --accent: #95A5A6;
+  --accent-rgb: 149, 165, 166;
+  --mask-bg: linear-gradient(141deg, #2a2a2a, #3a3a3a, #4a4a4a);
+  --content-bg: linear-gradient(323deg, #1a1a1a, #2a2a2a);
 }
