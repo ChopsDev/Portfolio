@@ -725,3 +725,99 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   letter-spacing: 4px;
   text-transform: uppercase;
 }
+
+/* Konami Code Easter Egg */
+.konami-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: konamiFadeIn 0.3s ease-out;
+}
+
+.konami-overlay.fade-out {
+  animation: konamiFadeOut 0.5s ease-out forwards;
+}
+
+@keyframes konamiFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes konamiFadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.konami-content {
+  text-align: center;
+  animation: konamiPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes konamiPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.konami-code {
+  font-family: monospace;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  color: #4ecdc4;
+  margin: 0 0 1rem 0;
+  letter-spacing: 4px;
+  text-shadow: 0 0 20px rgba(78, 205, 196, 0.5);
+}
+
+.konami-message {
+  font-family: "Archivo Black", sans-serif;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  color: #ffe66d;
+  margin: 0 0 1rem 0;
+  text-shadow: 0 0 30px rgba(255, 230, 109, 0.5);
+  animation: konamiPulse 0.5s ease-in-out infinite alternate;
+}
+
+@keyframes konamiPulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.05); }
+}
+
+.konami-sub {
+  font-family: "Lexend", sans-serif;
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  color: #aaa;
+  margin: 0;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.konami-confetti {
+  position: fixed;
+  top: -20px;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  z-index: 10001;
+  animation: confettiFall linear forwards;
+  pointer-events: none;
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
