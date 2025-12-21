@@ -398,6 +398,106 @@
             <p class="education-school">Institution Name</p>
           </div>
         </section>
+
+        <!--
+        =============================================
+        HOW TO ADD NEW RESUME SECTIONS
+        =============================================
+
+        NEW SKILL CATEGORY (add inside .skills-grid):
+
+        <div class="skill-category">
+          <h3>Category Name</h3>
+          <ul>
+            <li>Skill 1</li>
+            <li>Skill 2</li>
+            <li>Skill 3</li>
+          </ul>
+        </div>
+
+        NEW EXPERIENCE ENTRY (add inside Experience section):
+
+        <div class="experience-item">
+          <div class="experience-header">
+            <h3>Job Title</h3>
+            <span class="experience-date">2023 - Present</span>
+          </div>
+          <p class="experience-company">Company Name</p>
+          <p class="experience-desc">Description of what you did and achieved.</p>
+        </div>
+
+        NEW EDUCATION ENTRY (add inside Education section):
+
+        <div class="education-item">
+          <div class="education-header">
+            <h3>Degree / Certificate</h3>
+            <span class="education-date">2020 - 2024</span>
+          </div>
+          <p class="education-school">School / Institution Name</p>
+        </div>
+
+        NEW SECTION (add after existing sections):
+
+        <section class="resume-section">
+          <h2>Section Title</h2>
+          (add your content here)
+        </section>
+
+        =============================================
+        -->
+
+      </div>
+    </div>
+
+    <!-- Page: Devlog -->
+    <div class="page" data-page="devlog">
+      <div class="devlog-page">
+        <h1>Devlog</h1>
+        <p class="devlog-intro">Thoughts, progress updates, and things I've learned along the way.</p>
+
+        <article class="devlog-entry">
+          <div class="devlog-header">
+            <time class="devlog-date">December 2024</time>
+            <h2>Entry Title Here</h2>
+          </div>
+          <div class="devlog-content">
+            <p>Write about what you're working on, what you learned, or anything interesting from your dev journey.</p>
+            <p>You can include multiple paragraphs, links, or whatever feels right.</p>
+          </div>
+        </article>
+
+        <article class="devlog-entry">
+          <div class="devlog-header">
+            <time class="devlog-date">November 2024</time>
+            <h2>Another Entry</h2>
+          </div>
+          <div class="devlog-content">
+            <p>This is a placeholder entry. Replace it with your own content.</p>
+          </div>
+        </article>
+
+        <!--
+        =============================================
+        HOW TO ADD NEW DEVLOG ENTRIES
+        =============================================
+
+        Copy this block and paste it ABOVE other entries (newest first):
+
+        <article class="devlog-entry">
+          <div class="devlog-header">
+            <time class="devlog-date">Month Year</time>
+            <h2>Entry Title</h2>
+          </div>
+          <div class="devlog-content">
+            <p>First paragraph of your entry.</p>
+            <p>Add more paragraphs as needed.</p>
+            <p>You can also add <a href="https://example.com">links</a> to things.</p>
+          </div>
+        </article>
+
+        =============================================
+        -->
+
       </div>
     </div>
 
@@ -405,6 +505,7 @@
     <nav class="page-nav" aria-label="Page navigation">
       <button class="page-btn active" data-target="home">Home</button>
       <button class="page-btn" data-target="resume">Resume</button>
+      <button class="page-btn" data-target="devlog">Devlog</button>
     </nav>
   </div>
 
