@@ -271,6 +271,9 @@
       <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
     </button>
+
+    <!-- Page: Home -->
+    <div class="page active" data-page="home">
     <div class="landing-page">
       <div class="landing-left">
         <h1>Bryn Carter</h1>
@@ -335,8 +338,76 @@
         </div>
       </div>
     </div>
+    </div>
+
+    <!-- Page: Resume -->
+    <div class="page" data-page="resume">
+      <div class="resume-page">
+        <h1>Resume</h1>
+
+        <section class="resume-section">
+          <h2>Skills</h2>
+          <div class="skills-grid">
+            <div class="skill-category">
+              <h3>Languages</h3>
+              <ul>
+                <li>C#</li>
+                <li>JavaScript</li>
+                <li>GML</li>
+              </ul>
+            </div>
+            <div class="skill-category">
+              <h3>Tools</h3>
+              <ul>
+                <li>Unity</li>
+                <li>GameMaker</li>
+                <li>Blender</li>
+                <li>Git</li>
+              </ul>
+            </div>
+            <div class="skill-category">
+              <h3>Other</h3>
+              <ul>
+                <li>Game Design</li>
+                <li>UI/UX</li>
+                <li>Pixel Art</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="resume-section">
+          <h2>Experience</h2>
+          <div class="experience-item">
+            <div class="experience-header">
+              <h3>Your Role Title</h3>
+              <span class="experience-date">2023 - Present</span>
+            </div>
+            <p class="experience-company">Company Name</p>
+            <p class="experience-desc">Description of your responsibilities and achievements.</p>
+          </div>
+        </section>
+
+        <section class="resume-section">
+          <h2>Education</h2>
+          <div class="education-item">
+            <div class="education-header">
+              <h3>Your Degree</h3>
+              <span class="education-date">2021 - 2024</span>
+            </div>
+            <p class="education-school">Institution Name</p>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- Page Navigation -->
+    <nav class="page-nav" aria-label="Page navigation">
+      <button class="page-btn active" data-target="home">Home</button>
+      <button class="page-btn" data-target="resume">Resume</button>
+    </nav>
   </div>
-  
+
   <div class="panel right-panel">
     <h1>OTHER</h1>
     <div class="panel-hint">
