@@ -362,37 +362,18 @@ document.addEventListener('keydown', (e) => {
 });
 
 function triggerKonamiEasterEgg() {
-  // Create overlay
   const overlay = document.createElement('div');
   overlay.className = 'konami-overlay';
   overlay.innerHTML = `
     <div class="konami-content">
-      <p class="konami-code">↑↑↓↓←→←→BA</p>
-      <p class="konami-message">+30 Lives Granted</p>
-      <p class="konami-sub">You found the secret!</p>
+      <div class="konami-text">CHEAT ACTIVATED</div>
+      <p class="konami-sub">// you weren't supposed to find this</p>
     </div>
   `;
   document.body.appendChild(overlay);
 
-  // Create confetti
-  for (let i = 0; i < 50; i++) {
-    setTimeout(() => createConfetti(), i * 30);
-  }
-
-  // Remove after animation
   setTimeout(() => {
     overlay.classList.add('fade-out');
     setTimeout(() => overlay.remove(), 500);
   }, 2500);
-}
-
-function createConfetti() {
-  const confetti = document.createElement('div');
-  confetti.className = 'konami-confetti';
-  confetti.style.left = Math.random() * 100 + 'vw';
-  confetti.style.backgroundColor = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#95e1d3', '#f38181', '#aa96da'][Math.floor(Math.random() * 6)];
-  confetti.style.animationDuration = (Math.random() * 2 + 2) + 's';
-  confetti.style.animationDelay = Math.random() * 0.5 + 's';
-  document.body.appendChild(confetti);
-  setTimeout(() => confetti.remove(), 4000);
 }
