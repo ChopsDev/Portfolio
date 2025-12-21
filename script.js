@@ -34,6 +34,10 @@ function closeAll(keepMiddleShrunk = false) {
     setTimeout(() => {
       if (!middle.classList.contains('shrink')) {
         middle.classList.add('ready');
+        // Mark intro animations as complete after they finish
+        setTimeout(() => {
+          middle.classList.add('intro-done');
+        }, 1000);
       }
     }, 150);
   }
@@ -44,7 +48,7 @@ function closeAll(keepMiddleShrunk = false) {
 
 // Expand the left panel and shrink the middle
 function expandLeft() {
-  middle.classList.remove('ready');
+  middle.classList.remove('ready', 'intro-done');
   middle.classList.add('shrink');
   closeAll(true);
   toggleScroll(true);
@@ -60,7 +64,7 @@ function expandLeft() {
 
 // Expand the right panel and shrink the middle
 function expandRight() {
-  middle.classList.remove('ready');
+  middle.classList.remove('ready', 'intro-done');
   middle.classList.add('shrink');
   closeAll(true);
   toggleScroll(true);
