@@ -39,15 +39,12 @@
 .panel-hint .hint-arrow {
   font-size: 1.8rem;
   animation: bounce-arrow 1.5s ease-in-out infinite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
-.left-panel .panel-hint .hint-arrow {
-  transform: rotate(-90deg);
-}
-
-.right-panel .panel-hint .hint-arrow {
-  transform: rotate(90deg);
-}
 
 @keyframes pulse-hint {
   0%, 100% {
@@ -62,19 +59,15 @@
 
 @keyframes bounce-arrow {
   0%, 100% {
-    transform: rotate(-90deg) translateX(0);
+    transform: translateY(0);
   }
   50% {
-    transform: rotate(-90deg) translateX(5px);
+    transform: translateY(5px);
   }
 }
 
 .right-panel .panel-hint {
   animation-name: pulse-hint-right;
-}
-
-.right-panel .panel-hint .hint-arrow {
-  animation-name: bounce-arrow-right;
 }
 
 @keyframes pulse-hint-right {
@@ -85,15 +78,6 @@
   50% {
     opacity: 1;
     transform: translateX(50%) translateY(-8px);
-  }
-}
-
-@keyframes bounce-arrow-right {
-  0%, 100% {
-    transform: rotate(90deg) translateX(0);
-  }
-  50% {
-    transform: rotate(90deg) translateX(5px);
   }
 }
 
