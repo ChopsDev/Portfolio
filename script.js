@@ -12,6 +12,11 @@ const HIDE_TEXT = "HIDE"
 // Show middle content on page load
 middle.classList.add('ready');
 
+// Mark intro animations as complete after they finish
+setTimeout(() => {
+  middle.classList.add('intro-done');
+}, 1000);
+
 // Function to close all panels and reset
 function closeAll(keepMiddleShrunk = false) {
   toggleScroll(false);
@@ -317,14 +322,17 @@ function getPreferredTheme() {
 function setTheme(theme) {
   if (theme === 'dark') {
     middle.classList.add('dark-mode');
+    document.body.classList.add('middle-dark');
   } else {
     middle.classList.remove('dark-mode');
+    document.body.classList.remove('middle-dark');
   }
   localStorage.setItem('middle-theme', theme);
 }
 
-// Initialize theme
+// Initialize theme and remove pending class
 setTheme(getPreferredTheme());
+document.documentElement.classList.remove('middle-dark-pending');
 
 // Toggle on click
 themeToggle.addEventListener('click', () => {

@@ -55,10 +55,18 @@ body.allow-scroll {
   height: 100%;
   overflow: hidden;
   background: #ffffff;
+  transition: background 0.3s ease;
+}
+
+/* Dark mode container background */
+html.middle-dark-pending .container,
+body.middle-dark .container {
+  background: #1a1a1a;
 }
 
 /* Dark mode for middle section */
-.middle.dark-mode {
+.middle.dark-mode,
+html.middle-dark-pending .middle {
   --middle-bg: #1a1a1a;
   --middle-text: #f0f0f0;
   --middle-text-secondary: #d0d0d0;
@@ -91,6 +99,11 @@ body.allow-scroll {
   opacity: 1;
   visibility: visible;
   transition: opacity 0.3s ease-out, visibility 0s;
+}
+
+/* Skip fade transition when returning from panels, keep background for theme */
+.middle.intro-done.ready {
+  transition: background 0.3s ease;
 }
 
 .middle.shrink {
@@ -154,36 +167,37 @@ body.allow-scroll {
   }
 }
 
-.middle.ready .landing-left h1 {
+/* Intro animations - only on first load */
+.middle.ready:not(.intro-done) .landing-left h1 {
   animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
-.middle.ready .landing-left .tagline {
+.middle.ready:not(.intro-done) .landing-left .tagline {
   animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.08s forwards;
   opacity: 0;
   animation-fill-mode: forwards;
 }
 
-.middle.ready .landing-left hr {
+.middle.ready:not(.intro-done) .landing-left hr {
   animation: lineReveal 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.15s forwards;
   opacity: 0;
   transform-origin: left center;
   animation-fill-mode: forwards;
 }
 
-.middle.ready .about {
+.middle.ready:not(.intro-done) .about {
   animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards;
   opacity: 0;
   animation-fill-mode: forwards;
 }
 
-.middle.ready .contact-links {
+.middle.ready:not(.intro-done) .contact-links {
   animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.28s forwards;
   opacity: 0;
   animation-fill-mode: forwards;
 }
 
-.middle.ready .landing-right {
+.middle.ready:not(.intro-done) .landing-right {
   animation: popIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.35s forwards;
   opacity: 0;
   animation-fill-mode: forwards;
@@ -443,12 +457,14 @@ hr {
   transform: rotate(-90deg);
 }
 
-.middle.dark-mode .theme-toggle .icon-moon {
+.middle.dark-mode .theme-toggle .icon-moon,
+html.middle-dark-pending .theme-toggle .icon-moon {
   opacity: 0;
   transform: rotate(90deg);
 }
 
-.middle.dark-mode .theme-toggle .icon-sun {
+.middle.dark-mode .theme-toggle .icon-sun,
+html.middle-dark-pending .theme-toggle .icon-sun {
   opacity: 1;
   transform: rotate(0);
 }
