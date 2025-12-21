@@ -46,9 +46,8 @@ function expandLeft() {
   leftHeading.classList.add('slide-left');
   leftPanel.classList.add('expanding', 'expanded');
 
-  // Hide hints permanently after first interaction
+  // Hide hint for this panel after first interaction
   leftPanel.classList.add('hint-hidden');
-  rightPanel.classList.add('hint-hidden');
 
   rightHeading.textContent = HIDE_TEXT
   leftContent.classList.add('visible');
@@ -63,8 +62,7 @@ function expandRight() {
   rightHeading.classList.add('slide-right');
   rightPanel.classList.add('expanding', 'expanded');
 
-  // Hide hints permanently after first interaction
-  leftPanel.classList.add('hint-hidden');
+  // Hide hint for this panel after first interaction
   rightPanel.classList.add('hint-hidden');
 
   leftHeading.textContent = HIDE_TEXT
