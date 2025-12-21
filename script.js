@@ -362,9 +362,6 @@ function switchPage(targetPage) {
 
   if (!targetEl || currentPage === targetEl) return;
 
-  // Remove intro-done to enable animation
-  middle.classList.remove('intro-done');
-
   // Switch active states
   currentPage.classList.remove('active');
   targetEl.classList.add('active');
@@ -373,11 +370,6 @@ function switchPage(targetPage) {
   pageBtns.forEach(btn => {
     btn.classList.toggle('active', btn.dataset.target === targetPage);
   });
-
-  // Re-add intro-done after animation
-  setTimeout(() => {
-    middle.classList.add('intro-done');
-  }, 600);
 }
 
 // Event delegation for page buttons
