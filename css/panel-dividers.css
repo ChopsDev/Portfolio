@@ -95,6 +95,11 @@
   border-radius: 20px;
 }
 
+/* Full background when expanded */
+.dropdown-header.active {
+  background-color: #555555;
+}
+
 .panel-divider h2 span {
   padding: 0 15px;
   position: relative;
