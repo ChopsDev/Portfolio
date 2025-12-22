@@ -1446,9 +1446,11 @@ body.crt-active .container {
 }
 
 @keyframes crt-flicker {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.98; }
-  75% { opacity: 0.96; }
+  0%, 89%, 100% { opacity: 1; filter: brightness(1); }
+  90% { opacity: 0.85; filter: brightness(0.9); }
+  92% { opacity: 1; filter: brightness(1.1); }
+  94% { opacity: 0.9; filter: brightness(0.85); }
+  96% { opacity: 1; filter: brightness(1); }
 }
 
 @keyframes crt-jitter {
