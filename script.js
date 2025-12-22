@@ -252,6 +252,8 @@ function checkZoomLevel() {
 
   if (isZoomedWayOut && !easterEggShown) {
     createEasterEggOverlay();
+    // Force reflow to enable fade-in transition on first show
+    void easterEggOverlay.offsetWidth;
     easterEggOverlay.classList.add('visible');
     easterEggShown = true;
   } else if (!isZoomedWayOut && easterEggShown) {

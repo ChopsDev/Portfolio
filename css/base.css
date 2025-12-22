@@ -958,7 +958,7 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   opacity: 1;
   visibility: visible;
   transform: scale(1);
-  transition: opacity 1s ease, transform 1s ease, visibility 0s;
+  transition: opacity 0.6s ease, transform 0.6s ease, visibility 0s;
 }
 
 #zoom-easter-egg.reactive::after {
