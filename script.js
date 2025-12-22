@@ -557,6 +557,7 @@ pageNav.addEventListener('click', (e) => {
 // Konami Code Easter Egg
 const konamiSequence = [];
 const konamiCode = 'ArrowUp,ArrowUp,ArrowDown,ArrowDown,ArrowLeft,ArrowRight,ArrowLeft,ArrowRight,b,a';
+let cheatsEnabled = false;
 
 document.addEventListener('keydown', (e) => {
   konamiSequence.push(e.key.length === 1 ? e.key.toLowerCase() : e.key);
@@ -564,17 +565,20 @@ document.addEventListener('keydown', (e) => {
 
   if (konamiSequence.join(',') === konamiCode) {
     konamiSequence.length = 0;
-    triggerKonamiEasterEgg();
+    toggleKonamiCheats();
   }
 });
 
-function triggerKonamiEasterEgg() {
+function toggleKonamiCheats() {
+  cheatsEnabled = !cheatsEnabled;
+
+  // Show overlay
   const overlay = document.createElement('div');
   overlay.className = 'konami-overlay';
   overlay.innerHTML = `
     <div class="konami-content">
-      <div class="konami-text">CHEAT ACTIVATED</div>
-      <p class="konami-sub">// you weren't supposed to find this</p>
+      <div class="konami-text">${cheatsEnabled ? 'CHEAT ACTIVATED' : 'CHEAT DEACTIVATED'}</div>
+      <p class="konami-sub">// ${cheatsEnabled ? 'nice one' : 'back to normal'}</p>
     </div>
   `;
   document.body.appendChild(overlay);
@@ -583,16 +587,50 @@ function triggerKonamiEasterEgg() {
     overlay.classList.add('fade-out');
     setTimeout(() => overlay.remove(), 500);
   }, 2500);
+
+  // Toggle all cheats
+  toggleCursorTrail(cheatsEnabled);
+
+  // =====================================================
+  // ADD MORE CHEATS HERE:
+  // Just call your function with cheatsEnabled, e.g.:
+  // toggleBigHeadMode(cheatsEnabled);
+  // toggleRainbowText(cheatsEnabled);
+  // =====================================================
 }
 
-// ========================================
+// Cursor Trail Effect
+let trailEnabled = false;
+const trailParticles = [];
+
+function toggleCursorTrail(enable) {
+  trailEnabled = enable;
+  if (!enable) {
+    // Clean up existing particles
+    trailParticles.forEach(p => p.remove());
+    trailParticles.length = 0;
+  }
+}
+
+document.addEventListener('mousemove', (e) => {
+  if (!trailEnabled) return;
+
+  const particle = document.createElement('div');
+  particle.className = 'cursor-trail-particle';
+  particle.style.left = e.clientX + 'px';
+  particle.style.top = e.clientY + 'px';
+  document.body.appendChild(particle);
+  trailParticles.push(particle);
+
+  // Remove particle after animation
+  setTimeout(() => {
+    particle.remove();
+    const idx = trailParticles.indexOf(particle);
+    if (idx > -1) trailParticles.splice(idx, 1);
+  }, 500);
+});
+
 // Image Lightbox
-// ----------------------------------------
-// Add class "lightbox-img" to any <img> to
-// make it clickable and open in a lightbox.
-// Images in the same parent container form
-// a gallery with arrow navigation.
-// ========================================
 
 let lightboxOverlay = null;
 let currentGallery = [];

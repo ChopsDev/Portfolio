@@ -385,7 +385,6 @@ hr {
   transition: transform 0.4s ease, opacity 0.3s ease;
   z-index: 0;
   pointer-events: none;
-  background-color: #111; /* TEMP: remove this */
 }
 
 .game-card:hover .game-card-bg {
@@ -1176,12 +1175,7 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   margin: 1.5rem 0 0 0;
 }
 
-/* ========================================
-   Image Lightbox
-   ----------------------------------------
-   Add class "lightbox-img" to any <img> to
-   make it clickable and open in a lightbox.
-   ======================================== */
+/* Image Lightbox - add "lightbox-img" class to make images clickable */
 
 .lightbox-img {
   cursor: zoom-in;
@@ -1371,9 +1365,31 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   transition: opacity 0.5s ease;
 }
 
-/* ========================================
-   Print Stylesheet (Resume)
-   ======================================== */
+/* Cursor trail (konami code cheat) */
+.cursor-trail-particle {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: var(--middle-accent, #4ECDC4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  animation: cursor-trail-fade 0.5s ease-out forwards;
+  transform: translate(-50%, -50%);
+}
+
+@keyframes cursor-trail-fade {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+}
+
+/* Print styles for resume */
 @media print {
   /* Hide everything except the resume */
   body {
