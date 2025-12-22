@@ -20,7 +20,7 @@ console.log('%cSince you\'re here... try out the Konami code', 'color: #666; fon
     localStorage.setItem('reload-count', '0');
   }, 30000);
 
-  if (reloadCount >= 6) {
+  if (reloadCount >= 5) {
     localStorage.setItem('reload-count', '0');
     triggerMatrixRain();
   }
