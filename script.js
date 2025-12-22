@@ -666,6 +666,7 @@ function toggleCRTEffect(enable) {
     if (!crtOverlay) {
       crtOverlay = document.createElement('div');
       crtOverlay.className = 'crt-overlay';
+      crtOverlay.innerHTML = '<div class="noise"></div>';
       document.body.appendChild(crtOverlay);
     }
     crtOverlay.classList.add('active');
