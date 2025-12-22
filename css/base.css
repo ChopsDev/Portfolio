@@ -385,6 +385,7 @@ hr {
   transition: transform 0.4s ease, opacity 0.3s ease;
   z-index: 0;
   pointer-events: none;
+  background-color: #111; /* TEMP: remove this */
 }
 
 .game-card:hover .game-card-bg {
@@ -393,26 +394,42 @@ hr {
 }
 
 /* Text styling when background image is present */
-.game-card.has-bg h3,
+.game-card.has-bg h3 {
+  text-shadow:
+    -1px -1px 0 rgba(255, 255, 255, 0.7),
+    1px -1px 0 rgba(255, 255, 255, 0.7),
+    -1px 1px 0 rgba(255, 255, 255, 0.7),
+    1px 1px 0 rgba(255, 255, 255, 0.7);
+}
+
 .game-card.has-bg span,
 .game-card.has-bg p {
+  font-weight: 500;
   text-shadow:
     -1px -1px 0 rgba(255, 255, 255, 0.9),
     1px -1px 0 rgba(255, 255, 255, 0.9),
     -1px 1px 0 rgba(255, 255, 255, 0.9),
     1px 1px 0 rgba(255, 255, 255, 0.9),
-    0 0 8px rgba(255, 255, 255, 1);
+    0 0 4px rgba(255, 255, 255, 0.6);
 }
 
-.middle.dark-mode .game-card.has-bg h3,
+.middle.dark-mode .game-card.has-bg h3 {
+  text-shadow:
+    -1px -1px 0 rgba(0, 0, 0, 0.7),
+    1px -1px 0 rgba(0, 0, 0, 0.7),
+    -1px 1px 0 rgba(0, 0, 0, 0.7),
+    1px 1px 0 rgba(0, 0, 0, 0.7);
+}
+
 .middle.dark-mode .game-card.has-bg span,
 .middle.dark-mode .game-card.has-bg p {
+  font-weight: 500;
   text-shadow:
-    -1px -1px 0 rgba(0, 0, 0, 1),
-    1px -1px 0 rgba(0, 0, 0, 1),
-    -1px 1px 0 rgba(0, 0, 0, 1),
-    1px 1px 0 rgba(0, 0, 0, 1),
-    0 0 8px rgba(0, 0, 0, 1);
+    -1px -1px 0 rgba(0, 0, 0, 0.9),
+    1px -1px 0 rgba(0, 0, 0, 0.9),
+    -1px 1px 0 rgba(0, 0, 0, 0.9),
+    1px 1px 0 rgba(0, 0, 0, 0.9),
+    0 0 4px rgba(0, 0, 0, 0.6);
 }
 
 .game-card::before {
@@ -468,7 +485,7 @@ hr {
   font-family: "Lexend", sans-serif;
   font-size: 0.7rem;
   font-weight: 400;
-  color: var(--middle-text-faint);
+  color: var(--middle-text-muted);
   text-align: center;
   margin: 0;
   transition: color 0.3s ease, text-shadow 0.3s ease;
