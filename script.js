@@ -10,6 +10,90 @@ console.log(`
 console.log('%cChur bro you found the console', 'font-size: 14px; font-weight: bold;');
 console.log('%cSince you\'re here... try out the Konami code', 'color: #666; font-style: italic;');
 
+// Matrix Rain Easter Egg - reload 5 times to trigger
+(function() {
+  const reloadCount = parseInt(localStorage.getItem('reload-count') || '0') + 1;
+  localStorage.setItem('reload-count', reloadCount);
+
+  // Reset after 30 seconds of no reloads
+  setTimeout(() => {
+    localStorage.setItem('reload-count', '0');
+  }, 30000);
+
+  if (reloadCount >= 5) {
+    localStorage.setItem('reload-count', '0');
+    triggerMatrixRain();
+  }
+})();
+
+function triggerMatrixRain() {
+  const canvas = document.createElement('canvas');
+  canvas.className = 'matrix-canvas';
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  document.body.appendChild(canvas);
+
+  const ctx = canvas.getContext('2d');
+
+  const chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const fontSize = 14;
+  const columns = Math.floor(canvas.width / fontSize);
+  const drops = Array(columns).fill(1);
+
+  // Fade in
+  canvas.style.opacity = '0';
+  requestAnimationFrame(() => canvas.style.opacity = '1');
+
+  function draw() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    ctx.font = fontSize + 'px monospace';
+
+    for (let i = 0; i < drops.length; i++) {
+      const char = chars[Math.floor(Math.random() * chars.length)];
+      const x = i * fontSize;
+      const y = drops[i] * fontSize;
+
+      // Bright green leading character with glow
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = '#00ff00';
+      ctx.fillStyle = '#7fff7f';
+      ctx.fillText(char, x, y);
+
+      // Dimmer green trail
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = '#00cc00';
+
+      if (y > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }
+
+  const interval = setInterval(draw, 33);
+
+  // Stop after 10 seconds
+  setTimeout(() => {
+    clearInterval(interval);
+    canvas.style.opacity = '0';
+    setTimeout(() => canvas.remove(), 500);
+  }, 10000);
+
+  // Handle resize
+  function handleResize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  window.addEventListener('resize', handleResize);
+
+  // Cleanup resize listener when done
+  setTimeout(() => {
+    window.removeEventListener('resize', handleResize);
+  }, 10500);
+}
+
 const htmlBody = document.querySelector("body")
 const leftPanel = document.querySelector('.left-panel');
 const rightPanel = document.querySelector('.right-panel');

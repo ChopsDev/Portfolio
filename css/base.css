@@ -1281,6 +1281,15 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   transition: opacity 0.5s ease;
 }
 
+/* Matrix Rain Easter Egg */
+.matrix-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+
 /* ========================================
    Print Stylesheet (Resume)
    ======================================== */
