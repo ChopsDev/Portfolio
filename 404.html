@@ -103,6 +103,29 @@
       100% { opacity: 0.02; }
     }
 
+    /* CRT moving scan line */
+    .crt-scanline {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(
+        to bottom,
+        transparent,
+        rgba(255, 255, 255, 0.08),
+        transparent
+      );
+      pointer-events: none;
+      z-index: 1001;
+      animation: scanline 6s linear infinite;
+    }
+
+    @keyframes scanline {
+      0% { top: -4px; }
+      100% { top: 100%; }
+    }
+
     @keyframes flicker {
       0%, 100% {
         color: #222;
@@ -236,6 +259,7 @@
   <div class="crt-lines"></div>
   <div class="crt-vignette"></div>
   <div class="crt-flicker"></div>
+  <div class="crt-scanline"></div>
   <div class="room-glow"></div>
   <div class="container">
     <div class="error-code">404</div>
