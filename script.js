@@ -591,6 +591,7 @@ function toggleKonamiCheats() {
   // Toggle all cheats
   toggleCursorTrail(cheatsEnabled);
   toggleClickConfetti(cheatsEnabled);
+  toggleCRTEffect(cheatsEnabled);
 
   // =====================================================
   // ADD MORE CHEATS HERE:
@@ -656,6 +657,24 @@ document.addEventListener('click', (e) => {
     setTimeout(() => confetti.remove(), 600);
   }
 });
+
+// CRT Scanline Effect
+let crtOverlay = null;
+
+function toggleCRTEffect(enable) {
+  if (enable) {
+    if (!crtOverlay) {
+      crtOverlay = document.createElement('div');
+      crtOverlay.className = 'crt-overlay';
+      document.body.appendChild(crtOverlay);
+    }
+    crtOverlay.classList.add('active');
+    document.body.classList.add('crt-active');
+  } else {
+    if (crtOverlay) crtOverlay.classList.remove('active');
+    document.body.classList.remove('crt-active');
+  }
+}
 
 // Image Lightbox
 

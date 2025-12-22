@@ -1417,6 +1417,59 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   }
 }
 
+/* CRT Effect (konami code cheat) */
+.crt-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 99997;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.15) 0px,
+      rgba(0, 0, 0, 0.15) 1px,
+      transparent 1px,
+      transparent 2px
+    );
+}
+
+.crt-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+}
+
+.crt-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 255, 0, 0.02);
+  animation: crt-flicker 0.1s infinite;
+}
+
+.crt-overlay.active {
+  opacity: 1;
+}
+
+body.crt-active {
+  animation: crt-jitter 10s infinite;
+}
+
+@keyframes crt-flicker {
+  0%, 100% { opacity: 0.02; }
+  50% { opacity: 0.04; }
+}
+
+@keyframes crt-jitter {
+  0%, 100% { filter: none; }
+  25% { filter: blur(0.3px); }
+  50% { filter: none; }
+  75% { filter: blur(0.2px); }
+}
+
 /* Print styles for resume */
 @media print {
   /* Hide everything except the resume */
