@@ -1370,28 +1370,27 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   transition: opacity 0.5s ease;
 }
 
-/* Cursor trail (konami code cheat) - ghost cursor effect */
+/* Cursor trail (konami code cheat) */
 .cursor-trail-particle {
   position: fixed;
-  width: 12px;
-  height: 18px;
+  width: 6px;
+  height: 6px;
+  background: #0f0;
+  border-radius: 50%;
   pointer-events: none;
   z-index: 99998;
-  animation: cursor-trail-fade 0.4s ease-out forwards;
-  transform: translate(-50%, -50%);
-  background: transparent;
-  border-left: 6px solid rgba(0, 255, 0, 0.6);
-  border-top: 10px solid rgba(0, 255, 0, 0.6);
-  border-right: 6px solid transparent;
-  border-bottom: 8px solid transparent;
+  animation: cursor-trail-move 0.4s ease-out forwards;
+  box-shadow: 0 0 4px #0f0;
 }
 
-@keyframes cursor-trail-fade {
+@keyframes cursor-trail-move {
   0% {
-    opacity: 0.8;
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
   }
   100% {
     opacity: 0;
+    transform: translate(var(--dx), var(--dy)) scale(0.3);
   }
 }
 

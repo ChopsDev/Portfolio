@@ -621,15 +621,16 @@ document.addEventListener('mousemove', (e) => {
   particle.className = 'cursor-trail-particle';
   particle.style.left = e.clientX + 'px';
   particle.style.top = e.clientY + 'px';
+  particle.style.setProperty('--dx', (Math.random() - 0.5) * 40 + 'px');
+  particle.style.setProperty('--dy', (Math.random() - 0.5) * 40 + 'px');
   document.body.appendChild(particle);
   trailParticles.push(particle);
 
-  // Remove particle after animation
   setTimeout(() => {
     particle.remove();
     const idx = trailParticles.indexOf(particle);
     if (idx > -1) trailParticles.splice(idx, 1);
-  }, 500);
+  }, 400);
 });
 
 // Click Confetti Effect - digital green particles
