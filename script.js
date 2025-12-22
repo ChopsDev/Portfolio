@@ -549,3 +549,23 @@ document.addEventListener('keydown', (e) => {
 
 // Initialize on load
 initLightbox();
+
+// Name click easter egg (Rick Roll)
+const nameHeading = document.querySelector('.landing-left h1');
+let nameClickCount = 0;
+let nameClickTimer = null;
+
+nameHeading.addEventListener('click', () => {
+  nameClickCount++;
+
+  // Reset count if too slow between clicks
+  clearTimeout(nameClickTimer);
+  nameClickTimer = setTimeout(() => {
+    nameClickCount = 0;
+  }, 800);
+
+  if (nameClickCount >= 3) {
+    nameClickCount = 0;
+    window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ&autoplay=1', '_blank');
+  }
+});
