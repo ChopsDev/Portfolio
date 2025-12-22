@@ -181,8 +181,9 @@
   }
 
   .panel-divider h2 {
-    font-size: clamp(1rem, 4vw, 1.5rem);
-    padding: 0 10px;
+    font-size: clamp(0.75rem, 3.5vw, 1.1rem);
+    padding: 0 8px;
+    white-space: nowrap;
   }
 
   /* ----- Flex containers (project layouts) ----- */
@@ -289,5 +290,9 @@
   .panel h1 {
     padding: 20px 15px;
     font-size: clamp(1rem, 5vw, 1.5rem);
+  }
+
+  .panel-divider h2 {
+    font-size: clamp(0.65rem, 3vw, 0.9rem);
   }
 }
