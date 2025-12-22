@@ -44,6 +44,9 @@ function triggerMatrixRain() {
   canvas.style.opacity = '0';
   requestAnimationFrame(() => canvas.style.opacity = '1');
 
+  // Track which columns are still active
+  const activeColumns = Array(columns).fill(true);
+
   function draw() {
     ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -51,6 +54,8 @@ function triggerMatrixRain() {
     ctx.font = fontSize + 'px monospace';
 
     for (let i = 0; i < drops.length; i++) {
+      if (!activeColumns[i]) continue;
+
       const char = chars[Math.floor(Math.random() * chars.length)];
       const x = i * fontSize;
       const y = drops[i] * fontSize;
@@ -74,11 +79,21 @@ function triggerMatrixRain() {
 
   const interval = setInterval(draw, 33);
 
-  // Stop after 10 seconds
+  // Stop after 10 seconds - columns fade individually over 2-4 seconds
   setTimeout(() => {
-    clearInterval(interval);
-    canvas.style.opacity = '0';
-    setTimeout(() => canvas.remove(), 500);
+    for (let i = 0; i < columns; i++) {
+      const delay = 2000 + Math.random() * 2000;
+      setTimeout(() => {
+        activeColumns[i] = false;
+      }, delay);
+    }
+
+    // Remove canvas after all columns have stopped + trail fade time
+    setTimeout(() => {
+      clearInterval(interval);
+      canvas.style.opacity = '0';
+      setTimeout(() => canvas.remove(), 500);
+    }, 5000);
   }, 10000);
 
   // Handle resize
