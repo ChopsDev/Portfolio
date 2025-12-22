@@ -397,16 +397,22 @@ hr {
 .game-card.has-bg span,
 .game-card.has-bg p {
   text-shadow:
-    0 1px 2px rgba(255, 255, 255, 0.8),
-    0 0 8px rgba(255, 255, 255, 0.5);
+    -1px -1px 0 rgba(255, 255, 255, 0.9),
+    1px -1px 0 rgba(255, 255, 255, 0.9),
+    -1px 1px 0 rgba(255, 255, 255, 0.9),
+    1px 1px 0 rgba(255, 255, 255, 0.9),
+    0 0 8px rgba(255, 255, 255, 1);
 }
 
 .middle.dark-mode .game-card.has-bg h3,
 .middle.dark-mode .game-card.has-bg span,
 .middle.dark-mode .game-card.has-bg p {
   text-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.9),
-    0 0 10px rgba(0, 0, 0, 0.7);
+    -1px -1px 0 rgba(0, 0, 0, 1),
+    1px -1px 0 rgba(0, 0, 0, 1),
+    -1px 1px 0 rgba(0, 0, 0, 1),
+    1px 1px 0 rgba(0, 0, 0, 1),
+    0 0 8px rgba(0, 0, 0, 1);
 }
 
 .game-card::before {
