@@ -590,6 +590,7 @@ function toggleKonamiCheats() {
 
   // Toggle all cheats
   toggleCursorTrail(cheatsEnabled);
+  toggleClickConfetti(cheatsEnabled);
 
   // =====================================================
   // ADD MORE CHEATS HERE:
@@ -628,6 +629,32 @@ document.addEventListener('mousemove', (e) => {
     const idx = trailParticles.indexOf(particle);
     if (idx > -1) trailParticles.splice(idx, 1);
   }, 500);
+});
+
+// Click Confetti Effect
+let confettiEnabled = false;
+const confettiColors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#95e1d3', '#f38181', '#aa96da'];
+
+function toggleClickConfetti(enable) {
+  confettiEnabled = enable;
+}
+
+document.addEventListener('click', (e) => {
+  if (!confettiEnabled) return;
+
+  for (let i = 0; i < 12; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'click-confetti';
+    confetti.style.left = e.clientX + 'px';
+    confetti.style.top = e.clientY + 'px';
+    confetti.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
+    confetti.style.setProperty('--x', (Math.random() - 0.5) * 200 + 'px');
+    confetti.style.setProperty('--y', (Math.random() - 0.5) * 200 + 'px');
+    confetti.style.setProperty('--r', Math.random() * 720 - 360 + 'deg');
+    document.body.appendChild(confetti);
+
+    setTimeout(() => confetti.remove(), 600);
+  }
 });
 
 // Image Lightbox
