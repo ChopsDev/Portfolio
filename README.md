@@ -33,7 +33,7 @@ My portfolio site. Built it myself with vanilla HTML/CSS/JS because I wanted to.
 ### Tech Stack
 
 ```
-Frontend:     HTML / CSS / JS (no frameworks, fight me)
+Frontend:     HTML / CSS / JS
 Game Dev:     Unity / Godot / GameMaker
 Languages:    C# / C++ / GDScript
 Art:          Blender / Photoshop
