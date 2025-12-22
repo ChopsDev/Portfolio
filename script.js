@@ -1,3 +1,15 @@
+// Console Easter Egg
+console.log(`
+%c  ____                        ____           _
+ | __ ) _ __ _   _ _ __      / ___|__ _ _ __| |_ ___ _ __
+ |  _ \\| '__| | | | '_ \\    | |   / _\` | '__| __/ _ \\ '__|
+ | |_) | |  | |_| | | | |   | |__| (_| | |  | ||  __/ |
+ |____/|_|   \\__, |_| |_|    \\____\\__,_|_|   \\__\\___|_|
+             |___/
+`, 'color: #888; font-family: monospace;');
+console.log('%cChur bro you found the console', 'font-size: 14px; font-weight: bold;');
+console.log('%cSince you\'re here... try out the Konami code', 'color: #666; font-style: italic;');
+
 const htmlBody = document.querySelector("body")
 const leftPanel = document.querySelector('.left-panel');
 const rightPanel = document.querySelector('.right-panel');
