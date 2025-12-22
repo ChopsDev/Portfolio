@@ -349,6 +349,64 @@ themeToggle.addEventListener('click', () => {
   setTheme(isDark ? 'light' : 'dark');
 });
 
+// Disco mode easter egg - click theme toggle 10 times rapidly
+let discoClickCount = 0;
+let discoClickTimer = null;
+let discoActive = false;
+
+themeToggle.addEventListener('click', () => {
+  if (discoActive) return;
+
+  discoClickCount++;
+
+  clearTimeout(discoClickTimer);
+  discoClickTimer = setTimeout(() => {
+    discoClickCount = 0;
+  }, 500);
+
+  if (discoClickCount >= 10) {
+    discoClickCount = 0;
+    triggerDiscoMode();
+  }
+});
+
+function triggerDiscoMode() {
+  discoActive = true;
+
+  const discoOverlay = document.createElement('div');
+  discoOverlay.className = 'disco-overlay';
+  document.body.appendChild(discoOverlay);
+
+  const colors = [
+    '#ff0055', '#ff00ff', '#00ffff', '#00ff00',
+    '#ffff00', '#ff8800', '#0088ff', '#ff0055'
+  ];
+  let colorIndex = 0;
+  let beatCount = 0;
+  const totalBeats = 24;
+
+  const discoInterval = setInterval(() => {
+    discoOverlay.style.background = colors[colorIndex % colors.length];
+    colorIndex++;
+    beatCount++;
+
+    // Alternate theme rapidly
+    if (beatCount % 2 === 0) {
+      middle.classList.toggle('dark-mode');
+    }
+
+    if (beatCount >= totalBeats) {
+      clearInterval(discoInterval);
+      discoOverlay.classList.add('fade-out');
+      setTimeout(() => {
+        discoOverlay.remove();
+        setTheme(getPreferredTheme());
+        discoActive = false;
+      }, 500);
+    }
+  }, 150);
+}
+
 // Listen for system preference changes
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
   if (!localStorage.getItem('middle-theme')) {

@@ -1244,3 +1244,19 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   color: rgba(255, 255, 255, 0.6);
   letter-spacing: 2px;
 }
+
+/* Disco Mode Easter Egg */
+.disco-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99998;
+  pointer-events: none;
+  opacity: 0.4;
+  mix-blend-mode: overlay;
+  transition: background 0.1s ease;
+}
+
+.disco-overlay.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
