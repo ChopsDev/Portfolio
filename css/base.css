@@ -629,6 +629,12 @@ html.middle-dark-pending .theme-toggle .icon-sun {
 .page-btn:hover {
   color: var(--middle-text);
   background: rgba(0, 0, 0, 0.05);
+  transform: scale(1.1);
+}
+
+.page-btn:active {
+  transform: scale(0.92);
+  transition: transform 0.1s ease;
 }
 
 .middle.dark-mode .page-btn:hover {
@@ -638,6 +644,14 @@ html.middle-dark-pending .theme-toggle .icon-sun {
 .page-btn.active {
   background: var(--middle-accent);
   color: var(--middle-bg);
+}
+
+.page-btn.active:hover {
+  transform: scale(1.1);
+}
+
+.page-btn.active:active {
+  transform: scale(0.92);
 }
 
 /* Hide nav when middle is shrunk */
