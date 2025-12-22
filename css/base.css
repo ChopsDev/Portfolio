@@ -628,7 +628,7 @@ html.middle-dark-pending .theme-toggle .icon-sun {
 
 .page-btn:hover {
   color: var(--middle-text);
-  background: rgba(0, 0, 0, 0.05);
+  background: rgba(0, 0, 0, 0.12);
   transform: scale(1.1);
 }
 
