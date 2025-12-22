@@ -1370,50 +1370,53 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   transition: opacity 0.5s ease;
 }
 
-/* Cursor trail (konami code cheat) */
+/* Cursor trail (konami code cheat) - ghost cursor effect */
 .cursor-trail-particle {
   position: fixed;
-  width: 8px;
-  height: 8px;
-  background: var(--middle-accent, #4ECDC4);
-  border-radius: 50%;
+  width: 12px;
+  height: 18px;
   pointer-events: none;
   z-index: 99998;
-  animation: cursor-trail-fade 0.5s ease-out forwards;
+  animation: cursor-trail-fade 0.4s ease-out forwards;
   transform: translate(-50%, -50%);
+  background: transparent;
+  border-left: 6px solid rgba(0, 255, 0, 0.6);
+  border-top: 10px solid rgba(0, 255, 0, 0.6);
+  border-right: 6px solid transparent;
+  border-bottom: 8px solid transparent;
 }
 
 @keyframes cursor-trail-fade {
+  0% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Click confetti (konami code cheat) - digital particles */
+.click-confetti {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  pointer-events: none;
+  z-index: 99998;
+  animation: confetti-burst 0.5s ease-out forwards;
+  transform: translate(-50%, -50%);
+  box-shadow:
+    0 0 2px #0f0,
+    0 0 4px #0f0;
+}
+
+@keyframes confetti-burst {
   0% {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }
   100% {
     opacity: 0;
-    transform: translate(-50%, -50%) scale(0.3);
-  }
-}
-
-/* Click confetti (konami code cheat) */
-.click-confetti {
-  position: fixed;
-  width: 10px;
-  height: 10px;
-  border-radius: 2px;
-  pointer-events: none;
-  z-index: 99998;
-  animation: confetti-burst 0.6s ease-out forwards;
-  transform: translate(-50%, -50%);
-}
-
-@keyframes confetti-burst {
-  0% {
-    opacity: 1;
-    transform: translate(-50%, -50%) scale(1) rotate(0deg);
-  }
-  100% {
-    opacity: 0;
-    transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(0) rotate(var(--r));
+    transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(0.5);
   }
 }
 
@@ -1452,7 +1455,7 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   animation: crt-scanlines 0.1s linear infinite;
 }
 
-body.crt-active * {
+body.crt-active *:not(.cursor-trail-particle):not(.click-confetti) {
   animation: crt-rgb-shift 3s steps(1) infinite;
 }
 

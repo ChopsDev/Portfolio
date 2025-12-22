@@ -632,9 +632,9 @@ document.addEventListener('mousemove', (e) => {
   }, 500);
 });
 
-// Click Confetti Effect
+// Click Confetti Effect - digital green particles
 let confettiEnabled = false;
-const confettiColors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#95e1d3', '#f38181', '#aa96da'];
+const confettiColors = ['#00ff00', '#00ff66', '#33ff33', '#00cc00', '#66ff66'];
 
 function toggleClickConfetti(enable) {
   confettiEnabled = enable;
@@ -643,18 +643,17 @@ function toggleClickConfetti(enable) {
 document.addEventListener('click', (e) => {
   if (!confettiEnabled) return;
 
-  for (let i = 0; i < 12; i++) {
+  for (let i = 0; i < 15; i++) {
     const confetti = document.createElement('div');
     confetti.className = 'click-confetti';
     confetti.style.left = e.clientX + 'px';
     confetti.style.top = e.clientY + 'px';
     confetti.style.backgroundColor = confettiColors[Math.floor(Math.random() * confettiColors.length)];
-    confetti.style.setProperty('--x', (Math.random() - 0.5) * 200 + 'px');
-    confetti.style.setProperty('--y', (Math.random() - 0.5) * 200 + 'px');
-    confetti.style.setProperty('--r', Math.random() * 720 - 360 + 'deg');
+    confetti.style.setProperty('--x', (Math.random() - 0.5) * 150 + 'px');
+    confetti.style.setProperty('--y', (Math.random() - 0.5) * 150 + 'px');
     document.body.appendChild(confetti);
 
-    setTimeout(() => confetti.remove(), 600);
+    setTimeout(() => confetti.remove(), 500);
   }
 });
 
