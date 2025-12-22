@@ -278,9 +278,12 @@ window.addEventListener('resize', function() {
 // Initial check
 checkZoomLevel();
 
-// Escape key to close panels
+// Escape key to close panels (but not if lightbox is open)
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
+    // Skip if lightbox is open - let the lightbox handler deal with it
+    if (document.querySelector('.lightbox-overlay.visible')) return;
+
     if (leftPanel.classList.contains('expanded') || rightPanel.classList.contains('expanded')) {
       closeAll();
     }
@@ -412,3 +415,74 @@ function triggerKonamiEasterEgg() {
     setTimeout(() => overlay.remove(), 500);
   }, 2500);
 }
+
+// ========================================
+// Image Lightbox
+// ----------------------------------------
+// Add class "lightbox-img" to any <img> to
+// make it clickable and open in a lightbox.
+// ========================================
+
+let lightboxOverlay = null;
+
+function createLightbox() {
+  if (lightboxOverlay) return;
+
+  lightboxOverlay = document.createElement('div');
+  lightboxOverlay.className = 'lightbox-overlay';
+  lightboxOverlay.innerHTML = `
+    <button class="lightbox-close" aria-label="Close lightbox"></button>
+    <img src="" alt="">
+    <span class="lightbox-hint">Click anywhere or press ESC to close</span>
+  `;
+  document.body.appendChild(lightboxOverlay);
+
+  // Close on overlay click
+  lightboxOverlay.addEventListener('click', closeLightbox);
+
+  // Prevent closing when clicking the image itself
+  lightboxOverlay.querySelector('img').addEventListener('click', (e) => {
+    e.stopPropagation();
+  });
+}
+
+function openLightbox(imgSrc, imgAlt) {
+  createLightbox();
+
+  const img = lightboxOverlay.querySelector('img');
+  img.src = imgSrc;
+  img.alt = imgAlt || '';
+
+  // Force reflow for transition
+  void lightboxOverlay.offsetWidth;
+  lightboxOverlay.classList.add('visible');
+
+  // Prevent body scroll
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  if (!lightboxOverlay) return;
+
+  lightboxOverlay.classList.remove('visible');
+  document.body.style.overflow = '';
+}
+
+// Initialize lightbox for all images with the class
+function initLightbox() {
+  document.querySelectorAll('.lightbox-img').forEach(img => {
+    img.addEventListener('click', () => {
+      openLightbox(img.src, img.alt);
+    });
+  });
+}
+
+// Close lightbox on ESC key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && lightboxOverlay?.classList.contains('visible')) {
+    closeLightbox();
+  }
+});
+
+// Initialize on load
+initLightbox();
