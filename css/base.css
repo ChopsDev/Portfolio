@@ -1442,23 +1442,15 @@ body.crt-active .container {
   transform-style: preserve-3d;
   border-radius: 20px;
   box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.3);
+  animation: crt-jitter 0.5s steps(1) infinite;
 }
 
-/* Static noise grain */
-.crt-overlay .noise {
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  opacity: 0.08;
-  pointer-events: none;
-  animation: noise-shift 0.2s steps(3) infinite;
-}
-
-@keyframes noise-shift {
-  0% { transform: translate(0, 0); }
-  33% { transform: translate(-5%, -5%); }
-  66% { transform: translate(5%, 5%); }
-  100% { transform: translate(0, 0); }
+@keyframes crt-jitter {
+  0%, 90%, 100% { transform: perspective(800px) rotateX(1deg) translateX(0); }
+  92% { transform: perspective(800px) rotateX(1deg) translateX(-2px); }
+  94% { transform: perspective(800px) rotateX(1deg) translateX(3px); }
+  96% { transform: perspective(800px) rotateX(1deg) translateX(-1px); }
+  98% { transform: perspective(800px) rotateX(1deg) translateX(2px); }
 }
 
 .crt-overlay::before {
