@@ -1425,14 +1425,10 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   z-index: 99997;
   opacity: 0;
   transition: opacity 0.3s ease;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      rgba(0, 0, 0, 0.15) 0px,
-      rgba(0, 0, 0, 0.15) 1px,
-      transparent 1px,
-      transparent 2px
-    );
+}
+
+.crt-overlay.active {
+  opacity: 1;
 }
 
 .crt-overlay::before {
@@ -1446,28 +1442,38 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(0, 255, 0, 0.02);
-  animation: crt-flicker 0.1s infinite;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.4) 0px,
+    rgba(0, 0, 0, 0.4) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  animation: crt-scanlines 0.1s linear infinite;
 }
 
-.crt-overlay.active {
-  opacity: 1;
+body.crt-active * {
+  animation: crt-rgb-shift 3s steps(1) infinite;
 }
 
-body.crt-active {
-  animation: crt-jitter 10s infinite;
+@keyframes crt-scanlines {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(4px); }
 }
 
-@keyframes crt-flicker {
-  0%, 100% { opacity: 0.02; }
-  50% { opacity: 0.04; }
-}
-
-@keyframes crt-jitter {
-  0%, 100% { filter: none; }
-  25% { filter: blur(0.3px); }
-  50% { filter: none; }
-  75% { filter: blur(0.2px); }
+@keyframes crt-rgb-shift {
+  0%, 92%, 100% {
+    text-shadow: none;
+  }
+  94% {
+    text-shadow: -1px 0 #ff0000, 1px 0 #00ffff;
+  }
+  96% {
+    text-shadow: 1px 0 #ff0000, -1px 0 #00ffff;
+  }
+  98% {
+    text-shadow: 0 0 2px #00ff00;
+  }
 }
 
 /* Print styles for resume */
