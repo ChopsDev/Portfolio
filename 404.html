@@ -54,6 +54,55 @@
       animation: room-flicker 4s ease-in-out infinite;
     }
 
+    /* CRT scan lines */
+    .crt-lines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.15) 0px,
+        rgba(0, 0, 0, 0.15) 1px,
+        transparent 1px,
+        transparent 2px
+      );
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* CRT vignette */
+    .crt-vignette {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.5) 100%);
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* Subtle screen flicker */
+    .crt-flicker {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.02);
+      pointer-events: none;
+      z-index: 998;
+      animation: crt-flicker 0.1s infinite;
+    }
+
+    @keyframes crt-flicker {
+      0% { opacity: 0.02; }
+      50% { opacity: 0.04; }
+      100% { opacity: 0.02; }
+    }
+
     @keyframes flicker {
       0%, 100% {
         color: #222;
@@ -184,6 +233,9 @@
   </style>
 </head>
 <body>
+  <div class="crt-lines"></div>
+  <div class="crt-vignette"></div>
+  <div class="crt-flicker"></div>
   <div class="room-glow"></div>
   <div class="container">
     <div class="error-code">404</div>
