@@ -577,7 +577,7 @@ function toggleKonamiCheats() {
   overlay.className = 'konami-overlay';
   overlay.innerHTML = `
     <div class="konami-content">
-      <div class="konami-text">${cheatsEnabled ? 'CHEAT ACTIVATED' : 'CHEAT DEACTIVATED'}</div>
+      <div class="konami-text ${cheatsEnabled ? '' : 'disabled'}">${cheatsEnabled ? 'CHEAT ACTIVATED' : 'CHEAT DEACTIVATED'}</div>
       <p class="konami-sub">// ${cheatsEnabled ? 'nice one' : 'back to normal'}</p>
     </div>
   `;

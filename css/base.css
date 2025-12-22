@@ -1168,6 +1168,11 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
 }
 
+.konami-text.disabled {
+  color: #f00;
+  text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+}
+
 .konami-sub {
   font-family: monospace;
   font-size: clamp(0.8rem, 2vw, 1rem);
