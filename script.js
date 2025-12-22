@@ -735,6 +735,6 @@ nameHeading.addEventListener('click', () => {
 
   if (nameClickCount >= 3) {
     nameClickCount = 0;
-    window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ&autoplay=1', '_blank');
+    window.open('https://youtu.be/23e4r2VL0gY?si=EyRaLlF4zjYuOI_f', '_blank');
   }
 });
