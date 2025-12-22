@@ -1260,3 +1260,90 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   opacity: 0;
   transition: opacity 0.5s ease;
 }
+
+/* ========================================
+   Print Stylesheet (Resume)
+   ======================================== */
+@media print {
+  /* Hide everything except the resume */
+  body {
+    background: white !important;
+    overflow: visible !important;
+  }
+
+  .left-panel,
+  .right-panel,
+  .page-nav,
+  .theme-toggle,
+  #zoom-easter-egg,
+  .page[data-page="home"],
+  .page[data-page="devlog"] {
+    display: none !important;
+  }
+
+  .container {
+    display: block !important;
+  }
+
+  .middle {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    background: white !important;
+    color: black !important;
+    box-shadow: none !important;
+  }
+
+  .page[data-page="resume"] {
+    display: block !important;
+    opacity: 1 !important;
+  }
+
+  .resume-page {
+    padding: 0 !important;
+  }
+
+  .resume-page h1 {
+    font-size: 24pt !important;
+    color: black !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .resume-page h2 {
+    font-size: 14pt !important;
+    color: black !important;
+    border-bottom: 1px solid #ccc !important;
+    padding-bottom: 0.25rem !important;
+  }
+
+  .resume-page h3 {
+    font-size: 12pt !important;
+    color: black !important;
+  }
+
+  .resume-section {
+    margin-bottom: 1rem !important;
+    break-inside: avoid !important;
+  }
+
+  .skills-grid {
+    display: flex !important;
+    gap: 2rem !important;
+  }
+
+  .skill-category ul {
+    margin: 0 !important;
+    padding-left: 1.2rem !important;
+  }
+
+  /* Add contact info for print */
+  .resume-page h1::after {
+    content: "chopsdev.github.io/Website-Portfolio" !important;
+    display: block !important;
+    font-size: 10pt !important;
+    font-weight: normal !important;
+    color: #666 !important;
+    margin-top: 0.25rem !important;
+  }
+}
