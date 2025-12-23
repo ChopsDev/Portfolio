@@ -134,6 +134,7 @@ function getUIAudioContext() {
 }
 
 function playKonamiDeactivate() {
+  try {
   const ctx = getUIAudioContext();
   const now = ctx.currentTime;
 
@@ -186,10 +187,12 @@ function playKonamiDeactivate() {
   noiseGain.connect(ctx.destination);
   noise.start(now + 0.5);
   noise.stop(now + 0.8);
+  } catch (e) {}
 }
 
 function playCRTThemeToggle(toDark) {
   if (!cheatsEnabled) return;
+  try {
   const ctx = getUIAudioContext();
   const now = ctx.currentTime;
 
@@ -251,10 +254,12 @@ function playCRTThemeToggle(toDark) {
   noiseGain.connect(ctx.destination);
   noise.start(now);
   noise.stop(now + 0.05);
+  } catch (e) {}
 }
 
 function playCRTPageSwitch() {
   if (!cheatsEnabled) return;
+  try {
   const ctx = getUIAudioContext();
   const now = ctx.currentTime;
 
@@ -306,10 +311,12 @@ function playCRTPageSwitch() {
   confirmGain.connect(ctx.destination);
   confirm.start(now + 0.1);
   confirm.stop(now + 0.15);
+  } catch (e) {}
 }
 
 function playCRTEscape() {
   if (!cheatsEnabled) return;
+  try {
   const ctx = getUIAudioContext();
   const now = ctx.currentTime;
 
@@ -346,10 +353,12 @@ function playCRTEscape() {
   noiseGain.connect(ctx.destination);
   noise.start(now);
   noise.stop(now + 0.04);
+  } catch (e) {}
 }
 
 function playPanelOpen() {
   if (!cheatsEnabled) return;
+  try {
   const ctx = getUIAudioContext();
   const now = ctx.currentTime;
 
@@ -402,10 +411,12 @@ function playPanelOpen() {
   noiseGain.connect(ctx.destination);
   noise.start(now);
   noise.stop(now + 0.08);
+  } catch (e) {}
 }
 
 function playCRTClick() {
   if (!cheatsEnabled) return;
+  try {
   const ctx = getUIAudioContext();
   const now = ctx.currentTime;
 
@@ -452,10 +463,12 @@ function playCRTClick() {
 
   noise.start(now);
   noise.stop(now + 0.02);
+  } catch (e) {}
 }
 
 function playCRTCollapsible(opening) {
   if (!cheatsEnabled) return;
+  try {
   const ctx = getUIAudioContext();
   const now = ctx.currentTime;
 
@@ -505,10 +518,12 @@ function playCRTCollapsible(opening) {
   noiseGain.connect(ctx.destination);
   noise.start(now);
   noise.stop(now + 0.025);
+  } catch (e) {}
 }
 
 function playCRTType() {
   if (!cheatsEnabled) return;
+  try {
   const ctx = getUIAudioContext();
   const now = ctx.currentTime;
 
@@ -548,10 +563,12 @@ function playCRTType() {
   noiseGain.connect(ctx.destination);
   noise.start(now);
   noise.stop(now + 0.015);
+  } catch (e) {}
 }
 
 function playCRTHover() {
   if (!cheatsEnabled) return;
+  try {
   const ctx = getUIAudioContext();
   const now = ctx.currentTime;
 
@@ -588,10 +605,12 @@ function playCRTHover() {
   noiseGain.connect(ctx.destination);
   noise.start(now);
   noise.stop(now + 0.015);
+  } catch (e) {}
 }
 
 function playPanelClose() {
   if (!cheatsEnabled) return;
+  try {
   const ctx = getUIAudioContext();
   const now = ctx.currentTime;
 
@@ -657,6 +676,7 @@ function playPanelClose() {
   thumpGain.connect(ctx.destination);
   thump.start(now + 0.12);
   thump.stop(now + 0.22);
+  } catch (e) {}
 }
 
 // Show middle content on page load
