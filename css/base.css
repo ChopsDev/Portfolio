@@ -1580,6 +1580,8 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   z-index: 99997;
   opacity: 0;
   transition: opacity 0.3s ease;
+  border-radius: 30px;
+  overflow: hidden;
 }
 
 .crt-overlay.active {
@@ -1587,37 +1589,76 @@ html.middle-dark-pending .theme-toggle .icon-sun {
 }
 
 body.crt-active {
-  perspective: 1000px;
+  overflow: hidden;
 }
 
 body.crt-active .container {
-  transform: perspective(800px) rotateX(1deg);
-  transform-style: preserve-3d;
-  border-radius: 20px;
-  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.3);
-  animation: crt-jitter 0.5s steps(1) infinite, crt-flicker 0.1s infinite;
+  border-radius: 30px;
+  box-shadow:
+    inset 0 0 80px rgba(0, 0, 0, 0.4),
+    inset 0 0 200px rgba(0, 0, 0, 0.2);
+  animation: crt-jitter 0.5s steps(1) infinite, crt-flicker 0.15s infinite;
+}
+
+/* CRT curved screen bulge effect */
+body.crt-active::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  border-radius: 30px;
+  box-shadow:
+    inset 0 0 150px 60px rgba(0, 0, 0, 0.5),
+    inset 0 -5px 30px rgba(0, 0, 0, 0.3),
+    inset 0 5px 30px rgba(0, 0, 0, 0.3),
+    inset -5px 0 30px rgba(0, 0, 0, 0.3),
+    inset 5px 0 30px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  z-index: 99996;
+}
+
+/* Curved glass reflection highlight */
+body.crt-active::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 80% 60% at 50% 50%,
+    transparent 0%,
+    transparent 50%,
+    rgba(0, 0, 0, 0.15) 80%,
+    rgba(0, 0, 0, 0.4) 100%
+  );
+  border-radius: 30px;
+  pointer-events: none;
+  z-index: 99996;
 }
 
 @keyframes crt-flicker {
-  0%, 89%, 100% { opacity: 1; filter: brightness(1); }
-  90% { opacity: 0.85; filter: brightness(0.9); }
-  92% { opacity: 1; filter: brightness(1.1); }
-  94% { opacity: 0.9; filter: brightness(0.85); }
-  96% { opacity: 1; filter: brightness(1); }
+  0%, 100% { opacity: 1; filter: brightness(1); }
+  10% { opacity: 0.97; filter: brightness(0.95); }
+  20% { opacity: 1; filter: brightness(1.05); }
+  30% { opacity: 0.95; filter: brightness(0.9); }
+  40% { opacity: 1; filter: brightness(1); }
+  50% { opacity: 0.92; filter: brightness(0.85); }
+  60% { opacity: 1; filter: brightness(1.1); }
+  70% { opacity: 0.98; filter: brightness(0.95); }
+  80% { opacity: 1; filter: brightness(1); }
+  90% { opacity: 0.9; filter: brightness(0.8); }
 }
 
 @keyframes crt-jitter {
-  0%, 90%, 100% { transform: perspective(800px) rotateX(1deg) translateX(0); }
-  92% { transform: perspective(800px) rotateX(1deg) translateX(-2px); }
-  94% { transform: perspective(800px) rotateX(1deg) translateX(3px); }
-  96% { transform: perspective(800px) rotateX(1deg) translateX(-1px); }
-  98% { transform: perspective(800px) rotateX(1deg) translateX(2px); }
+  0%, 90%, 100% { transform: translateX(0); }
+  92% { transform: translateX(-2px); }
+  94% { transform: translateX(3px); }
+  96% { transform: translateX(-1px); }
+  98% { transform: translateX(2px); }
 }
 
 .crt-overlay::before {
   content: '';
   position: absolute;
   inset: 0;
+  border-radius: 30px;
   background: radial-gradient(ellipse at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
 }
 
@@ -1625,6 +1666,7 @@ body.crt-active .container {
   content: '';
   position: absolute;
   inset: 0;
+  border-radius: 30px;
   background: repeating-linear-gradient(
     0deg,
     rgba(0, 0, 0, 0.25) 0px,
