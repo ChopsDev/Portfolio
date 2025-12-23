@@ -138,40 +138,55 @@ function playPanelOpen() {
   const ctx = getUIAudioContext();
   const now = ctx.currentTime;
 
-  // Swoosh sound - frequency sweep up
+  // CRT power-on sweep - rising square wave
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
-  const filter = ctx.createBiquadFilter();
-
-  osc.type = 'sine';
-  osc.frequency.setValueAtTime(150, now);
-  osc.frequency.exponentialRampToValueAtTime(400, now + 0.15);
-
-  filter.type = 'lowpass';
-  filter.frequency.setValueAtTime(800, now);
-  filter.frequency.exponentialRampToValueAtTime(2000, now + 0.1);
-
-  gain.gain.setValueAtTime(0.12, now);
-  gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
-
-  osc.connect(filter);
-  filter.connect(gain);
+  osc.type = 'square';
+  osc.frequency.setValueAtTime(80, now);
+  osc.frequency.exponentialRampToValueAtTime(600, now + 0.12);
+  gain.gain.setValueAtTime(0.06, now);
+  gain.gain.setValueAtTime(0.06, now + 0.08);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+  osc.connect(gain);
   gain.connect(ctx.destination);
-
   osc.start(now);
-  osc.stop(now + 0.2);
+  osc.stop(now + 0.15);
 
-  // Subtle click
-  const click = ctx.createOscillator();
-  const clickGain = ctx.createGain();
-  click.type = 'sine';
-  click.frequency.value = 1200;
-  clickGain.gain.setValueAtTime(0.08, now);
-  clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
-  click.connect(clickGain);
-  clickGain.connect(ctx.destination);
-  click.start(now);
-  click.stop(now + 0.03);
+  // Digital blip accent
+  const blip = ctx.createOscillator();
+  const blipGain = ctx.createGain();
+  blip.type = 'square';
+  blip.frequency.setValueAtTime(1200, now + 0.05);
+  blip.frequency.setValueAtTime(1400, now + 0.07);
+  blip.frequency.setValueAtTime(1800, now + 0.09);
+  blipGain.gain.setValueAtTime(0.04, now + 0.05);
+  blipGain.gain.setValueAtTime(0.05, now + 0.07);
+  blipGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+  blip.connect(blipGain);
+  blipGain.connect(ctx.destination);
+  blip.start(now + 0.05);
+  blip.stop(now + 0.12);
+
+  // Static burst
+  const bufferSize = ctx.sampleRate * 0.08;
+  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const output = noiseBuffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    output[i] = Math.random() * 2 - 1;
+  }
+  const noise = ctx.createBufferSource();
+  const noiseGain = ctx.createGain();
+  const noiseFilter = ctx.createBiquadFilter();
+  noise.buffer = noiseBuffer;
+  noiseFilter.type = 'highpass';
+  noiseFilter.frequency.value = 2000;
+  noiseGain.gain.setValueAtTime(0.04, now);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+  noise.connect(noiseFilter);
+  noiseFilter.connect(noiseGain);
+  noiseGain.connect(ctx.destination);
+  noise.start(now);
+  noise.stop(now + 0.08);
 }
 
 function playCRTClick() {
@@ -229,41 +244,68 @@ function playPanelClose() {
   const ctx = getUIAudioContext();
   const now = ctx.currentTime;
 
-  // Swoosh sound - frequency sweep down
+  // CRT power-down sweep - falling square wave
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
-  const filter = ctx.createBiquadFilter();
-
-  osc.type = 'sine';
-  osc.frequency.setValueAtTime(350, now);
-  osc.frequency.exponentialRampToValueAtTime(120, now + 0.15);
-
-  filter.type = 'lowpass';
-  filter.frequency.setValueAtTime(1500, now);
-  filter.frequency.exponentialRampToValueAtTime(400, now + 0.15);
-
-  gain.gain.setValueAtTime(0.1, now);
-  gain.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
-
-  osc.connect(filter);
-  filter.connect(gain);
+  osc.type = 'square';
+  osc.frequency.setValueAtTime(500, now);
+  osc.frequency.exponentialRampToValueAtTime(60, now + 0.18);
+  gain.gain.setValueAtTime(0.06, now);
+  gain.gain.setValueAtTime(0.05, now + 0.1);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+  osc.connect(gain);
   gain.connect(ctx.destination);
-
   osc.start(now);
-  osc.stop(now + 0.18);
+  osc.stop(now + 0.2);
 
-  // Soft thud
-  const thud = ctx.createOscillator();
-  const thudGain = ctx.createGain();
-  thud.type = 'sine';
-  thud.frequency.setValueAtTime(80, now + 0.05);
-  thud.frequency.exponentialRampToValueAtTime(40, now + 0.12);
-  thudGain.gain.setValueAtTime(0.1, now + 0.05);
-  thudGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
-  thud.connect(thudGain);
-  thudGain.connect(ctx.destination);
-  thud.start(now + 0.05);
-  thud.stop(now + 0.12);
+  // Descending digital blips
+  const blip = ctx.createOscillator();
+  const blipGain = ctx.createGain();
+  blip.type = 'square';
+  blip.frequency.setValueAtTime(1600, now);
+  blip.frequency.setValueAtTime(1200, now + 0.03);
+  blip.frequency.setValueAtTime(800, now + 0.06);
+  blipGain.gain.setValueAtTime(0.04, now);
+  blipGain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+  blip.connect(blipGain);
+  blipGain.connect(ctx.destination);
+  blip.start(now);
+  blip.stop(now + 0.1);
+
+  // Static crackle
+  const bufferSize = ctx.sampleRate * 0.1;
+  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const output = noiseBuffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    output[i] = Math.random() * 2 - 1;
+  }
+  const noise = ctx.createBufferSource();
+  const noiseGain = ctx.createGain();
+  const noiseFilter = ctx.createBiquadFilter();
+  noise.buffer = noiseBuffer;
+  noiseFilter.type = 'bandpass';
+  noiseFilter.frequency.value = 1500;
+  noiseFilter.Q.value = 0.5;
+  noiseGain.gain.setValueAtTime(0.02, now + 0.05);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+  noise.connect(noiseFilter);
+  noiseFilter.connect(noiseGain);
+  noiseGain.connect(ctx.destination);
+  noise.start(now + 0.05);
+  noise.stop(now + 0.15);
+
+  // Low thump at the end
+  const thump = ctx.createOscillator();
+  const thumpGain = ctx.createGain();
+  thump.type = 'sine';
+  thump.frequency.setValueAtTime(50, now + 0.12);
+  thump.frequency.exponentialRampToValueAtTime(30, now + 0.2);
+  thumpGain.gain.setValueAtTime(0.08, now + 0.12);
+  thumpGain.gain.exponentialRampToValueAtTime(0.001, now + 0.22);
+  thump.connect(thumpGain);
+  thumpGain.connect(ctx.destination);
+  thump.start(now + 0.12);
+  thump.stop(now + 0.22);
 }
 
 // Show middle content on page load
