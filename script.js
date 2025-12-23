@@ -1191,40 +1191,101 @@ function decryptText(element, finalText, onComplete) {
   scramble();
 }
 
+function shutdownSequence(container, onComplete) {
+  const lines = [
+    { text: '> DISABLING CHEAT MODULE...', delay: 0 },
+    { text: '> UNLOADING EFFECTS...', delay: 400 },
+    { text: '> RESTORING DEFAULTS...', delay: 800 },
+    { text: '> SHUTDOWN COMPLETE', delay: 1200, final: true }
+  ];
+
+  container.innerHTML = '';
+  container.style.textAlign = 'left';
+  container.style.fontFamily = 'monospace';
+  container.style.fontSize = 'clamp(0.9rem, 2.5vw, 1.2rem)';
+
+  lines.forEach((line, index) => {
+    setTimeout(() => {
+      const lineEl = document.createElement('div');
+      lineEl.style.color = line.final ? '#0f0' : '#0a0';
+      lineEl.style.marginBottom = '0.5rem';
+      lineEl.style.textShadow = line.final ? '0 0 10px rgba(0, 255, 0, 0.5)' : 'none';
+
+      if (line.final) {
+        lineEl.style.marginTop = '1rem';
+        lineEl.style.fontSize = 'clamp(1.2rem, 4vw, 1.8rem)';
+      }
+
+      container.appendChild(lineEl);
+      typeText(lineEl, line.text, () => {
+        if (line.final && onComplete) onComplete();
+      });
+    }, line.delay);
+  });
+}
+
+function typeText(element, text, onComplete) {
+  let i = 0;
+  const speed = 30;
+
+  function type() {
+    if (i < text.length) {
+      element.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, speed);
+    } else if (onComplete) {
+      onComplete();
+    }
+  }
+
+  type();
+}
+
 function toggleKonamiCheats() {
   cheatsEnabled = !cheatsEnabled;
 
   // Show overlay
   const overlay = document.createElement('div');
   overlay.className = 'konami-overlay';
-  const finalText = cheatsEnabled ? 'CHEAT ACTIVATED' : 'CHEAT DEACTIVATED';
-  const subText = cheatsEnabled ? 'nice one' : 'back to normal';
-  overlay.innerHTML = `
-    <div class="konami-content">
-      <div class="konami-text ${cheatsEnabled ? '' : 'disabled'}"></div>
-      <p class="konami-sub">// ${subText}</p>
-    </div>
-  `;
 
-  // Play deactivation sound
-  if (!cheatsEnabled) {
+  if (cheatsEnabled) {
+    // Activation - decrypt animation
+    overlay.innerHTML = `
+      <div class="konami-content">
+        <div class="konami-text"></div>
+        <p class="konami-sub">// nice one</p>
+      </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const textElement = overlay.querySelector('.konami-text');
+    const subElement = overlay.querySelector('.konami-sub');
+
+    decryptText(textElement, 'CHEAT ACTIVATED', () => {
+      subElement.classList.add('visible');
+    });
+
+    setTimeout(() => {
+      overlay.classList.add('fade-out');
+      setTimeout(() => overlay.remove(), 500);
+    }, 2500);
+  } else {
+    // Deactivation - shutdown sequence
+    overlay.innerHTML = `<div class="konami-content"></div>`;
+
+    document.body.appendChild(overlay);
     playKonamiDeactivate();
+
+    const content = overlay.querySelector('.konami-content');
+
+    shutdownSequence(content, () => {
+      setTimeout(() => {
+        overlay.classList.add('fade-out');
+        setTimeout(() => overlay.remove(), 500);
+      }, 800);
+    });
   }
-
-  document.body.appendChild(overlay);
-
-  // Start decrypt animation
-  const textElement = overlay.querySelector('.konami-text');
-  const subElement = overlay.querySelector('.konami-sub');
-
-  decryptText(textElement, finalText, () => {
-    subElement.classList.add('visible');
-  });
-
-  setTimeout(() => {
-    overlay.classList.add('fade-out');
-    setTimeout(() => overlay.remove(), 500);
-  }, 2500);
 
   // Toggle all cheats
   toggleCursorTrail(cheatsEnabled);
