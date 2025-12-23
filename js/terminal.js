@@ -23,7 +23,7 @@ const Terminal = {
     this.overlay.innerHTML = `
       <div class="terminal-container">
         <div class="terminal-header">
-          <span>SECRET TERMINAL - bryncarter.dev</span>
+          <span>SECRET TERMINAL</span>
           <button class="terminal-close">&times;</button>
         </div>
         <div class="terminal-body">

@@ -1,8 +1,10 @@
 // Main initialization and event coordination
 
 // CRT click sound on any click (only in cheat mode)
-document.addEventListener('click', () => {
+// Skip elements that have their own sound effects
+document.addEventListener('click', (e) => {
   if (!cheatsEnabled) return;
+  if (e.target.closest('.collapsible, .dropdown-header')) return;
   playCRTClick();
 });
 

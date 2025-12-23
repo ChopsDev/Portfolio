@@ -271,6 +271,19 @@
   .form-submit {
     width: 100%;
   }
+
+  /* ----- Page Navigation (bottom buttons) ----- */
+
+  .page-nav {
+    gap: 0.25rem;
+    padding: 0.3rem;
+    bottom: 15px;
+  }
+
+  .page-btn {
+    font-size: 0.7rem;
+    padding: 0.4rem 0.8rem;
+  }
 }
 
 /* ----- 375px Minimum Width Adjustments ----- */
@@ -342,5 +355,16 @@
     justify-content: flex-start;
     gap: 0.75rem;
     padding: 1rem;
+  }
+
+  .page-nav {
+    gap: 0.15rem;
+    padding: 0.25rem;
+    bottom: 10px;
+  }
+
+  .page-btn {
+    font-size: 0.6rem;
+    padding: 0.35rem 0.6rem;
   }
 }
