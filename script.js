@@ -138,42 +138,36 @@ function playPanelOpen() {
   const ctx = getUIAudioContext();
   const now = ctx.currentTime;
 
-  // Soft low-pass filter
-  const filter = ctx.createBiquadFilter();
-  filter.type = 'lowpass';
-  filter.frequency.value = 500;
-  filter.connect(ctx.destination);
-
-  // CRT power-on sweep - soft triangle wave
+  // CRT power-on sweep - rising square wave
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
-  osc.type = 'triangle';
-  osc.frequency.setValueAtTime(60, now);
-  osc.frequency.exponentialRampToValueAtTime(350, now + 0.12);
-  gain.gain.setValueAtTime(0.1, now);
-  gain.gain.setValueAtTime(0.1, now + 0.08);
+  osc.type = 'square';
+  osc.frequency.setValueAtTime(80, now);
+  osc.frequency.exponentialRampToValueAtTime(600, now + 0.12);
+  gain.gain.setValueAtTime(0.06, now);
+  gain.gain.setValueAtTime(0.06, now + 0.08);
   gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
   osc.connect(gain);
-  gain.connect(filter);
+  gain.connect(ctx.destination);
   osc.start(now);
   osc.stop(now + 0.15);
 
-  // Soft chime accent
+  // Digital blip accent
   const blip = ctx.createOscillator();
   const blipGain = ctx.createGain();
-  blip.type = 'sine';
-  blip.frequency.setValueAtTime(300, now + 0.05);
-  blip.frequency.setValueAtTime(400, now + 0.07);
-  blip.frequency.setValueAtTime(500, now + 0.09);
-  blipGain.gain.setValueAtTime(0.06, now + 0.05);
-  blipGain.gain.setValueAtTime(0.07, now + 0.07);
+  blip.type = 'square';
+  blip.frequency.setValueAtTime(1200, now + 0.05);
+  blip.frequency.setValueAtTime(1400, now + 0.07);
+  blip.frequency.setValueAtTime(1800, now + 0.09);
+  blipGain.gain.setValueAtTime(0.04, now + 0.05);
+  blipGain.gain.setValueAtTime(0.05, now + 0.07);
   blipGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
   blip.connect(blipGain);
-  blipGain.connect(filter);
+  blipGain.connect(ctx.destination);
   blip.start(now + 0.05);
   blip.stop(now + 0.12);
 
-  // Soft muffled static
+  // Static burst
   const bufferSize = ctx.sampleRate * 0.08;
   const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
   const output = noiseBuffer.getChannelData(0);
@@ -184,9 +178,9 @@ function playPanelOpen() {
   const noiseGain = ctx.createGain();
   const noiseFilter = ctx.createBiquadFilter();
   noise.buffer = noiseBuffer;
-  noiseFilter.type = 'lowpass';
-  noiseFilter.frequency.value = 400;
-  noiseGain.gain.setValueAtTime(0.03, now);
+  noiseFilter.type = 'highpass';
+  noiseFilter.frequency.value = 2000;
+  noiseGain.gain.setValueAtTime(0.04, now);
   noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
   noise.connect(noiseFilter);
   noiseFilter.connect(noiseGain);
@@ -250,39 +244,33 @@ function playCRTCollapsible(opening) {
   const ctx = getUIAudioContext();
   const now = ctx.currentTime;
 
-  // Soft low-pass filter
-  const filter = ctx.createBiquadFilter();
-  filter.type = 'lowpass';
-  filter.frequency.value = 600;
-  filter.connect(ctx.destination);
-
-  // Soft mechanical click - triangle wave
+  // Mechanical relay click
   const click1 = ctx.createOscillator();
   const click1Gain = ctx.createGain();
-  click1.type = 'triangle';
-  click1.frequency.setValueAtTime(opening ? 400 : 300, now);
-  click1.frequency.setValueAtTime(opening ? 200 : 150, now + 0.02);
-  click1Gain.gain.setValueAtTime(0.12, now);
-  click1Gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+  click1.type = 'square';
+  click1.frequency.setValueAtTime(opening ? 1500 : 1200, now);
+  click1.frequency.setValueAtTime(opening ? 800 : 600, now + 0.015);
+  click1Gain.gain.setValueAtTime(0.1, now);
+  click1Gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
   click1.connect(click1Gain);
-  click1Gain.connect(filter);
+  click1Gain.connect(ctx.destination);
   click1.start(now);
-  click1.stop(now + 0.04);
+  click1.stop(now + 0.03);
 
-  // Second softer click
+  // Second click for relay feel
   const click2 = ctx.createOscillator();
   const click2Gain = ctx.createGain();
-  click2.type = 'sine';
-  click2.frequency.setValueAtTime(opening ? 500 : 250, now + 0.025);
-  click2Gain.gain.setValueAtTime(0.08, now + 0.025);
-  click2Gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+  click2.type = 'square';
+  click2.frequency.setValueAtTime(opening ? 2000 : 1000, now + 0.02);
+  click2Gain.gain.setValueAtTime(0.08, now + 0.02);
+  click2Gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
   click2.connect(click2Gain);
-  click2Gain.connect(filter);
-  click2.start(now + 0.025);
-  click2.stop(now + 0.05);
+  click2Gain.connect(ctx.destination);
+  click2.start(now + 0.02);
+  click2.stop(now + 0.04);
 
-  // Soft muffled noise
-  const bufferSize = ctx.sampleRate * 0.03;
+  // Tiny mechanical noise
+  const bufferSize = ctx.sampleRate * 0.025;
   const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
   const output = noiseBuffer.getChannelData(0);
   for (let i = 0; i < bufferSize; i++) {
@@ -292,323 +280,16 @@ function playCRTCollapsible(opening) {
   const noiseGain = ctx.createGain();
   const noiseFilter = ctx.createBiquadFilter();
   noise.buffer = noiseBuffer;
-  noiseFilter.type = 'lowpass';
-  noiseFilter.frequency.value = 400;
-  noiseGain.gain.setValueAtTime(0.03, now);
-  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
-  noise.connect(noiseFilter);
-  noiseFilter.connect(noiseGain);
-  noiseGain.connect(ctx.destination);
-  noise.start(now);
-  noise.stop(now + 0.03);
-}
-
-function playKonamiActivate() {
-  const ctx = getUIAudioContext();
-  const now = ctx.currentTime;
-
-  // Soft low-pass filter for all tones
-  const masterFilter = ctx.createBiquadFilter();
-  masterFilter.type = 'lowpass';
-  masterFilter.frequency.value = 800;
-  masterFilter.Q.value = 0.5;
-  masterFilter.connect(ctx.destination);
-
-  // Soft static burst at start
-  const bufferSize = ctx.sampleRate * 0.1;
-  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-  const output = noiseBuffer.getChannelData(0);
-  for (let i = 0; i < bufferSize; i++) {
-    output[i] = Math.random() * 2 - 1;
-  }
-  const noise = ctx.createBufferSource();
-  const noiseGain = ctx.createGain();
-  const noiseFilter = ctx.createBiquadFilter();
-  noise.buffer = noiseBuffer;
-  noiseFilter.type = 'lowpass';
-  noiseFilter.frequency.value = 600;
-  noiseGain.gain.setValueAtTime(0.06, now);
-  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
-  noise.connect(noiseFilter);
-  noiseFilter.connect(noiseGain);
-  noiseGain.connect(ctx.destination);
-  noise.start(now);
-  noise.stop(now + 0.1);
-
-  // Warm ascending arpeggio - triangle waves for softer tone
-  const notes = [196, 247, 294, 392, 494, 587]; // G3, B3, D4, G4, B4, D5 - lower octave
-  notes.forEach((freq, i) => {
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = 'triangle';
-    osc.frequency.value = freq;
-    gain.gain.setValueAtTime(0.1, now + 0.05 + i * 0.07);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05 + i * 0.07 + 0.15);
-    osc.connect(gain);
-    gain.connect(masterFilter);
-    osc.start(now + 0.05 + i * 0.07);
-    osc.stop(now + 0.05 + i * 0.07 + 0.15);
-  });
-
-  // Soft chime blips - sine waves instead of square
-  const chimes = [523, 659, 784, 659, 784, 1047];
-  chimes.forEach((freq, i) => {
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = 'sine';
-    osc.frequency.value = freq;
-    gain.gain.setValueAtTime(0.04, now + 0.5 + i * 0.05);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5 + i * 0.05 + 0.1);
-    osc.connect(gain);
-    gain.connect(masterFilter);
-    osc.start(now + 0.5 + i * 0.05);
-    osc.stop(now + 0.5 + i * 0.05 + 0.1);
-  });
-
-  // Final warm chord
-  const chordTime = now + 0.85;
-  [392, 494, 587].forEach(freq => { // G4, B4, D5 - major chord
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = 'triangle';
-    osc.frequency.value = freq;
-    gain.gain.setValueAtTime(0.08, chordTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, chordTime + 0.4);
-    osc.connect(gain);
-    gain.connect(masterFilter);
-    osc.start(chordTime);
-    osc.stop(chordTime + 0.4);
-  });
-
-  // Soft end static
-  const endNoise = ctx.createBufferSource();
-  const endNoiseGain = ctx.createGain();
-  const endNoiseFilter = ctx.createBiquadFilter();
-  endNoise.buffer = noiseBuffer;
-  endNoiseFilter.type = 'lowpass';
-  endNoiseFilter.frequency.value = 400;
-  endNoiseGain.gain.setValueAtTime(0.03, chordTime + 0.15);
-  endNoiseGain.gain.exponentialRampToValueAtTime(0.001, chordTime + 0.3);
-  endNoise.connect(endNoiseFilter);
-  endNoiseFilter.connect(endNoiseGain);
-  endNoiseGain.connect(ctx.destination);
-  endNoise.start(chordTime + 0.15);
-  endNoise.stop(chordTime + 0.3);
-}
-
-function playKonamiDeactivate() {
-  const ctx = getUIAudioContext();
-  const now = ctx.currentTime;
-
-  // Power-down sequence - descending tones
-  const frequencies = [1000, 800, 600, 450, 300, 150];
-  frequencies.forEach((freq, i) => {
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = 'square';
-    osc.frequency.value = freq;
-    gain.gain.setValueAtTime(0.07, now + i * 0.1);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.09);
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start(now + i * 0.1);
-    osc.stop(now + i * 0.1 + 0.09);
-  });
-
-  // Final low thump
-  const thump = ctx.createOscillator();
-  const thumpGain = ctx.createGain();
-  thump.type = 'sine';
-  thump.frequency.setValueAtTime(80, now + 0.65);
-  thump.frequency.exponentialRampToValueAtTime(30, now + 0.9);
-  thumpGain.gain.setValueAtTime(0.15, now + 0.65);
-  thumpGain.gain.exponentialRampToValueAtTime(0.001, now + 0.9);
-  thump.connect(thumpGain);
-  thumpGain.connect(ctx.destination);
-  thump.start(now + 0.65);
-  thump.stop(now + 0.9);
-
-  // Static fadeout
-  const bufferSize = ctx.sampleRate * 0.3;
-  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-  const output = noiseBuffer.getChannelData(0);
-  for (let i = 0; i < bufferSize; i++) {
-    output[i] = Math.random() * 2 - 1;
-  }
-  const noise = ctx.createBufferSource();
-  const noiseGain = ctx.createGain();
-  const noiseFilter = ctx.createBiquadFilter();
-  noise.buffer = noiseBuffer;
-  noiseFilter.type = 'lowpass';
-  noiseFilter.frequency.setValueAtTime(4000, now + 0.5);
-  noiseFilter.frequency.exponentialRampToValueAtTime(200, now + 0.8);
-  noiseGain.gain.setValueAtTime(0.06, now + 0.5);
-  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
-  noise.connect(noiseFilter);
-  noiseFilter.connect(noiseGain);
-  noiseGain.connect(ctx.destination);
-  noise.start(now + 0.5);
-  noise.stop(now + 0.8);
-}
-
-function playCRTThemeToggle(toDark) {
-  if (!cheatsEnabled) return;
-  const ctx = getUIAudioContext();
-  const now = ctx.currentTime;
-
-  // Electric switch click
-  const click = ctx.createOscillator();
-  const clickGain = ctx.createGain();
-  click.type = 'square';
-  click.frequency.setValueAtTime(toDark ? 400 : 600, now);
-  click.frequency.setValueAtTime(toDark ? 200 : 800, now + 0.02);
-  clickGain.gain.setValueAtTime(0.1, now);
-  clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
-  click.connect(clickGain);
-  clickGain.connect(ctx.destination);
-  click.start(now);
-  click.stop(now + 0.04);
-
-  // Power surge hum
-  const hum = ctx.createOscillator();
-  const humGain = ctx.createGain();
-  hum.type = 'sawtooth';
-  hum.frequency.setValueAtTime(toDark ? 80 : 120, now + 0.02);
-  hum.frequency.exponentialRampToValueAtTime(toDark ? 50 : 150, now + 0.12);
-  humGain.gain.setValueAtTime(0.06, now + 0.02);
-  humGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
-  hum.connect(humGain);
-  humGain.connect(ctx.destination);
-  hum.start(now + 0.02);
-  hum.stop(now + 0.12);
-
-  // Confirmation blip
-  const blip = ctx.createOscillator();
-  const blipGain = ctx.createGain();
-  blip.type = 'square';
-  blip.frequency.value = toDark ? 300 : 900;
-  blipGain.gain.setValueAtTime(0.07, now + 0.08);
-  blipGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
-  blip.connect(blipGain);
-  blipGain.connect(ctx.destination);
-  blip.start(now + 0.08);
-  blip.stop(now + 0.12);
-
-  // Static crackle
-  const bufferSize = ctx.sampleRate * 0.05;
-  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-  const output = noiseBuffer.getChannelData(0);
-  for (let i = 0; i < bufferSize; i++) {
-    output[i] = Math.random() * 2 - 1;
-  }
-  const noise = ctx.createBufferSource();
-  const noiseGain = ctx.createGain();
-  const noiseFilter = ctx.createBiquadFilter();
-  noise.buffer = noiseBuffer;
-  noiseFilter.type = 'highpass';
+  noiseFilter.type = 'bandpass';
   noiseFilter.frequency.value = 2000;
+  noiseFilter.Q.value = 2;
   noiseGain.gain.setValueAtTime(0.04, now);
-  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.025);
   noise.connect(noiseFilter);
   noiseFilter.connect(noiseGain);
   noiseGain.connect(ctx.destination);
   noise.start(now);
-  noise.stop(now + 0.05);
-}
-
-function playCRTPageSwitch() {
-  if (!cheatsEnabled) return;
-  const ctx = getUIAudioContext();
-  const now = ctx.currentTime;
-
-  // Channel change static burst
-  const bufferSize = ctx.sampleRate * 0.12;
-  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-  const output = noiseBuffer.getChannelData(0);
-  for (let i = 0; i < bufferSize; i++) {
-    output[i] = Math.random() * 2 - 1;
-  }
-  const noise = ctx.createBufferSource();
-  const noiseGain = ctx.createGain();
-  const noiseFilter = ctx.createBiquadFilter();
-  noise.buffer = noiseBuffer;
-  noiseFilter.type = 'bandpass';
-  noiseFilter.frequency.setValueAtTime(3000, now);
-  noiseFilter.frequency.exponentialRampToValueAtTime(800, now + 0.1);
-  noiseGain.gain.setValueAtTime(0.12, now);
-  noiseGain.gain.setValueAtTime(0.08, now + 0.03);
-  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
-  noise.connect(noiseFilter);
-  noiseFilter.connect(noiseGain);
-  noiseGain.connect(ctx.destination);
-  noise.start(now);
-  noise.stop(now + 0.12);
-
-  // Tuning blip
-  const blip = ctx.createOscillator();
-  const blipGain = ctx.createGain();
-  blip.type = 'square';
-  blip.frequency.setValueAtTime(600, now + 0.02);
-  blip.frequency.setValueAtTime(900, now + 0.05);
-  blip.frequency.setValueAtTime(750, now + 0.08);
-  blipGain.gain.setValueAtTime(0.06, now + 0.02);
-  blipGain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
-  blip.connect(blipGain);
-  blipGain.connect(ctx.destination);
-  blip.start(now + 0.02);
-  blip.stop(now + 0.1);
-
-  // Confirmation tone
-  const confirm = ctx.createOscillator();
-  const confirmGain = ctx.createGain();
-  confirm.type = 'square';
-  confirm.frequency.value = 1200;
-  confirmGain.gain.setValueAtTime(0.05, now + 0.1);
-  confirmGain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
-  confirm.connect(confirmGain);
-  confirmGain.connect(ctx.destination);
-  confirm.start(now + 0.1);
-  confirm.stop(now + 0.15);
-}
-
-function playCRTEscape() {
-  if (!cheatsEnabled) return;
-  const ctx = getUIAudioContext();
-  const now = ctx.currentTime;
-
-  // Quick descending blip
-  const osc = ctx.createOscillator();
-  const gain = ctx.createGain();
-  osc.type = 'square';
-  osc.frequency.setValueAtTime(800, now);
-  osc.frequency.exponentialRampToValueAtTime(200, now + 0.08);
-  gain.gain.setValueAtTime(0.1, now);
-  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
-  osc.connect(gain);
-  gain.connect(ctx.destination);
-  osc.start(now);
-  osc.stop(now + 0.1);
-
-  // Static pop
-  const bufferSize = ctx.sampleRate * 0.04;
-  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-  const output = noiseBuffer.getChannelData(0);
-  for (let i = 0; i < bufferSize; i++) {
-    output[i] = Math.random() * 2 - 1;
-  }
-  const noise = ctx.createBufferSource();
-  const noiseGain = ctx.createGain();
-  const noiseFilter = ctx.createBiquadFilter();
-  noise.buffer = noiseBuffer;
-  noiseFilter.type = 'bandpass';
-  noiseFilter.frequency.value = 1500;
-  noiseGain.gain.setValueAtTime(0.06, now);
-  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
-  noise.connect(noiseFilter);
-  noiseFilter.connect(noiseGain);
-  noiseGain.connect(ctx.destination);
-  noise.start(now);
-  noise.stop(now + 0.04);
+  noise.stop(now + 0.025);
 }
 
 function playCRTType() {
@@ -659,21 +340,21 @@ function playCRTHover() {
   const ctx = getUIAudioContext();
   const now = ctx.currentTime;
 
-  // Punchy slap - low frequency hit
-  const slap = ctx.createOscillator();
-  const slapGain = ctx.createGain();
-  slap.type = 'sine';
-  slap.frequency.setValueAtTime(400, now);
-  slap.frequency.exponentialRampToValueAtTime(80, now + 0.05);
-  slapGain.gain.setValueAtTime(0.15, now);
-  slapGain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
-  slap.connect(slapGain);
-  slapGain.connect(ctx.destination);
-  slap.start(now);
-  slap.stop(now + 0.06);
+  // Quick electronic tick
+  const tick = ctx.createOscillator();
+  const tickGain = ctx.createGain();
+  tick.type = 'square';
+  tick.frequency.setValueAtTime(2400, now);
+  tick.frequency.setValueAtTime(1800, now + 0.01);
+  tickGain.gain.setValueAtTime(0.03, now);
+  tickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.025);
+  tick.connect(tickGain);
+  tickGain.connect(ctx.destination);
+  tick.start(now);
+  tick.stop(now + 0.025);
 
-  // Noise transient for attack
-  const bufferSize = ctx.sampleRate * 0.02;
+  // Tiny static
+  const bufferSize = ctx.sampleRate * 0.015;
   const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
   const output = noiseBuffer.getChannelData(0);
   for (let i = 0; i < bufferSize; i++) {
@@ -683,15 +364,15 @@ function playCRTHover() {
   const noiseGain = ctx.createGain();
   const noiseFilter = ctx.createBiquadFilter();
   noise.buffer = noiseBuffer;
-  noiseFilter.type = 'lowpass';
-  noiseFilter.frequency.value = 1500;
-  noiseGain.gain.setValueAtTime(0.1, now);
-  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.025);
+  noiseFilter.type = 'highpass';
+  noiseFilter.frequency.value = 4000;
+  noiseGain.gain.setValueAtTime(0.015, now);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.015);
   noise.connect(noiseFilter);
   noiseFilter.connect(noiseGain);
   noiseGain.connect(ctx.destination);
   noise.start(now);
-  noise.stop(now + 0.025);
+  noise.stop(now + 0.015);
 }
 
 function playPanelClose() {
@@ -699,41 +380,35 @@ function playPanelClose() {
   const ctx = getUIAudioContext();
   const now = ctx.currentTime;
 
-  // Soft low-pass filter
-  const filter = ctx.createBiquadFilter();
-  filter.type = 'lowpass';
-  filter.frequency.value = 400;
-  filter.connect(ctx.destination);
-
-  // CRT power-down sweep - soft triangle wave
+  // CRT power-down sweep - falling square wave
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
-  osc.type = 'triangle';
-  osc.frequency.setValueAtTime(300, now);
-  osc.frequency.exponentialRampToValueAtTime(50, now + 0.18);
-  gain.gain.setValueAtTime(0.1, now);
-  gain.gain.setValueAtTime(0.08, now + 0.1);
+  osc.type = 'square';
+  osc.frequency.setValueAtTime(500, now);
+  osc.frequency.exponentialRampToValueAtTime(60, now + 0.18);
+  gain.gain.setValueAtTime(0.06, now);
+  gain.gain.setValueAtTime(0.05, now + 0.1);
   gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
   osc.connect(gain);
-  gain.connect(filter);
+  gain.connect(ctx.destination);
   osc.start(now);
   osc.stop(now + 0.2);
 
-  // Descending soft tones
+  // Descending digital blips
   const blip = ctx.createOscillator();
   const blipGain = ctx.createGain();
-  blip.type = 'sine';
-  blip.frequency.setValueAtTime(400, now);
-  blip.frequency.setValueAtTime(300, now + 0.03);
-  blip.frequency.setValueAtTime(200, now + 0.06);
-  blipGain.gain.setValueAtTime(0.06, now);
+  blip.type = 'square';
+  blip.frequency.setValueAtTime(1600, now);
+  blip.frequency.setValueAtTime(1200, now + 0.03);
+  blip.frequency.setValueAtTime(800, now + 0.06);
+  blipGain.gain.setValueAtTime(0.04, now);
   blipGain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
   blip.connect(blipGain);
-  blipGain.connect(filter);
+  blipGain.connect(ctx.destination);
   blip.start(now);
   blip.stop(now + 0.1);
 
-  // Soft muffled static
+  // Static crackle
   const bufferSize = ctx.sampleRate * 0.1;
   const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
   const output = noiseBuffer.getChannelData(0);
@@ -744,8 +419,9 @@ function playPanelClose() {
   const noiseGain = ctx.createGain();
   const noiseFilter = ctx.createBiquadFilter();
   noise.buffer = noiseBuffer;
-  noiseFilter.type = 'lowpass';
-  noiseFilter.frequency.value = 350;
+  noiseFilter.type = 'bandpass';
+  noiseFilter.frequency.value = 1500;
+  noiseFilter.Q.value = 0.5;
   noiseGain.gain.setValueAtTime(0.02, now + 0.05);
   noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
   noise.connect(noiseFilter);
@@ -1252,7 +928,7 @@ function toggleKonamiCheats() {
 
   // Play activation/deactivation sound
   if (cheatsEnabled) {
-    playKonamiActivate();
+    return;
   } else {
     playKonamiDeactivate();
   }
@@ -1348,6 +1024,7 @@ let crtOverlay = null;
 let crtAudioContext = null;
 let crtOscillators = [];
 let crtGainNode = null;
+let crtGlitchInterval = null;
 
 function createCRTHum() {
   if (crtAudioContext) return;
@@ -1380,7 +1057,7 @@ function createCRTHum() {
   hum100.frequency.value = 100;
   lfoGain.connect(hum100.frequency); // Add wobble
   const gain100 = crtAudioContext.createGain();
-  gain100.gain.value = 0.08;
+  gain100.gain.value = 0.18;
   hum100.connect(gain100);
   gain100.connect(humFilter);
   hum100.start();
@@ -1391,7 +1068,7 @@ function createCRTHum() {
   hum200.type = 'sine';
   hum200.frequency.value = 200;
   const gain200 = crtAudioContext.createGain();
-  gain200.gain.value = 0.04;
+  gain200.gain.value = 0.1;
   hum200.connect(gain200);
   gain200.connect(humFilter);
   hum200.start();
@@ -1402,7 +1079,7 @@ function createCRTHum() {
   hum50.type = 'sine';
   hum50.frequency.value = 50;
   const gain50 = crtAudioContext.createGain();
-  gain50.gain.value = 0.05;
+  gain50.gain.value = 0.12;
   hum50.connect(gain50);
   gain50.connect(humFilter);
   hum50.start();
@@ -1422,7 +1099,7 @@ function createCRTHum() {
   lfo2.start();
   crtOscillators.push(lfo2);
   const gain150 = crtAudioContext.createGain();
-  gain150.gain.value = 0.03;
+  gain150.gain.value = 0.08;
   hum150.connect(gain150);
   gain150.connect(humFilter);
   hum150.start();
@@ -1449,6 +1126,7 @@ function toggleCRTEffect(enable) {
       crtGainNode.gain.setValueAtTime(crtGainNode.gain.value, crtAudioContext.currentTime);
       crtGainNode.gain.linearRampToValueAtTime(1, crtAudioContext.currentTime + 0.3);
     }
+
   } else {
     if (crtOverlay) crtOverlay.classList.remove('active');
     document.body.classList.remove('crt-active');
@@ -1458,6 +1136,12 @@ function toggleCRTEffect(enable) {
       crtGainNode.gain.cancelScheduledValues(crtAudioContext.currentTime);
       crtGainNode.gain.setValueAtTime(crtGainNode.gain.value, crtAudioContext.currentTime);
       crtGainNode.gain.linearRampToValueAtTime(0, crtAudioContext.currentTime + 0.3);
+    }
+
+    // Stop random glitches
+    if (crtGlitchInterval) {
+      clearTimeout(crtGlitchInterval);
+      crtGlitchInterval = null;
     }
   }
 }
