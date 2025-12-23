@@ -202,7 +202,7 @@ function playCRTClick() {
   osc.frequency.setValueAtTime(800, now);
   osc.frequency.exponentialRampToValueAtTime(200, now + 0.04);
 
-  gain.gain.setValueAtTime(0.08, now);
+  gain.gain.setValueAtTime(0.18, now);
   gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
 
   osc.connect(gain);
@@ -228,7 +228,7 @@ function playCRTClick() {
   noiseFilter.frequency.value = 3000;
   noiseFilter.Q.value = 1;
 
-  noiseGain.gain.setValueAtTime(0.03, now);
+  noiseGain.gain.setValueAtTime(0.07, now);
   noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.02);
 
   noise.connect(noiseFilter);
@@ -237,6 +237,46 @@ function playCRTClick() {
 
   noise.start(now);
   noise.stop(now + 0.02);
+}
+
+function playCRTHover() {
+  if (!cheatsEnabled) return;
+  const ctx = getUIAudioContext();
+  const now = ctx.currentTime;
+
+  // Quick electronic tick
+  const tick = ctx.createOscillator();
+  const tickGain = ctx.createGain();
+  tick.type = 'square';
+  tick.frequency.setValueAtTime(2400, now);
+  tick.frequency.setValueAtTime(1800, now + 0.01);
+  tickGain.gain.setValueAtTime(0.03, now);
+  tickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.025);
+  tick.connect(tickGain);
+  tickGain.connect(ctx.destination);
+  tick.start(now);
+  tick.stop(now + 0.025);
+
+  // Tiny static
+  const bufferSize = ctx.sampleRate * 0.015;
+  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const output = noiseBuffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    output[i] = Math.random() * 2 - 1;
+  }
+  const noise = ctx.createBufferSource();
+  const noiseGain = ctx.createGain();
+  const noiseFilter = ctx.createBiquadFilter();
+  noise.buffer = noiseBuffer;
+  noiseFilter.type = 'highpass';
+  noiseFilter.frequency.value = 4000;
+  noiseGain.gain.setValueAtTime(0.015, now);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.015);
+  noise.connect(noiseFilter);
+  noiseFilter.connect(noiseGain);
+  noiseGain.connect(ctx.destination);
+  noise.start(now);
+  noise.stop(now + 0.015);
 }
 
 function playPanelClose() {
@@ -1094,4 +1134,22 @@ nameHeading.addEventListener('click', () => {
 document.addEventListener('click', () => {
   if (!cheatsEnabled) return;
   playCRTClick();
+});
+
+// CRT hover sound on interactive elements (only in cheat mode)
+document.addEventListener('mouseover', (e) => {
+  if (!cheatsEnabled) return;
+
+  const interactive = e.target.closest('a, button, .collapsible, .dropdown-header, .page-btn, .contact-link, .game-link, .theme-toggle, .lightbox-img, .panel');
+  if (interactive && !interactive.dataset.hovered) {
+    interactive.dataset.hovered = 'true';
+    playCRTHover();
+  }
+});
+
+document.addEventListener('mouseout', (e) => {
+  const interactive = e.target.closest('a, button, .collapsible, .dropdown-header, .page-btn, .contact-link, .game-link, .theme-toggle, .lightbox-img, .panel');
+  if (interactive) {
+    delete interactive.dataset.hovered;
+  }
 });
