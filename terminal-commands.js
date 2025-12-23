@@ -773,6 +773,306 @@ Just kidding. Everything is fine. Probably.`
     action: () => 'Have you tried turning it off and on again?'
   },
 
+  helpme: {
+  description: 'Asks the terminal for help',
+  hidden: false,
+  action: () => 'No.'
+},
+
+clearbrain: {
+  description: 'Clears your thoughts',
+  hidden: true,
+  action: () => 'Still thinking about chickens.'
+},
+
+status: {
+  description: 'Shows system status',
+  hidden: false,
+  action: () => 'All systems operational. Morals offline.'
+},
+
+date: {
+  description: 'Shows current date',
+  hidden: false,
+  action: () => new Date().toString()
+},
+
+uptime: {
+  description: 'How long the system has been running',
+  hidden: true,
+  action: () => 'Too long.'
+},
+
+ping: {
+  description: 'Ping the server',
+  hidden: false,
+  action: (args) => `Pinging ${args[0] || 'localhost'}... no response.`
+},
+
+motivation: {
+  description: 'Get motivated',
+  hidden: true,
+  action: () => 'Grind harder.'
+},
+
+fortune: {
+  description: 'Displays a fortune',
+  hidden: true,
+  action: () => 'A goose watches you.'
+},
+
+// =====================================================
+// FAKE SYSTEM COMMANDS
+// =====================================================
+
+reboot: {
+  description: 'Reboot the system',
+  hidden: false,
+  action: () => 'Reboot failed. Try again later.'
+},
+
+shutdown: {
+  description: 'Shutdown the system',
+  hidden: false,
+  action: () => 'Permission denied.'
+},
+
+sudo: {
+  description: 'Run command as superuser',
+  hidden: false,
+  action: () => 'You are not trusted.'
+},
+
+install: {
+  description: 'Install a package',
+  hidden: false,
+  action: (args) => `Installing ${args[0] || 'nothing'}... failed.`
+},
+
+uninstall: {
+  description: 'Remove a package',
+  hidden: false,
+  action: () => 'Nothing was removed. Everything is permanent.'
+},
+
+update: {
+  description: 'Update the system',
+  hidden: false,
+  action: () => 'System already outdated.'
+},
+
+// =====================================================
+// TENDER-THEMED COMMANDS
+// =====================================================
+
+grind: {
+  description: 'Grind a chicken',
+  hidden: true,
+  action: () => 'Chicken processed.'
+},
+
+// =====================================================
+// META / FOURTH WALL COMMANDS
+// =====================================================
+
+credits: {
+  description: 'Show credits',
+  hidden: false,
+  action: () => 'Made with poor decisions.'
+},
+
+source: {
+  description: 'View source code',
+  hidden: false,
+  action: () => 'Nice try.'
+},
+
+version: {
+  description: 'Show version',
+  hidden: false,
+  action: () => 'v0.0.1-alpha-broken'
+},
+
+terms: {
+  description: 'View terms and conditions',
+  hidden: false,
+  action: () => 'You already agreed.'
+},
+
+privacy: {
+  description: 'View privacy policy',
+  hidden: false,
+  action: () => 'There is none.'
+},
+
+panic: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Too late.'
+},
+
+konami: {
+  description: '???',
+  hidden: true,
+  action: () => 'Nothing happens.'
+},
+
+debuggod: {
+  description: 'Enable god mode',
+  hidden: true,
+  action: () => 'God is unavailable.'
+},
+
+truth: {
+  description: 'Reveal the truth',
+  hidden: true,
+  action: () => 'You knew already.'
+},
+
+fuck: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Fuck you too.'
+},
+
+shit: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Well… yeah.'
+},
+
+ass: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Grow up.'
+},
+
+bitch: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'That’s not productive.'
+},
+
+cunt: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Alright mate.'
+},
+
+damn: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Damn indeed.'
+},
+
+piss: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Gross.'
+},
+
+cock: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Wrong terminal.'
+},
+
+dick: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Keep it professional.'
+},
+
+motherfucker: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Bold of you.'
+},
+
+fucker: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Try harder.'
+},
+
+bollocks: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Utter bollocks.'
+},
+
+wanker: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Self-reflection moment.'
+},
+
+twat: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Unnecessary.'
+},
+
+arsehole: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Fair.'
+},
+
+prick: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Uncalled for.'
+},
+
+shithead: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'That’s rude.'
+},
+
+fuckoff: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Make me.'
+},
+
+fml: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Relatable.'
+},
+
+kms: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'No.'
+},
+
+hell: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Already here.'
+},
+
+screwthis: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Yet you keep typing.'
+},
+
+rage: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'Calm down.'
+},
+
+why: {
+  description: 'Do not use',
+  hidden: true,
+  action: () => 'No answer.'
+},
+
   // =====================================================
   // ADD YOUR OWN COMMANDS BELOW:
   // =====================================================
