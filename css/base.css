@@ -1319,6 +1319,7 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   font-size: clamp(1.5rem, 6vw, 3rem);
   color: #0f0;
   text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+  letter-spacing: 2px;
 }
 
 .konami-text.disabled {
@@ -1331,6 +1332,11 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   font-size: clamp(0.8rem, 2vw, 1rem);
   color: #555;
   margin: 1.5rem 0 0 0;
+  opacity: 0;
+}
+
+.konami-sub.visible {
+  opacity: 1;
 }
 
 /* Image Lightbox - add "lightbox-img" class to make images clickable */

@@ -1158,16 +1158,51 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
+function decryptText(element, finalText, onComplete) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*!?<>';
+  const duration = 1500;
+  const startTime = Date.now();
+
+  function scramble() {
+    const elapsed = Date.now() - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+
+    let result = '';
+    for (let i = 0; i < finalText.length; i++) {
+      if (finalText[i] === ' ') {
+        result += ' ';
+      } else if (progress > (i / finalText.length) * 0.8 + 0.2) {
+        result += finalText[i];
+      } else {
+        result += chars[Math.floor(Math.random() * chars.length)];
+      }
+    }
+
+    element.textContent = result;
+
+    if (progress < 1) {
+      requestAnimationFrame(scramble);
+    } else {
+      element.textContent = finalText;
+      if (onComplete) onComplete();
+    }
+  }
+
+  scramble();
+}
+
 function toggleKonamiCheats() {
   cheatsEnabled = !cheatsEnabled;
 
   // Show overlay
   const overlay = document.createElement('div');
   overlay.className = 'konami-overlay';
+  const finalText = cheatsEnabled ? 'CHEAT ACTIVATED' : 'CHEAT DEACTIVATED';
+  const subText = cheatsEnabled ? 'nice one' : 'back to normal';
   overlay.innerHTML = `
     <div class="konami-content">
-      <div class="konami-text ${cheatsEnabled ? '' : 'disabled'}">${cheatsEnabled ? 'CHEAT ACTIVATED' : 'CHEAT DEACTIVATED'}</div>
-      <p class="konami-sub">// ${cheatsEnabled ? 'nice one' : 'back to normal'}</p>
+      <div class="konami-text ${cheatsEnabled ? '' : 'disabled'}"></div>
+      <p class="konami-sub">// ${subText}</p>
     </div>
   `;
 
@@ -1177,6 +1212,14 @@ function toggleKonamiCheats() {
   }
 
   document.body.appendChild(overlay);
+
+  // Start decrypt animation
+  const textElement = overlay.querySelector('.konami-text');
+  const subElement = overlay.querySelector('.konami-sub');
+
+  decryptText(textElement, finalText, () => {
+    subElement.classList.add('visible');
+  });
 
   setTimeout(() => {
     overlay.classList.add('fade-out');
