@@ -1191,6 +1191,144 @@ function decryptText(element, finalText, onComplete) {
   scramble();
 }
 
+function playErrorBeep() {
+  try {
+    const ctx = getUIAudioContext();
+    const now = ctx.currentTime;
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'square';
+    osc.frequency.setValueAtTime(800, now);
+    osc.frequency.setValueAtTime(400, now + 0.05);
+    gain.gain.setValueAtTime(0.08, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.1);
+  } catch (e) {}
+}
+
+function playWarningBeep() {
+  try {
+    const ctx = getUIAudioContext();
+    const now = ctx.currentTime;
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'square';
+    osc.frequency.setValueAtTime(600, now);
+    osc.frequency.setValueAtTime(600, now + 0.08);
+    osc.frequency.setValueAtTime(400, now + 0.16);
+    gain.gain.setValueAtTime(0.07, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.2);
+  } catch (e) {}
+}
+
+function playCriticalBeep() {
+  try {
+    const ctx = getUIAudioContext();
+    const now = ctx.currentTime;
+
+    // Rapid beeping
+    for (let i = 0; i < 3; i++) {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'square';
+      osc.frequency.value = 1000;
+      gain.gain.setValueAtTime(0.1, now + i * 0.1);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.05);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now + i * 0.1);
+      osc.stop(now + i * 0.1 + 0.05);
+    }
+  } catch (e) {}
+}
+
+function playCorruptionNoise() {
+  try {
+    const ctx = getUIAudioContext();
+    const now = ctx.currentTime;
+
+    const bufferSize = ctx.sampleRate * 0.8;
+    const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+    const output = noiseBuffer.getChannelData(0);
+    for (let i = 0; i < bufferSize; i++) {
+      output[i] = Math.random() * 2 - 1;
+    }
+
+    const noise = ctx.createBufferSource();
+    const noiseGain = ctx.createGain();
+    const noiseFilter = ctx.createBiquadFilter();
+    noise.buffer = noiseBuffer;
+    noiseFilter.type = 'bandpass';
+    noiseFilter.frequency.setValueAtTime(2000, now);
+    noiseFilter.frequency.exponentialRampToValueAtTime(500, now + 0.8);
+    noiseGain.gain.setValueAtTime(0.15, now);
+    noiseGain.gain.linearRampToValueAtTime(0.08, now + 0.4);
+    noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+    noise.connect(noiseFilter);
+    noiseFilter.connect(noiseGain);
+    noiseGain.connect(ctx.destination);
+    noise.start(now);
+    noise.stop(now + 0.8);
+
+    // Glitchy tones
+    for (let i = 0; i < 5; i++) {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'square';
+      osc.frequency.value = 200 + Math.random() * 800;
+      const startTime = now + i * 0.15 + Math.random() * 0.05;
+      gain.gain.setValueAtTime(0.05, startTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.08);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(startTime);
+      osc.stop(startTime + 0.08);
+    }
+  } catch (e) {}
+}
+
+function playShutdownSound() {
+  try {
+    const ctx = getUIAudioContext();
+    const now = ctx.currentTime;
+
+    // Power down sweep
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'sawtooth';
+    osc.frequency.setValueAtTime(400, now);
+    osc.frequency.exponentialRampToValueAtTime(30, now + 0.5);
+    gain.gain.setValueAtTime(0.15, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.5);
+
+    // Final thump
+    const thump = ctx.createOscillator();
+    const thumpGain = ctx.createGain();
+    thump.type = 'sine';
+    thump.frequency.setValueAtTime(60, now + 0.3);
+    thump.frequency.exponentialRampToValueAtTime(20, now + 0.6);
+    thumpGain.gain.setValueAtTime(0.2, now + 0.3);
+    thumpGain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
+    thump.connect(thumpGain);
+    thumpGain.connect(ctx.destination);
+    thump.start(now + 0.3);
+    thump.stop(now + 0.6);
+  } catch (e) {}
+}
+
 function corruptedShutdown(container, overlay, onComplete) {
   const glitchChars = '!@#$%^&*()_+-=[]{}|;:,.<>?/~`█▓▒░╔╗╚╝║═';
 
@@ -1235,27 +1373,29 @@ function corruptedShutdown(container, overlay, onComplete) {
     overlay.style.opacity = Math.random() > 0.5 ? '1' : '0.7';
   }
 
-  // Timeline
-  setTimeout(() => addLine('ERROR: CHEAT_MODULE failed to respond'), 0);
-  setTimeout(() => addLine('ERROR: Memory corruption detected at 0x7F3A'), 200);
-  setTimeout(() => addLine('WARNING: Unstable state detected'), 400);
-  setTimeout(() => addLine('ERROR: Stack overflow in EFFECT_HANDLER'), 600);
-  setTimeout(() => addLine('CRITICAL: System integrity compromised'), 800);
+  // Timeline with synced audio
+  setTimeout(() => { addLine('ERROR: CHEAT_MODULE failed to respond'); playErrorBeep(); }, 0);
+  setTimeout(() => { addLine('ERROR: Memory corruption detected at 0x7F3A'); playErrorBeep(); }, 200);
+  setTimeout(() => { addLine('WARNING: Unstable state detected'); playWarningBeep(); }, 400);
+  setTimeout(() => { addLine('ERROR: Stack overflow in EFFECT_HANDLER'); playErrorBeep(); }, 600);
+  setTimeout(() => { addLine('CRITICAL: System integrity compromised'); playCriticalBeep(); }, 800);
 
-  // Start corruption
+  // Start corruption with noise
   let corruptInterval;
   let flickerInterval;
 
   setTimeout(() => {
     addLine('ATTEMPTING RECOVERY...', '#ff0', false);
+    playCorruptionNoise();
     corruptInterval = setInterval(corruptAllLines, 80);
     flickerInterval = setInterval(screenFlicker, 100);
   }, 1000);
 
-  setTimeout(() => addLine('█▓▒░ RECOVERY FAILED ░▒▓█', '#f00'), 1300);
+  setTimeout(() => { addLine('█▓▒░ RECOVERY FAILED ░▒▓█', '#f00'); playCriticalBeep(); }, 1300);
 
   setTimeout(() => {
     addLine('FORCING SHUTDOWN...', '#f80', false);
+    playWarningBeep();
   }, 1600);
 
   // Final corruption burst
@@ -1270,6 +1410,7 @@ function corruptedShutdown(container, overlay, onComplete) {
     clearInterval(corruptInterval);
     clearInterval(flickerInterval);
     overlay.style.opacity = '1';
+    playShutdownSound();
 
     container.innerHTML = '';
     container.style.textAlign = 'center';
@@ -1319,7 +1460,6 @@ function toggleKonamiCheats() {
     overlay.innerHTML = `<div class="konami-content"></div>`;
 
     document.body.appendChild(overlay);
-    playKonamiDeactivate();
 
     const content = overlay.querySelector('.konami-content');
 
