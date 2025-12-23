@@ -1201,7 +1201,7 @@ function playErrorBeep() {
     osc.type = 'square';
     osc.frequency.setValueAtTime(800, now);
     osc.frequency.setValueAtTime(400, now + 0.05);
-    gain.gain.setValueAtTime(0.08, now);
+    gain.gain.setValueAtTime(0.04, now);
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
     osc.connect(gain);
     gain.connect(ctx.destination);
@@ -1221,7 +1221,7 @@ function playWarningBeep() {
     osc.frequency.setValueAtTime(600, now);
     osc.frequency.setValueAtTime(600, now + 0.08);
     osc.frequency.setValueAtTime(400, now + 0.16);
-    gain.gain.setValueAtTime(0.07, now);
+    gain.gain.setValueAtTime(0.035, now);
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.2);
     osc.connect(gain);
     gain.connect(ctx.destination);
@@ -1241,7 +1241,7 @@ function playCriticalBeep() {
       const gain = ctx.createGain();
       osc.type = 'square';
       osc.frequency.value = 1000;
-      gain.gain.setValueAtTime(0.1, now + i * 0.1);
+      gain.gain.setValueAtTime(0.04, now + i * 0.1);
       gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.05);
       osc.connect(gain);
       gain.connect(ctx.destination);
@@ -1270,8 +1270,8 @@ function playCorruptionNoise() {
     noiseFilter.type = 'bandpass';
     noiseFilter.frequency.setValueAtTime(2000, now);
     noiseFilter.frequency.exponentialRampToValueAtTime(500, now + 0.8);
-    noiseGain.gain.setValueAtTime(0.15, now);
-    noiseGain.gain.linearRampToValueAtTime(0.08, now + 0.4);
+    noiseGain.gain.setValueAtTime(0.06, now);
+    noiseGain.gain.linearRampToValueAtTime(0.03, now + 0.4);
     noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
     noise.connect(noiseFilter);
     noiseFilter.connect(noiseGain);
@@ -1286,7 +1286,7 @@ function playCorruptionNoise() {
       osc.type = 'square';
       osc.frequency.value = 200 + Math.random() * 800;
       const startTime = now + i * 0.15 + Math.random() * 0.05;
-      gain.gain.setValueAtTime(0.05, startTime);
+      gain.gain.setValueAtTime(0.025, startTime);
       gain.gain.exponentialRampToValueAtTime(0.001, startTime + 0.08);
       osc.connect(gain);
       gain.connect(ctx.destination);
@@ -1307,7 +1307,7 @@ function playShutdownSound() {
     osc.type = 'sawtooth';
     osc.frequency.setValueAtTime(400, now);
     osc.frequency.exponentialRampToValueAtTime(30, now + 0.5);
-    gain.gain.setValueAtTime(0.15, now);
+    gain.gain.setValueAtTime(0.06, now);
     gain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
     osc.connect(gain);
     gain.connect(ctx.destination);
@@ -1320,7 +1320,7 @@ function playShutdownSound() {
     thump.type = 'sine';
     thump.frequency.setValueAtTime(60, now + 0.3);
     thump.frequency.exponentialRampToValueAtTime(20, now + 0.6);
-    thumpGain.gain.setValueAtTime(0.2, now + 0.3);
+    thumpGain.gain.setValueAtTime(0.08, now + 0.3);
     thumpGain.gain.exponentialRampToValueAtTime(0.001, now + 0.6);
     thump.connect(thumpGain);
     thumpGain.connect(ctx.destination);
@@ -1475,6 +1475,7 @@ function toggleKonamiCheats() {
   toggleCursorTrail(cheatsEnabled);
   toggleClickConfetti(cheatsEnabled);
   toggleCRTEffect(cheatsEnabled);
+  if (typeof Terminal !== 'undefined') Terminal.showAccessButton(cheatsEnabled);
 
   // =====================================================
   // ADD MORE CHEATS HERE:
@@ -1848,3 +1849,267 @@ document.addEventListener('input', (e) => {
     playCRTType();
   }
 }, true);
+
+// =====================================================
+// SECRET TERMINAL
+// =====================================================
+
+const Terminal = {
+  overlay: null,
+  output: null,
+  input: null,
+  history: [],
+  historyIndex: -1,
+  accessBtn: null,
+
+  // =====================================================
+  // ADD YOUR COMMANDS HERE - Easy to extend!
+  // Format: 'commandname': { description: '...', action: (args) => '...' }
+  // Return a string, or use Terminal.print() for colored output
+  // =====================================================
+  commands: {
+    help: {
+      description: 'Show available commands',
+      action: () => {
+        let output = 'Available commands:\n\n';
+        for (const [name, cmd] of Object.entries(Terminal.commands)) {
+          output += `  ${name.padEnd(12)} - ${cmd.description}\n`;
+        }
+        output += '\nType a command and press Enter.';
+        return output;
+      }
+    },
+
+    clear: {
+      description: 'Clear the terminal',
+      action: () => {
+        Terminal.output.innerHTML = '';
+        return null;
+      }
+    },
+
+    about: {
+      description: 'About this terminal',
+      action: () => {
+        return `SECRET TERMINAL v1.0
+--------------------
+You found the secret terminal!
+This is a hidden feature unlocked by the Konami Code.
+
+Type 'help' to see available commands.`;
+      }
+    },
+
+    whoami: {
+      description: 'Display current user',
+      action: () => 'guest@bryncarter.dev'
+    },
+
+    date: {
+      description: 'Show current date/time',
+      action: () => new Date().toString()
+    },
+
+    echo: {
+      description: 'Echo a message',
+      action: (args) => args.join(' ') || ''
+    },
+
+    games: {
+      description: 'List my games',
+      action: () => {
+        return `MY GAMES
+--------
+1. Stepping Stones  - Minimalist 2D platformer
+2. Tilting Game     - Physics-based labyrinth
+3. Asteroid Overcharge - Roguelike shooter
+4. Sync Or Sink     - Rhythm game (team project)
+
+Type 'open <number>' to visit the game page.`;
+      }
+    },
+
+    open: {
+      description: 'Open a game page (1-4)',
+      action: (args) => {
+        const urls = {
+          '1': 'https://chopsdev.itch.io/stepping-stones',
+          '2': 'https://chopsdev.itch.io/some-tilting-game',
+          '3': 'https://chopsdev.itch.io/asteroid-overcharge',
+          '4': 'https://kaylienufo.itch.io/sync-or-sink'
+        };
+        const num = args[0];
+        if (urls[num]) {
+          window.open(urls[num], '_blank');
+          return `Opening game ${num}...`;
+        }
+        return 'Usage: open <1-4>';
+      }
+    },
+
+    socials: {
+      description: 'Show social links',
+      action: () => {
+        return `SOCIALS
+-------
+GitHub:  github.com/ChopsDev
+Itch.io: chopsdev.itch.io
+YouTube: youtube.com/@chops.
+Email:   contact@chopsdev.com`;
+      }
+    },
+
+    matrix: {
+      description: 'Enter the matrix',
+      action: () => {
+        triggerMatrixRain();
+        Terminal.close();
+        return null;
+      }
+    },
+
+    exit: {
+      description: 'Close the terminal',
+      action: () => {
+        setTimeout(() => Terminal.close(), 100);
+        return 'Goodbye...';
+      }
+    },
+
+    // =====================================================
+    // ADD MORE COMMANDS BELOW:
+    //
+    // example: {
+    //   description: 'Example command',
+    //   action: (args) => {
+    //     return 'This is the output';
+    //   }
+    // },
+    // =====================================================
+  },
+
+  init() {
+    // Create access button
+    this.accessBtn = document.createElement('button');
+    this.accessBtn.className = 'terminal-access-btn';
+    this.accessBtn.textContent = '> Terminal';
+    this.accessBtn.addEventListener('click', () => this.open());
+    document.body.appendChild(this.accessBtn);
+
+    // Create terminal overlay
+    this.overlay = document.createElement('div');
+    this.overlay.className = 'terminal-overlay';
+    this.overlay.innerHTML = `
+      <div class="terminal-container">
+        <div class="terminal-header">
+          <span>SECRET TERMINAL - bryncarter.dev</span>
+          <button class="terminal-close">&times;</button>
+        </div>
+        <div class="terminal-body">
+          <div class="terminal-output"></div>
+          <div class="terminal-input-line">
+            <span class="terminal-prompt">$</span>
+            <input type="text" class="terminal-input" placeholder="Type 'help' for commands..." autofocus>
+          </div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(this.overlay);
+
+    this.output = this.overlay.querySelector('.terminal-output');
+    this.input = this.overlay.querySelector('.terminal-input');
+
+    // Event listeners
+    this.overlay.querySelector('.terminal-close').addEventListener('click', () => this.close());
+    this.overlay.addEventListener('click', (e) => {
+      if (e.target === this.overlay) this.close();
+    });
+
+    this.input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        this.execute(this.input.value);
+        this.input.value = '';
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (this.historyIndex < this.history.length - 1) {
+          this.historyIndex++;
+          this.input.value = this.history[this.history.length - 1 - this.historyIndex];
+        }
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        if (this.historyIndex > 0) {
+          this.historyIndex--;
+          this.input.value = this.history[this.history.length - 1 - this.historyIndex];
+        } else {
+          this.historyIndex = -1;
+          this.input.value = '';
+        }
+      } else if (e.key === 'Escape') {
+        this.close();
+      }
+    });
+
+    // Show welcome message
+    this.print('Welcome to the Secret Terminal!', 'info');
+    this.print('Type "help" to see available commands.\n', 'response');
+  },
+
+  open() {
+    this.overlay.classList.add('visible');
+    this.input.focus();
+    document.body.style.overflow = 'hidden';
+  },
+
+  close() {
+    this.overlay.classList.remove('visible');
+    document.body.style.overflow = '';
+  },
+
+  print(text, className = 'response') {
+    const line = document.createElement('div');
+    line.className = className;
+    line.textContent = text;
+    this.output.appendChild(line);
+    this.output.parentElement.scrollTop = this.output.parentElement.scrollHeight;
+  },
+
+  execute(input) {
+    const trimmed = input.trim();
+    if (!trimmed) return;
+
+    // Add to history
+    this.history.push(trimmed);
+    this.historyIndex = -1;
+
+    // Show command
+    this.print(`$ ${trimmed}`, 'command-line');
+
+    // Parse command
+    const parts = trimmed.split(/\s+/);
+    const cmd = parts[0].toLowerCase();
+    const args = parts.slice(1);
+
+    // Execute
+    if (this.commands[cmd]) {
+      const result = this.commands[cmd].action(args);
+      if (result !== null && result !== undefined) {
+        this.print(result, 'response');
+      }
+    } else {
+      this.print(`Command not found: ${cmd}`, 'error');
+      this.print('Type "help" for available commands.', 'response');
+    }
+  },
+
+  showAccessButton(show) {
+    if (show) {
+      this.accessBtn.classList.add('visible');
+    } else {
+      this.accessBtn.classList.remove('visible');
+      this.close();
+    }
+  }
+};
+
+// Initialize terminal
+Terminal.init();
