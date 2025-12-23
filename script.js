@@ -839,7 +839,7 @@ function createCRTHum() {
   hum60.type = 'sine';
   hum60.frequency.value = 60;
   const gain60 = crtAudioContext.createGain();
-  gain60.gain.value = 0.08;
+  gain60.gain.value = 0.025;
   hum60.connect(gain60);
   gain60.connect(crtGainNode);
   hum60.start();
@@ -850,7 +850,7 @@ function createCRTHum() {
   hum120.type = 'sine';
   hum120.frequency.value = 120;
   const gain120 = crtAudioContext.createGain();
-  gain120.gain.value = 0.04;
+  gain120.gain.value = 0.012;
   hum120.connect(gain120);
   gain120.connect(crtGainNode);
   hum120.start();
@@ -861,7 +861,7 @@ function createCRTHum() {
   flyback.type = 'sine';
   flyback.frequency.value = 15700;
   const gainFlyback = crtAudioContext.createGain();
-  gainFlyback.gain.value = 0.015;
+  gainFlyback.gain.value = 0.006;
   flyback.connect(gainFlyback);
   gainFlyback.connect(crtGainNode);
   flyback.start();
