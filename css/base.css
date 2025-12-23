@@ -1470,32 +1470,25 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   color: #050;
 }
 
-/* Terminal access button */
-.terminal-access-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #000;
-  border: 2px solid #0f0;
-  color: #0f0;
-  padding: 10px 16px;
-  font-family: monospace;
-  font-size: 14px;
-  cursor: pointer;
-  z-index: 9999;
-  display: none;
-  box-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
-  transition: all 0.2s ease;
+/* Terminal nav button - hidden by default */
+.terminal-nav-btn {
+  display: none !important;
 }
 
-.terminal-access-btn:hover {
-  background: #0f0;
-  color: #000;
-  box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+.terminal-nav-btn.visible {
+  display: inline-block !important;
+  background: #0a0a0a !important;
+  color: #0f0 !important;
+  border-color: #0f0 !important;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
 }
 
-.terminal-access-btn.visible {
-  display: block;
+.terminal-nav-btn.visible:hover {
+  background: #0f0 !important;
+  color: #000 !important;
+  text-shadow: none;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
 }
 
 /* Image Lightbox - add "lightbox-img" class to make images clickable */

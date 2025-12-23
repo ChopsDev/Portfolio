@@ -1977,24 +1977,56 @@ Email:   contact@chopsdev.com`;
     },
 
     // =====================================================
-    // ADD MORE COMMANDS BELOW:
+    // HOW TO ADD NEW COMMANDS:
+    // =====================================================
     //
-    // example: {
-    //   description: 'Example command',
-    //   action: (args) => {
-    //     return 'This is the output';
-    //   }
-    // },
+    // 1. Add a new entry below with this format:
+    //
+    //    commandname: {
+    //      description: 'Short description for help menu',
+    //      action: (args) => {
+    //        // args is an array of words typed after the command
+    //        // Example: "greet John" → args = ['John']
+    //
+    //        // Return a string to display output:
+    //        return 'Hello ' + (args[0] || 'World') + '!';
+    //
+    //        // Or return null for no output (like 'clear')
+    //      }
+    //    },
+    //
+    // 2. EXAMPLES:
+    //
+    //    // Simple command - no arguments
+    //    hello: {
+    //      description: 'Say hello',
+    //      action: () => 'Hello, World!'
+    //    },
+    //
+    //    // Command with arguments
+    //    say: {
+    //      description: 'Say something',
+    //      action: (args) => args.join(' ') || 'You said nothing!'
+    //    },
+    //
+    //    // Command that does something
+    //    hierarchyrandomcolour: {
+    //      description: 'Use a random colour for hierarchy',
+    //      action: () => {
+    //        document.body.style.background = '#' + Math.floor(Math.random()*16777215).toString(16);
+    //        return 'Randomised!';
+    //      }
+    //    },
+    //
     // =====================================================
   },
 
   init() {
-    // Create access button
-    this.accessBtn = document.createElement('button');
-    this.accessBtn.className = 'terminal-access-btn';
-    this.accessBtn.textContent = '> Terminal';
-    this.accessBtn.addEventListener('click', () => this.open());
-    document.body.appendChild(this.accessBtn);
+    // Get nav button
+    this.accessBtn = document.getElementById('terminal-nav-btn');
+    if (this.accessBtn) {
+      this.accessBtn.addEventListener('click', () => this.open());
+    }
 
     // Create terminal overlay
     this.overlay = document.createElement('div');
@@ -2018,6 +2050,7 @@ Email:   contact@chopsdev.com`;
 
     this.output = this.overlay.querySelector('.terminal-output');
     this.input = this.overlay.querySelector('.terminal-input');
+    this.input.disabled = true; // Disabled until terminal is opened
 
     // Event listeners
     this.overlay.querySelector('.terminal-close').addEventListener('click', () => this.close());
@@ -2026,6 +2059,9 @@ Email:   contact@chopsdev.com`;
     });
 
     this.input.addEventListener('keydown', (e) => {
+      // Only process input when terminal is open
+      if (!this.overlay.classList.contains('visible')) return;
+
       if (e.key === 'Enter') {
         this.execute(this.input.value);
         this.input.value = '';
@@ -2056,12 +2092,15 @@ Email:   contact@chopsdev.com`;
 
   open() {
     this.overlay.classList.add('visible');
+    this.input.disabled = false;
     this.input.focus();
     document.body.style.overflow = 'hidden';
   },
 
   close() {
     this.overlay.classList.remove('visible');
+    this.input.blur();
+    this.input.disabled = true;
     document.body.style.overflow = '';
   },
 
@@ -2102,6 +2141,7 @@ Email:   contact@chopsdev.com`;
   },
 
   showAccessButton(show) {
+    if (!this.accessBtn) return;
     if (show) {
       this.accessBtn.classList.add('visible');
     } else {
