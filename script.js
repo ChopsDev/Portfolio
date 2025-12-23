@@ -433,6 +433,46 @@ function playKonamiDeactivate() {
   noise.stop(now + 0.8);
 }
 
+function playCRTEscape() {
+  if (!cheatsEnabled) return;
+  const ctx = getUIAudioContext();
+  const now = ctx.currentTime;
+
+  // Quick descending blip
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = 'square';
+  osc.frequency.setValueAtTime(800, now);
+  osc.frequency.exponentialRampToValueAtTime(200, now + 0.08);
+  gain.gain.setValueAtTime(0.1, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+  osc.start(now);
+  osc.stop(now + 0.1);
+
+  // Static pop
+  const bufferSize = ctx.sampleRate * 0.04;
+  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const output = noiseBuffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    output[i] = Math.random() * 2 - 1;
+  }
+  const noise = ctx.createBufferSource();
+  const noiseGain = ctx.createGain();
+  const noiseFilter = ctx.createBiquadFilter();
+  noise.buffer = noiseBuffer;
+  noiseFilter.type = 'bandpass';
+  noiseFilter.frequency.value = 1500;
+  noiseGain.gain.setValueAtTime(0.06, now);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+  noise.connect(noiseFilter);
+  noiseFilter.connect(noiseGain);
+  noiseGain.connect(ctx.destination);
+  noise.start(now);
+  noise.stop(now + 0.04);
+}
+
 function playCRTType() {
   if (!cheatsEnabled) return;
   const ctx = getUIAudioContext();
@@ -880,9 +920,13 @@ checkZoomLevel();
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     // Skip if lightbox is open - let the lightbox handler deal with it
-    if (document.querySelector('.lightbox-overlay.visible')) return;
+    if (document.querySelector('.lightbox-overlay.visible')) {
+      playCRTEscape();
+      return;
+    }
 
     if (leftPanel.classList.contains('expanded') || rightPanel.classList.contains('expanded')) {
+      playCRTEscape();
       closeAll();
     }
   }
