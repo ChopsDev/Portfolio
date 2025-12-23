@@ -361,18 +361,22 @@ function checkZoomLevel() {
   const isZoomedWayOut = window.innerWidth > 3800;
   const widthChanged = Math.abs(window.innerWidth - lastWidth) > 50;
 
-  if (isZoomedWayOut && !easterEggShown) {
+  // Don't show on contact page (form inputs need zoom)
+  const activePage = document.querySelector('.page.active');
+  const isContactPage = activePage && activePage.dataset.page === 'contact';
+
+  if (isZoomedWayOut && !easterEggShown && !isContactPage) {
     createEasterEggOverlay();
     // Force reflow to enable fade-in transition on first show
     void easterEggOverlay.offsetWidth;
     easterEggOverlay.classList.add('visible');
     easterEggShown = true;
-  } else if (!isZoomedWayOut && easterEggShown) {
+  } else if ((!isZoomedWayOut || isContactPage) && easterEggShown) {
     if (easterEggOverlay) {
       easterEggOverlay.classList.remove('visible');
     }
     easterEggShown = false;
-  } else if (isZoomedWayOut && easterEggShown && widthChanged) {
+  } else if (isZoomedWayOut && easterEggShown && widthChanged && !isContactPage) {
     triggerReactivePulse();
   }
 
