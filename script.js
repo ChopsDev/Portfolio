@@ -641,21 +641,21 @@ function playCRTHover() {
   const ctx = getUIAudioContext();
   const now = ctx.currentTime;
 
-  // Quick electronic tick
-  const tick = ctx.createOscillator();
-  const tickGain = ctx.createGain();
-  tick.type = 'square';
-  tick.frequency.setValueAtTime(2400, now);
-  tick.frequency.setValueAtTime(1800, now + 0.01);
-  tickGain.gain.setValueAtTime(0.03, now);
-  tickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.025);
-  tick.connect(tickGain);
-  tickGain.connect(ctx.destination);
-  tick.start(now);
-  tick.stop(now + 0.025);
+  // Punchy slap - low frequency hit
+  const slap = ctx.createOscillator();
+  const slapGain = ctx.createGain();
+  slap.type = 'sine';
+  slap.frequency.setValueAtTime(400, now);
+  slap.frequency.exponentialRampToValueAtTime(80, now + 0.05);
+  slapGain.gain.setValueAtTime(0.15, now);
+  slapGain.gain.exponentialRampToValueAtTime(0.001, now + 0.06);
+  slap.connect(slapGain);
+  slapGain.connect(ctx.destination);
+  slap.start(now);
+  slap.stop(now + 0.06);
 
-  // Tiny static
-  const bufferSize = ctx.sampleRate * 0.015;
+  // Noise transient for attack
+  const bufferSize = ctx.sampleRate * 0.02;
   const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
   const output = noiseBuffer.getChannelData(0);
   for (let i = 0; i < bufferSize; i++) {
@@ -665,15 +665,15 @@ function playCRTHover() {
   const noiseGain = ctx.createGain();
   const noiseFilter = ctx.createBiquadFilter();
   noise.buffer = noiseBuffer;
-  noiseFilter.type = 'highpass';
-  noiseFilter.frequency.value = 4000;
-  noiseGain.gain.setValueAtTime(0.015, now);
-  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.015);
+  noiseFilter.type = 'lowpass';
+  noiseFilter.frequency.value = 1500;
+  noiseGain.gain.setValueAtTime(0.1, now);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.025);
   noise.connect(noiseFilter);
   noiseFilter.connect(noiseGain);
   noiseGain.connect(ctx.destination);
   noise.start(now);
-  noise.stop(now + 0.015);
+  noise.stop(now + 0.025);
 }
 
 function playPanelClose() {
@@ -1357,7 +1357,7 @@ function createCRTHum() {
   hum100.frequency.value = 100;
   lfoGain.connect(hum100.frequency); // Add wobble
   const gain100 = crtAudioContext.createGain();
-  gain100.gain.value = 0.18;
+  gain100.gain.value = 0.08;
   hum100.connect(gain100);
   gain100.connect(humFilter);
   hum100.start();
@@ -1368,7 +1368,7 @@ function createCRTHum() {
   hum200.type = 'sine';
   hum200.frequency.value = 200;
   const gain200 = crtAudioContext.createGain();
-  gain200.gain.value = 0.1;
+  gain200.gain.value = 0.04;
   hum200.connect(gain200);
   gain200.connect(humFilter);
   hum200.start();
@@ -1379,7 +1379,7 @@ function createCRTHum() {
   hum50.type = 'sine';
   hum50.frequency.value = 50;
   const gain50 = crtAudioContext.createGain();
-  gain50.gain.value = 0.12;
+  gain50.gain.value = 0.05;
   hum50.connect(gain50);
   gain50.connect(humFilter);
   hum50.start();
@@ -1399,7 +1399,7 @@ function createCRTHum() {
   lfo2.start();
   crtOscillators.push(lfo2);
   const gain150 = crtAudioContext.createGain();
-  gain150.gain.value = 0.08;
+  gain150.gain.value = 0.03;
   hum150.connect(gain150);
   gain150.connect(humFilter);
   hum150.start();
