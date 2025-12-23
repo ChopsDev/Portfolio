@@ -664,6 +664,51 @@ document.addEventListener('click', (e) => {
 
 // CRT Scanline Effect
 let crtOverlay = null;
+let crtAudioContext = null;
+let crtOscillators = [];
+let crtGainNode = null;
+
+function createCRTHum() {
+  if (crtAudioContext) return;
+
+  crtAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+  crtGainNode = crtAudioContext.createGain();
+  crtGainNode.gain.value = 0;
+  crtGainNode.connect(crtAudioContext.destination);
+
+  // 60Hz power hum
+  const hum60 = crtAudioContext.createOscillator();
+  hum60.type = 'sine';
+  hum60.frequency.value = 60;
+  const gain60 = crtAudioContext.createGain();
+  gain60.gain.value = 0.08;
+  hum60.connect(gain60);
+  gain60.connect(crtGainNode);
+  hum60.start();
+  crtOscillators.push(hum60);
+
+  // 120Hz harmonic
+  const hum120 = crtAudioContext.createOscillator();
+  hum120.type = 'sine';
+  hum120.frequency.value = 120;
+  const gain120 = crtAudioContext.createGain();
+  gain120.gain.value = 0.04;
+  hum120.connect(gain120);
+  gain120.connect(crtGainNode);
+  hum120.start();
+  crtOscillators.push(hum120);
+
+  // High-pitched flyback whine (~15.7kHz)
+  const flyback = crtAudioContext.createOscillator();
+  flyback.type = 'sine';
+  flyback.frequency.value = 15700;
+  const gainFlyback = crtAudioContext.createGain();
+  gainFlyback.gain.value = 0.015;
+  flyback.connect(gainFlyback);
+  gainFlyback.connect(crtGainNode);
+  flyback.start();
+  crtOscillators.push(flyback);
+}
 
 function toggleCRTEffect(enable) {
   if (enable) {
@@ -674,9 +719,27 @@ function toggleCRTEffect(enable) {
     }
     crtOverlay.classList.add('active');
     document.body.classList.add('crt-active');
+
+    // Start CRT hum
+    createCRTHum();
+    if (crtAudioContext && crtAudioContext.state === 'suspended') {
+      crtAudioContext.resume();
+    }
+    if (crtGainNode) {
+      crtGainNode.gain.cancelScheduledValues(crtAudioContext.currentTime);
+      crtGainNode.gain.setValueAtTime(crtGainNode.gain.value, crtAudioContext.currentTime);
+      crtGainNode.gain.linearRampToValueAtTime(1, crtAudioContext.currentTime + 0.3);
+    }
   } else {
     if (crtOverlay) crtOverlay.classList.remove('active');
     document.body.classList.remove('crt-active');
+
+    // Fade out CRT hum
+    if (crtGainNode && crtAudioContext) {
+      crtGainNode.gain.cancelScheduledValues(crtAudioContext.currentTime);
+      crtGainNode.gain.setValueAtTime(crtGainNode.gain.value, crtAudioContext.currentTime);
+      crtGainNode.gain.linearRampToValueAtTime(0, crtAudioContext.currentTime + 0.3);
+    }
   }
 }
 
