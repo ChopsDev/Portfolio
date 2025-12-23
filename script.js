@@ -433,6 +433,49 @@ function playKonamiDeactivate() {
   noise.stop(now + 0.8);
 }
 
+function playCRTType() {
+  if (!cheatsEnabled) return;
+  const ctx = getUIAudioContext();
+  const now = ctx.currentTime;
+
+  // Randomize pitch slightly for variety
+  const basePitch = 1800 + Math.random() * 400;
+
+  // Key click
+  const click = ctx.createOscillator();
+  const clickGain = ctx.createGain();
+  click.type = 'square';
+  click.frequency.setValueAtTime(basePitch, now);
+  click.frequency.exponentialRampToValueAtTime(basePitch * 0.5, now + 0.02);
+  clickGain.gain.setValueAtTime(0.06, now);
+  clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.025);
+  click.connect(clickGain);
+  clickGain.connect(ctx.destination);
+  click.start(now);
+  click.stop(now + 0.025);
+
+  // Tiny mechanical noise
+  const bufferSize = ctx.sampleRate * 0.015;
+  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const output = noiseBuffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    output[i] = Math.random() * 2 - 1;
+  }
+  const noise = ctx.createBufferSource();
+  const noiseGain = ctx.createGain();
+  const noiseFilter = ctx.createBiquadFilter();
+  noise.buffer = noiseBuffer;
+  noiseFilter.type = 'highpass';
+  noiseFilter.frequency.value = 5000;
+  noiseGain.gain.setValueAtTime(0.025, now);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.015);
+  noise.connect(noiseFilter);
+  noiseFilter.connect(noiseGain);
+  noiseGain.connect(ctx.destination);
+  noise.start(now);
+  noise.stop(now + 0.015);
+}
+
 function playCRTHover() {
   if (!cheatsEnabled) return;
   const ctx = getUIAudioContext();
@@ -1360,3 +1403,13 @@ document.addEventListener('mouseout', (e) => {
     delete interactive.dataset.hovered;
   }
 });
+
+// CRT typing sound on input fields (only in cheat mode)
+document.addEventListener('input', (e) => {
+  if (!cheatsEnabled) return;
+
+  const tagName = e.target.tagName.toLowerCase();
+  if (tagName === 'input' || tagName === 'textarea') {
+    playCRTType();
+  }
+}, true);
