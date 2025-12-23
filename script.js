@@ -120,6 +120,152 @@ const middle = document.querySelector('.middle');
 
 const HIDE_TEXT = "HIDE"
 
+// UI Sound Effects System
+let uiAudioContext = null;
+
+function getUIAudioContext() {
+  if (!uiAudioContext) {
+    uiAudioContext = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  if (uiAudioContext.state === 'suspended') {
+    uiAudioContext.resume();
+  }
+  return uiAudioContext;
+}
+
+function playPanelOpen() {
+  if (!cheatsEnabled) return;
+  const ctx = getUIAudioContext();
+  const now = ctx.currentTime;
+
+  // Swoosh sound - frequency sweep up
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const filter = ctx.createBiquadFilter();
+
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(150, now);
+  osc.frequency.exponentialRampToValueAtTime(400, now + 0.15);
+
+  filter.type = 'lowpass';
+  filter.frequency.setValueAtTime(800, now);
+  filter.frequency.exponentialRampToValueAtTime(2000, now + 0.1);
+
+  gain.gain.setValueAtTime(0.12, now);
+  gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+
+  osc.connect(filter);
+  filter.connect(gain);
+  gain.connect(ctx.destination);
+
+  osc.start(now);
+  osc.stop(now + 0.2);
+
+  // Subtle click
+  const click = ctx.createOscillator();
+  const clickGain = ctx.createGain();
+  click.type = 'sine';
+  click.frequency.value = 1200;
+  clickGain.gain.setValueAtTime(0.08, now);
+  clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+  click.connect(clickGain);
+  clickGain.connect(ctx.destination);
+  click.start(now);
+  click.stop(now + 0.03);
+}
+
+function playCRTClick() {
+  if (!cheatsEnabled) return;
+  const ctx = getUIAudioContext();
+  const now = ctx.currentTime;
+
+  // CRT-style click - short electronic blip
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+
+  osc.type = 'square';
+  osc.frequency.setValueAtTime(800, now);
+  osc.frequency.exponentialRampToValueAtTime(200, now + 0.04);
+
+  gain.gain.setValueAtTime(0.08, now);
+  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+
+  osc.start(now);
+  osc.stop(now + 0.05);
+
+  // Add a tiny bit of noise for texture
+  const bufferSize = ctx.sampleRate * 0.02;
+  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const output = noiseBuffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    output[i] = Math.random() * 2 - 1;
+  }
+
+  const noise = ctx.createBufferSource();
+  const noiseGain = ctx.createGain();
+  const noiseFilter = ctx.createBiquadFilter();
+
+  noise.buffer = noiseBuffer;
+  noiseFilter.type = 'bandpass';
+  noiseFilter.frequency.value = 3000;
+  noiseFilter.Q.value = 1;
+
+  noiseGain.gain.setValueAtTime(0.03, now);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.02);
+
+  noise.connect(noiseFilter);
+  noiseFilter.connect(noiseGain);
+  noiseGain.connect(ctx.destination);
+
+  noise.start(now);
+  noise.stop(now + 0.02);
+}
+
+function playPanelClose() {
+  if (!cheatsEnabled) return;
+  const ctx = getUIAudioContext();
+  const now = ctx.currentTime;
+
+  // Swoosh sound - frequency sweep down
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  const filter = ctx.createBiquadFilter();
+
+  osc.type = 'sine';
+  osc.frequency.setValueAtTime(350, now);
+  osc.frequency.exponentialRampToValueAtTime(120, now + 0.15);
+
+  filter.type = 'lowpass';
+  filter.frequency.setValueAtTime(1500, now);
+  filter.frequency.exponentialRampToValueAtTime(400, now + 0.15);
+
+  gain.gain.setValueAtTime(0.1, now);
+  gain.gain.exponentialRampToValueAtTime(0.01, now + 0.18);
+
+  osc.connect(filter);
+  filter.connect(gain);
+  gain.connect(ctx.destination);
+
+  osc.start(now);
+  osc.stop(now + 0.18);
+
+  // Soft thud
+  const thud = ctx.createOscillator();
+  const thudGain = ctx.createGain();
+  thud.type = 'sine';
+  thud.frequency.setValueAtTime(80, now + 0.05);
+  thud.frequency.exponentialRampToValueAtTime(40, now + 0.12);
+  thudGain.gain.setValueAtTime(0.1, now + 0.05);
+  thudGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+  thud.connect(thudGain);
+  thudGain.connect(ctx.destination);
+  thud.start(now + 0.05);
+  thud.stop(now + 0.12);
+}
+
 // Show middle content on page load
 middle.classList.add('ready');
 
@@ -130,6 +276,9 @@ setTimeout(() => {
 
 // Function to close all panels and reset
 function closeAll(keepMiddleShrunk = false) {
+  // Check if a panel was actually open before closing
+  const wasOpen = leftPanel.classList.contains('expanded') || rightPanel.classList.contains('expanded');
+
   toggleScroll(false);
 
   leftPanel.classList.remove('expanded', 'expanding');
@@ -151,6 +300,11 @@ function closeAll(keepMiddleShrunk = false) {
         }, 1000);
       }
     }, 150);
+
+    // Play close sound only when actually closing (not switching panels)
+    if (wasOpen) {
+      playPanelClose();
+    }
   }
 
   rightHeading.textContent = "OTHER"
@@ -171,6 +325,8 @@ function expandLeft() {
 
   rightHeading.textContent = HIDE_TEXT
   leftContent.classList.add('visible');
+
+  playPanelOpen();
 }
 
 // Expand the right panel and shrink the middle
@@ -187,6 +343,8 @@ function expandRight() {
 
   leftHeading.textContent = HIDE_TEXT
   rightContent.classList.add('visible');
+
+  playPanelOpen();
 }
 
 function toggleScroll(toggle){
@@ -888,4 +1046,10 @@ nameHeading.addEventListener('click', () => {
     nameClickCount = 0;
     window.open('https://youtu.be/23e4r2VL0gY?si=EyRaLlF4zjYuOI_f', '_blank');
   }
+});
+
+// CRT click sound on any click (only in cheat mode)
+document.addEventListener('click', () => {
+  if (!cheatsEnabled) return;
+  playCRTClick();
 });
