@@ -239,6 +239,200 @@ function playCRTClick() {
   noise.stop(now + 0.02);
 }
 
+function playCRTCollapsible(opening) {
+  if (!cheatsEnabled) return;
+  const ctx = getUIAudioContext();
+  const now = ctx.currentTime;
+
+  // Mechanical relay click
+  const click1 = ctx.createOscillator();
+  const click1Gain = ctx.createGain();
+  click1.type = 'square';
+  click1.frequency.setValueAtTime(opening ? 1500 : 1200, now);
+  click1.frequency.setValueAtTime(opening ? 800 : 600, now + 0.015);
+  click1Gain.gain.setValueAtTime(0.1, now);
+  click1Gain.gain.exponentialRampToValueAtTime(0.001, now + 0.03);
+  click1.connect(click1Gain);
+  click1Gain.connect(ctx.destination);
+  click1.start(now);
+  click1.stop(now + 0.03);
+
+  // Second click for relay feel
+  const click2 = ctx.createOscillator();
+  const click2Gain = ctx.createGain();
+  click2.type = 'square';
+  click2.frequency.setValueAtTime(opening ? 2000 : 1000, now + 0.02);
+  click2Gain.gain.setValueAtTime(0.08, now + 0.02);
+  click2Gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+  click2.connect(click2Gain);
+  click2Gain.connect(ctx.destination);
+  click2.start(now + 0.02);
+  click2.stop(now + 0.04);
+
+  // Tiny mechanical noise
+  const bufferSize = ctx.sampleRate * 0.025;
+  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const output = noiseBuffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    output[i] = Math.random() * 2 - 1;
+  }
+  const noise = ctx.createBufferSource();
+  const noiseGain = ctx.createGain();
+  const noiseFilter = ctx.createBiquadFilter();
+  noise.buffer = noiseBuffer;
+  noiseFilter.type = 'bandpass';
+  noiseFilter.frequency.value = 2000;
+  noiseFilter.Q.value = 2;
+  noiseGain.gain.setValueAtTime(0.04, now);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.025);
+  noise.connect(noiseFilter);
+  noiseFilter.connect(noiseGain);
+  noiseGain.connect(ctx.destination);
+  noise.start(now);
+  noise.stop(now + 0.025);
+}
+
+function playKonamiActivate() {
+  const ctx = getUIAudioContext();
+  const now = ctx.currentTime;
+
+  // Static burst at start
+  const bufferSize = ctx.sampleRate * 0.1;
+  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const output = noiseBuffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    output[i] = Math.random() * 2 - 1;
+  }
+  const noise = ctx.createBufferSource();
+  const noiseGain = ctx.createGain();
+  const noiseFilter = ctx.createBiquadFilter();
+  noise.buffer = noiseBuffer;
+  noiseFilter.type = 'bandpass';
+  noiseFilter.frequency.value = 2000;
+  noiseGain.gain.setValueAtTime(0.1, now);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+  noise.connect(noiseFilter);
+  noiseFilter.connect(noiseGain);
+  noiseGain.connect(ctx.destination);
+  noise.start(now);
+  noise.stop(now + 0.1);
+
+  // Retro arcade ascending arpeggio - square waves
+  const notes = [262, 330, 392, 523, 659, 784]; // C4, E4, G4, C5, E5, G5
+  notes.forEach((freq, i) => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'square';
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.08, now + 0.05 + i * 0.06);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05 + i * 0.06 + 0.12);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(now + 0.05 + i * 0.06);
+    osc.stop(now + 0.05 + i * 0.06 + 0.12);
+  });
+
+  // 8-bit sparkle blips
+  const sparkles = [1047, 1319, 1568, 1319, 1568, 2093];
+  sparkles.forEach((freq, i) => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'square';
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.05, now + 0.4 + i * 0.04);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.4 + i * 0.04 + 0.08);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(now + 0.4 + i * 0.04);
+    osc.stop(now + 0.4 + i * 0.04 + 0.08);
+  });
+
+  // Final retro chord with slight detune for that old TV feel
+  const chordTime = now + 0.7;
+  [523, 661, 786].forEach(freq => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'square';
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.06, chordTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, chordTime + 0.35);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(chordTime);
+    osc.stop(chordTime + 0.35);
+  });
+
+  // End static crackle
+  const endNoise = ctx.createBufferSource();
+  const endNoiseGain = ctx.createGain();
+  const endNoiseFilter = ctx.createBiquadFilter();
+  endNoise.buffer = noiseBuffer;
+  endNoiseFilter.type = 'highpass';
+  endNoiseFilter.frequency.value = 3000;
+  endNoiseGain.gain.setValueAtTime(0.04, chordTime + 0.1);
+  endNoiseGain.gain.exponentialRampToValueAtTime(0.001, chordTime + 0.25);
+  endNoise.connect(endNoiseFilter);
+  endNoiseFilter.connect(endNoiseGain);
+  endNoiseGain.connect(ctx.destination);
+  endNoise.start(chordTime + 0.1);
+  endNoise.stop(chordTime + 0.25);
+}
+
+function playKonamiDeactivate() {
+  const ctx = getUIAudioContext();
+  const now = ctx.currentTime;
+
+  // Power-down sequence - descending tones
+  const frequencies = [1000, 800, 600, 450, 300, 150];
+  frequencies.forEach((freq, i) => {
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'square';
+    osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.07, now + i * 0.1);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.1 + 0.09);
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(now + i * 0.1);
+    osc.stop(now + i * 0.1 + 0.09);
+  });
+
+  // Final low thump
+  const thump = ctx.createOscillator();
+  const thumpGain = ctx.createGain();
+  thump.type = 'sine';
+  thump.frequency.setValueAtTime(80, now + 0.65);
+  thump.frequency.exponentialRampToValueAtTime(30, now + 0.9);
+  thumpGain.gain.setValueAtTime(0.15, now + 0.65);
+  thumpGain.gain.exponentialRampToValueAtTime(0.001, now + 0.9);
+  thump.connect(thumpGain);
+  thumpGain.connect(ctx.destination);
+  thump.start(now + 0.65);
+  thump.stop(now + 0.9);
+
+  // Static fadeout
+  const bufferSize = ctx.sampleRate * 0.3;
+  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const output = noiseBuffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    output[i] = Math.random() * 2 - 1;
+  }
+  const noise = ctx.createBufferSource();
+  const noiseGain = ctx.createGain();
+  const noiseFilter = ctx.createBiquadFilter();
+  noise.buffer = noiseBuffer;
+  noiseFilter.type = 'lowpass';
+  noiseFilter.frequency.setValueAtTime(4000, now + 0.5);
+  noiseFilter.frequency.exponentialRampToValueAtTime(200, now + 0.8);
+  noiseGain.gain.setValueAtTime(0.06, now + 0.5);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.8);
+  noise.connect(noiseFilter);
+  noiseFilter.connect(noiseGain);
+  noiseGain.connect(ctx.destination);
+  noise.start(now + 0.5);
+  noise.stop(now + 0.8);
+}
+
 function playCRTHover() {
   if (!cheatsEnabled) return;
   const ctx = getUIAudioContext();
@@ -471,6 +665,9 @@ function toggleCollapsible(element) {
   const isExpanded = element.classList.contains("active");
   element.setAttribute("aria-expanded", isExpanded);
 
+  // Play relay click sound
+  playCRTCollapsible(isExpanded);
+
   let content = element.nextElementSibling;
 
   while (content) {
@@ -510,6 +707,9 @@ function toggleDropdown(header) {
   header.classList.toggle("active");
   const isExpanded = header.classList.contains("active");
   header.setAttribute("aria-expanded", isExpanded);
+
+  // Play relay click sound
+  playCRTCollapsible(isExpanded);
 
   const targetId = header.getAttribute("data-target");
   const dropdownContent = document.getElementById(targetId);
@@ -815,6 +1015,13 @@ document.addEventListener('keydown', (e) => {
 
 function toggleKonamiCheats() {
   cheatsEnabled = !cheatsEnabled;
+
+  // Play activation/deactivation sound
+  if (cheatsEnabled) {
+    playKonamiActivate();
+  } else {
+    playKonamiDeactivate();
+  }
 
   // Show overlay
   const overlay = document.createElement('div');
