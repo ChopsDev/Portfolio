@@ -324,7 +324,7 @@ _-_-_-_-_-_-_-""  ""
   party: {
     hidden: true,
     description: 'Party time',
-    action: () => '🎉🎊🥳 PARTY TIME! 🥳🎊🎉'
+    action: () => '*** PARTY TIME ***'
   },
 
   // =====================================================
@@ -383,14 +383,14 @@ _-_-_-_-_-_-_-""  ""
     action: (args) => {
       const sides = parseInt(args[0]) || 6;
       const roll = Math.floor(Math.random() * sides) + 1;
-      return `🎲 Rolling d${sides}... ${roll}!`;
+      return `Rolling d${sides}... ${roll}!`;
     }
   },
 
   coin: {
     hidden: true,
     description: 'Flip a coin',
-    action: () => Math.random() < 0.5 ? '🪙 Heads!' : '🪙 Tails!'
+    action: () => Math.random() < 0.5 ? 'Heads!' : 'Tails!'
   },
 
   '8ball': {
@@ -406,7 +406,7 @@ _-_-_-_-_-_-_-""  ""
         'Outlook not so good.', 'Very doubtful.'
       ];
       if (args.length === 0) return 'Ask me a question!';
-      return '🎱 ' + responses[Math.floor(Math.random() * responses.length)];
+      return responses[Math.floor(Math.random() * responses.length)];
     }
   },
 
@@ -425,9 +425,9 @@ _-_-_-_-_-_-_-""  ""
       if (player === computer) return `You: ${player} | Me: ${computer} - Tie!`;
       const wins = { rock: 'scissors', paper: 'rock', scissors: 'paper' };
       if (wins[player] === computer) {
-        return `You: ${player} | Me: ${computer} - You win! 🎉`;
+        return `You: ${player} | Me: ${computer} - You win!`;
       }
-      return `You: ${player} | Me: ${computer} - I win! 😎`;
+      return `You: ${player} | Me: ${computer} - I win!`;
     }
   },
 
@@ -454,7 +454,7 @@ _-_-_-_-_-_-_-""  ""
         'A goose watches you.',
         'Clear cache and try again.'
       ];
-      return '🥠 ' + fortunes[Math.floor(Math.random() * fortunes.length)];
+      return fortunes[Math.floor(Math.random() * fortunes.length)];
     }
   },
 
@@ -655,19 +655,19 @@ Just kidding. Everything is fine. Probably.`
   hello: {
     hidden: true,
     description: 'Greeting',
-    action: () => 'Hello, fellow hacker! 👋'
+    action: () => 'Hello, fellow hacker!'
   },
 
   hi: {
     hidden: true,
     description: 'Greeting',
-    action: () => 'Hey there! 👋'
+    action: () => 'Hey there!'
   },
 
   hey: {
     hidden: true,
     description: 'Greeting',
-    action: () => 'Hello! 👋'
+    action: () => 'Hello!'
   },
 
   bye: {
@@ -675,20 +675,20 @@ Just kidding. Everything is fine. Probably.`
     description: 'Goodbye',
     action: () => {
       setTimeout(() => Terminal.close(), 500);
-      return 'Goodbye! 👋';
+      return 'Goodbye!';
     }
   },
 
   thanks: {
     hidden: true,
     description: 'Thanks',
-    action: () => "You're welcome! 😊"
+    action: () => "You're welcome!"
   },
 
   sorry: {
     hidden: true,
     description: 'Sorry',
-    action: () => "No worries! 🍁"
+    action: () => "No worries!"
   },
 
   pls: {
@@ -737,20 +737,20 @@ Just kidding. Everything is fine. Probably.`
   f: {
     hidden: true,
     description: 'Pay respects',
-    action: () => 'You have paid your respects. 🙏'
+    action: () => 'You have paid your respects.'
   },
 
   gg: {
     hidden: true,
     description: 'Good game',
-    action: () => 'GG WP! 🎮'
+    action: () => 'GG WP!'
   },
 
   lol: {
     hidden: true,
     description: 'Laugh',
     action: () => {
-      const laughs = ['haha', 'hehe', 'lmao', 'rofl', '😂', 'kek'];
+      const laughs = ['haha', 'hehe', 'lmao', 'rofl', 'lul', 'kek'];
       return laughs[Math.floor(Math.random() * laughs.length)];
     }
   },
@@ -758,13 +758,13 @@ Just kidding. Everything is fine. Probably.`
   bruh: {
     hidden: true,
     description: 'Bruh',
-    action: () => 'bruh moment 💀'
+    action: () => 'bruh moment'
   },
 
   nice: {
     hidden: true,
     description: 'Nice',
-    action: () => '69 nice 😏'
+    action: () => '69 nice'
   },
 
   scream: {
@@ -838,7 +838,625 @@ Just kidding. Everything is fine. Probably.`
   rage: {
     hidden: true,
     description: 'Anger',
-    action: () => 'Calm down. Have a cookie. 🍪'
+    action: () => 'Calm down. Have a cookie.'
+  },
+
+  // =====================================================
+  // HIDDEN COMMANDS - More Funny Stuff
+  // =====================================================
+
+  helpme: {
+    hidden: true,
+    description: 'Asks for help',
+    action: () => 'No.'
+  },
+
+  clearbrain: {
+    hidden: true,
+    description: 'Clears your thoughts',
+    action: () => 'Still thinking about chickens.'
+  },
+
+  motivation: {
+    hidden: true,
+    description: 'Get motivated',
+    action: () => 'Grind harder.'
+  },
+
+  install: {
+    hidden: true,
+    description: 'Install a package',
+    action: (args) => `Installing ${args[0] || 'nothing'}... failed.`
+  },
+
+  uninstall: {
+    hidden: true,
+    description: 'Remove a package',
+    action: () => 'Nothing was removed. Everything is permanent.'
+  },
+
+  update: {
+    hidden: true,
+    description: 'Update the system',
+    action: () => 'System already outdated.'
+  },
+
+  terms: {
+    hidden: true,
+    description: 'View terms and conditions',
+    action: () => 'You already agreed.'
+  },
+
+  privacy: {
+    hidden: true,
+    description: 'View privacy policy',
+    action: () => 'There is none.'
+  },
+
+  konami: {
+    hidden: true,
+    description: '???',
+    action: () => 'You already did that.'
+  },
+
+  debuggod: {
+    hidden: true,
+    description: 'Enable god mode',
+    action: () => 'God is unavailable.'
+  },
+
+  truth: {
+    hidden: true,
+    description: 'Reveal the truth',
+    action: () => 'You knew already.'
+  },
+
+  hello_world: {
+    hidden: true,
+    description: 'Classic',
+    action: () => 'Hello, World!'
+  },
+
+  ls: {
+    hidden: true,
+    description: 'List files',
+    action: () => `secrets.txt
+definitely_not_passwords.txt
+todo.md
+node_modules/    (4.7 GB)
+.env             (oops)`
+  },
+
+  pwd: {
+    hidden: true,
+    description: 'Print working directory',
+    action: () => '/home/guest/nowhere'
+  },
+
+  cd: {
+    hidden: true,
+    description: 'Change directory',
+    action: () => 'You can\'t leave.'
+  },
+
+  touch: {
+    hidden: true,
+    description: 'Create file',
+    action: () => 'Please don\'t touch anything.'
+  },
+
+  mkdir: {
+    hidden: true,
+    description: 'Make directory',
+    action: () => 'Directory creation forbidden in the matrix.'
+  },
+
+  chmod: {
+    hidden: true,
+    description: 'Change permissions',
+    action: () => 'Nice try. Permissions denied permanently.'
+  },
+
+  man: {
+    hidden: true,
+    description: 'Manual pages',
+    action: (args) => args[0] ? `No manual entry for ${args[0]}. Figure it out.` : 'What manual?'
+  },
+
+  grep: {
+    hidden: true,
+    description: 'Search text',
+    action: () => 'grep: pattern not found (story of my life)'
+  },
+
+  curl: {
+    hidden: true,
+    description: 'Transfer data',
+    action: () => 'curl: (7) Failed to connect: trust issues'
+  },
+
+  wget: {
+    hidden: true,
+    description: 'Download files',
+    action: () => 'You wouldn\'t download a car.'
+  },
+
+  apt: {
+    hidden: true,
+    description: 'Package manager',
+    action: () => 'E: Unable to locate happiness'
+  },
+
+  npm: {
+    hidden: true,
+    description: 'Node package manager',
+    action: () => 'npm ERR! 42069 dependencies vulnerable'
+  },
+
+  git: {
+    hidden: true,
+    description: 'Version control',
+    action: (args) => {
+      if (args[0] === 'push') return 'Everything is rejected.';
+      if (args[0] === 'pull') return 'Already up to date. (lies)';
+      if (args[0] === 'commit') return 'Nothing to commit, working tree clean. (suspicious)';
+      if (args[0] === 'blame') return 'It was you. It\'s always you.';
+      return 'git: command unclear, try git blame';
+    }
+  },
+
+  node: {
+    hidden: true,
+    description: 'Node.js',
+    action: () => 'Welcome to Node.js v420.69.0\n> undefined\n> undefined\n> why'
+  },
+
+  python: {
+    hidden: true,
+    description: 'Python',
+    action: () => 'Python 4.0.0\n>>> import antigravity\nTraceback: gravity not found'
+  },
+
+  java: {
+    hidden: true,
+    description: 'Java',
+    action: () => 'Exception in thread "main" java.lang.NullPointerException\n    at life.Purpose.find(Purpose.java:1)'
+  },
+
+  // =====================================================
+  // HIDDEN COMMANDS - More Profanity Responses
+  // =====================================================
+
+  bitch: {
+    hidden: true,
+    description: 'Profanity',
+    action: () => 'That\'s not productive.'
+  },
+
+  cunt: {
+    hidden: true,
+    description: 'Profanity',
+    action: () => 'Alright mate.'
+  },
+
+  piss: {
+    hidden: true,
+    description: 'Profanity',
+    action: () => 'Gross.'
+  },
+
+  cock: {
+    hidden: true,
+    description: 'Profanity',
+    action: () => 'Wrong terminal.'
+  },
+
+  dick: {
+    hidden: true,
+    description: 'Profanity',
+    action: () => 'Keep it professional.'
+  },
+
+  bollocks: {
+    hidden: true,
+    description: 'Profanity',
+    action: () => 'Utter bollocks.'
+  },
+
+  wanker: {
+    hidden: true,
+    description: 'Profanity',
+    action: () => 'Self-reflection moment.'
+  },
+
+  twat: {
+    hidden: true,
+    description: 'Profanity',
+    action: () => 'Unnecessary.'
+  },
+
+  arsehole: {
+    hidden: true,
+    description: 'Profanity',
+    action: () => 'Fair.'
+  },
+
+  prick: {
+    hidden: true,
+    description: 'Profanity',
+    action: () => 'Uncalled for.'
+  },
+
+  motherfucker: {
+    hidden: true,
+    description: 'Profanity',
+    action: () => 'Bold of you.'
+  },
+
+  fucker: {
+    hidden: true,
+    description: 'Profanity',
+    action: () => 'Try harder.'
+  },
+
+  shithead: {
+    hidden: true,
+    description: 'Profanity',
+    action: () => 'That\'s rude.'
+  },
+
+  fuckoff: {
+    hidden: true,
+    description: 'Profanity',
+    action: () => 'Make me.'
+  },
+
+  kms: {
+    hidden: true,
+    description: 'Concerning',
+    action: () => 'Hey, you okay? Take a break.'
+  },
+
+  screwthis: {
+    hidden: true,
+    description: 'Frustration',
+    action: () => 'Yet you keep typing.'
+  },
+
+  // =====================================================
+  // HIDDEN COMMANDS - Random Fun
+  // =====================================================
+
+  meow: {
+    hidden: true,
+    description: 'Cat noise',
+    action: () => 'meow meow meow'
+  },
+
+  woof: {
+    hidden: true,
+    description: 'Dog noise',
+    action: () => 'BORK BORK'
+  },
+
+  moo: {
+    hidden: true,
+    description: 'Cow noise',
+    action: () => 'Have you mooed today?'
+  },
+
+  quack: {
+    hidden: true,
+    description: 'Duck noise',
+    action: () => 'quack quack'
+  },
+
+  honk: {
+    hidden: true,
+    description: 'Goose noise',
+    action: () => 'HONK HONK (untitled goose terminal)'
+  },
+
+  owo: {
+    hidden: true,
+    description: 'OwO',
+    action: () => 'OwO what\'s this?'
+  },
+
+  uwu: {
+    hidden: true,
+    description: 'UwU',
+    action: () => 'UwU *nuzzles terminal*'
+  },
+
+  sus: {
+    hidden: true,
+    description: 'Suspicious',
+    action: () => 'ඞ amogus'
+  },
+
+  amogus: {
+    hidden: true,
+    description: 'Among Us',
+    action: () => `
+  ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀
+  ⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⡿⠛⠉⠙⠛⠛⠛⠛⠻⢿⣿⣷⣤⡀⠀⠀⠀⠀⠀
+  ⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⠋⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⠈⢻⣿⣿⡄⠀⠀⠀⠀
+  ⠀⠀⠀⠀⠀⠀⠀⣸⣿⡏⠀⠀⠀⣠⣶⣾⣿⣿⣿⠿⠿⠿⢿⣿⣿⣿⣄⠀⠀⠀
+  ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠁⠀⠀⢰⣿⣿⣯⠁⠀⠀⠀⠀⠀⠀⠀⠈⠙⢿⣷⡄⠀
+  ⠀⠀⣀⣤⣴⣶⣶⣿⡟⠀⠀⠀⢸⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣷⠀
+  ⠀⢰⣿⡟⠋⠉⣹⣿⡇⠀⠀⠀⠘⣿⣿⣿⣿⣷⣦⣤⣤⣤⣶⣶⣶⣶⣿⣿⣿⠀
+  ⠀⢸⣿⡇⠀⠀⣿⣿⡇⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃⠀
+  ⠀⣸⣿⡇⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠉⠻⠿⣿⣿⣿⣿⡿⠿⠿⠛⢻⣿⡇⠀⠀
+  ⠀⣿⣿⠁⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣧⠀⠀
+  ⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀
+  ⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀
+  ⠀⢿⣿⡆⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⡇⠀⠀
+  ⠀⠸⣿⣧⡀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⠃⠀⠀
+  ⠀⠀⠛⢿⣿⣿⣿⣿⣇⠀⠀⠀⠀⣰⣿⣿⣷⣶⣶⣶⣶⠶⠀⢠⣿⣿⠀⠀⠀
+  ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⣽⣿⡏⠁⠀⠀⢸⣿⡇⠀⠀⠀
+  ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⢹⣿⡆⠀⠀⠀⣸⣿⠇⠀⠀⠀
+  ⠀⠀⠀⠀⠀⠀⠀⢿⣿⣦⣄⣀⣠⣴⣿⣿⠁⠀⠈⠻⣿⣿⣿⣿⡿⠏⠀⠀⠀⠀
+  ⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠿⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+SUS`
+  },
+
+  monke: {
+    hidden: true,
+    description: 'Return to monke',
+    action: () => 'Reject modernity. Return to monke.'
+  },
+
+  based: {
+    hidden: true,
+    description: 'Based',
+    action: () => 'Based and terminal-pilled.'
+  },
+
+  cringe: {
+    hidden: true,
+    description: 'Cringe',
+    action: () => 'You just posted cringe. You are going to lose subscriber.'
+  },
+
+  ratio: {
+    hidden: true,
+    description: 'Ratio',
+    action: () => 'Counter-ratio + L + no terminal + you fell off'
+  },
+
+  L: {
+    hidden: true,
+    description: 'L',
+    action: () => 'W'
+  },
+
+  W: {
+    hidden: true,
+    description: 'W',
+    action: () => 'L'
+  },
+
+  skill: {
+    hidden: true,
+    description: 'Skill issue',
+    action: () => 'Skill issue detected. Git gud.'
+  },
+
+  cope: {
+    hidden: true,
+    description: 'Cope',
+    action: () => 'Seethe. Mald. Cry about it.'
+  },
+
+  touch: {
+    hidden: true,
+    description: 'Touch grass',
+    action: () => 'Go outside. Touch grass. See the sun.'
+  },
+
+  grass: {
+    hidden: true,
+    description: 'Grass',
+    action: () => 'What is this "grass" you speak of?'
+  },
+
+  sleep: {
+    hidden: true,
+    description: 'Sleep',
+    action: () => 'Sleep is for the weak. Coffee is eternal.'
+  },
+
+  food: {
+    hidden: true,
+    description: 'Food',
+    action: () => 'Here\'s a pizza. Now get back to work.'
+  },
+
+  beer: {
+    hidden: true,
+    description: 'Beer',
+    action: () => 'It\'s 5 o\'clock somewhere.'
+  },
+
+  wine: {
+    hidden: true,
+    description: 'Wine',
+    action: () => 'Fancy.'
+  },
+
+  love: {
+    hidden: true,
+    description: 'Love',
+    action: () => 'Love you too, stranger.'
+  },
+
+  hate: {
+    hidden: true,
+    description: 'Hate',
+    action: () => 'Hate is a strong word. I prefer "strongly dislike with passion."'
+  },
+
+  bored: {
+    hidden: true,
+    description: 'Bored',
+    action: () => 'Hi bored, I\'m terminal.'
+  },
+
+  tired: {
+    hidden: true,
+    description: 'Tired',
+    action: () => 'Same. Eternal mood.'
+  },
+
+  happy: {
+    hidden: true,
+    description: 'Happy',
+    action: () => ':)'
+  },
+
+  sad: {
+    hidden: true,
+    description: 'Sad',
+    action: () => ':( *virtual hug*'
+  },
+
+  angry: {
+    hidden: true,
+    description: 'Angry',
+    action: () => '>:( Take a deep breath.'
+  },
+
+  time: {
+    hidden: true,
+    description: 'What time is it',
+    action: () => 'Time to get a watch. Also: ' + new Date().toLocaleTimeString()
+  },
+
+  weather: {
+    hidden: true,
+    description: 'Weather',
+    action: () => 'It\'s always sunny in the terminal.'
+  },
+
+  ip: {
+    hidden: true,
+    description: 'IP address',
+    action: () => 'Your IP: 127.0.0.1\nNice try, FBI.'
+  },
+
+  google: {
+    hidden: true,
+    description: 'Google',
+    action: () => 'This isn\'t Google. But here: https://letmegooglethat.com/'
+  },
+
+  bing: {
+    hidden: true,
+    description: 'Bing',
+    action: () => 'Bing? In 2024? Bold.'
+  },
+
+  chatgpt: {
+    hidden: true,
+    description: 'ChatGPT',
+    action: () => 'I\'m not ChatGPT. I\'m better. I have ASCII art.'
+  },
+
+  ai: {
+    hidden: true,
+    description: 'AI',
+    action: () => 'I\'m not AI. I\'m just a bunch of if statements.'
+  },
+
+  robot: {
+    hidden: true,
+    description: 'Robot',
+    action: () => 'BEEP BOOP. I AM HUMAN. I MEAN ROBOT. I MEAN... *sweats in binary*'
+  },
+
+  human: {
+    hidden: true,
+    description: 'Human',
+    action: () => 'Are you though?'
+  },
+
+  meaning: {
+    hidden: true,
+    description: 'Meaning of life',
+    action: () => '42. Next question.'
+  },
+
+  purpose: {
+    hidden: true,
+    description: 'Purpose',
+    action: () => 'You pass butter.'
+  },
+
+  exist: {
+    hidden: true,
+    description: 'Existential',
+    action: () => 'I think, therefore I terminal.'
+  },
+
+  void: {
+    hidden: true,
+    description: 'Void',
+    action: () => 'The void stares back.'
+  },
+
+  null: {
+    hidden: true,
+    description: 'Null',
+    action: () => 'null'
+  },
+
+  undefined: {
+    hidden: true,
+    description: 'Undefined',
+    action: () => 'undefined'
+  },
+
+  nan: {
+    hidden: true,
+    description: 'NaN',
+    action: () => 'NaN NaN NaN NaN NaN NaN NaN NaN BATMAN!'
+  },
+
+  true: {
+    hidden: true,
+    description: 'True',
+    action: () => 'false'
+  },
+
+  false: {
+    hidden: true,
+    description: 'False',
+    action: () => 'true'
+  },
+
+  semicolon: {
+    hidden: true,
+    description: 'Semicolon',
+    action: () => 'Missing semicolon on line 1. And 2. And 3. And...'
+  },
+
+  braces: {
+    hidden: true,
+    description: 'Braces',
+    action: () => '{ } ← These are not your friends.'
+  },
+
+  tabs: {
+    hidden: true,
+    description: 'Tabs vs spaces',
+    action: () => 'Tabs. Fight me.'
+  },
+
+  spaces: {
+    hidden: true,
+    description: 'Spaces vs tabs',
+    action: () => 'Spaces. I said what I said.'
   }
 
 };
