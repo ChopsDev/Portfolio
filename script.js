@@ -1191,54 +1191,98 @@ function decryptText(element, finalText, onComplete) {
   scramble();
 }
 
-function shutdownSequence(container, onComplete) {
-  const lines = [
-    { text: '> DISABLING CHEAT MODULE...', delay: 0 },
-    { text: '> UNLOADING EFFECTS...', delay: 400 },
-    { text: '> RESTORING DEFAULTS...', delay: 800 },
-    { text: '> SHUTDOWN COMPLETE', delay: 1200, final: true }
-  ];
+function corruptedShutdown(container, overlay, onComplete) {
+  const glitchChars = '!@#$%^&*()_+-=[]{}|;:,.<>?/~`█▓▒░╔╗╚╝║═';
 
   container.innerHTML = '';
   container.style.textAlign = 'left';
   container.style.fontFamily = 'monospace';
-  container.style.fontSize = 'clamp(0.9rem, 2.5vw, 1.2rem)';
+  container.style.fontSize = 'clamp(0.8rem, 2vw, 1rem)';
 
-  lines.forEach((line, index) => {
-    setTimeout(() => {
-      const lineEl = document.createElement('div');
-      lineEl.style.color = line.final ? '#0f0' : '#0a0';
-      lineEl.style.marginBottom = '0.5rem';
-      lineEl.style.textShadow = line.final ? '0 0 10px rgba(0, 255, 0, 0.5)' : 'none';
+  const lines = [];
 
-      if (line.final) {
-        lineEl.style.marginTop = '1rem';
-        lineEl.style.fontSize = 'clamp(1.2rem, 4vw, 1.8rem)';
-      }
-
-      container.appendChild(lineEl);
-      typeText(lineEl, line.text, () => {
-        if (line.final && onComplete) onComplete();
-      });
-    }, line.delay);
-  });
-}
-
-function typeText(element, text, onComplete) {
-  let i = 0;
-  const speed = 30;
-
-  function type() {
-    if (i < text.length) {
-      element.textContent += text.charAt(i);
-      i++;
-      setTimeout(type, speed);
-    } else if (onComplete) {
-      onComplete();
-    }
+  function addLine(text, color = '#f00', isError = true) {
+    const line = document.createElement('div');
+    line.textContent = text;
+    line.style.color = color;
+    line.style.marginBottom = '0.3rem';
+    line.style.textShadow = isError ? '0 0 5px rgba(255, 0, 0, 0.5)' : 'none';
+    container.appendChild(line);
+    lines.push(line);
+    return line;
   }
 
-  type();
+  function corruptLine(line) {
+    const original = line.textContent;
+    let corrupted = '';
+    for (let i = 0; i < original.length; i++) {
+      if (Math.random() > 0.5) {
+        corrupted += glitchChars[Math.floor(Math.random() * glitchChars.length)];
+      } else {
+        corrupted += original[i];
+      }
+    }
+    line.textContent = corrupted;
+  }
+
+  function corruptAllLines() {
+    lines.forEach(line => {
+      if (Math.random() > 0.3) corruptLine(line);
+    });
+  }
+
+  function screenFlicker() {
+    overlay.style.opacity = Math.random() > 0.5 ? '1' : '0.7';
+  }
+
+  // Timeline
+  setTimeout(() => addLine('ERROR: CHEAT_MODULE failed to respond'), 0);
+  setTimeout(() => addLine('ERROR: Memory corruption detected at 0x7F3A'), 200);
+  setTimeout(() => addLine('WARNING: Unstable state detected'), 400);
+  setTimeout(() => addLine('ERROR: Stack overflow in EFFECT_HANDLER'), 600);
+  setTimeout(() => addLine('CRITICAL: System integrity compromised'), 800);
+
+  // Start corruption
+  let corruptInterval;
+  let flickerInterval;
+
+  setTimeout(() => {
+    addLine('ATTEMPTING RECOVERY...', '#ff0', false);
+    corruptInterval = setInterval(corruptAllLines, 80);
+    flickerInterval = setInterval(screenFlicker, 100);
+  }, 1000);
+
+  setTimeout(() => addLine('█▓▒░ RECOVERY FAILED ░▒▓█', '#f00'), 1300);
+
+  setTimeout(() => {
+    addLine('FORCING SHUTDOWN...', '#f80', false);
+  }, 1600);
+
+  // Final corruption burst
+  setTimeout(() => {
+    for (let i = 0; i < 3; i++) {
+      addLine(Array(30).fill().map(() => glitchChars[Math.floor(Math.random() * glitchChars.length)]).join(''), '#600');
+    }
+  }, 1900);
+
+  // Clear and show final message
+  setTimeout(() => {
+    clearInterval(corruptInterval);
+    clearInterval(flickerInterval);
+    overlay.style.opacity = '1';
+
+    container.innerHTML = '';
+    container.style.textAlign = 'center';
+
+    const finalLine = document.createElement('div');
+    finalLine.textContent = 'SYSTEM TERMINATED';
+    finalLine.style.color = '#f00';
+    finalLine.style.fontSize = 'clamp(1.5rem, 5vw, 2.5rem)';
+    finalLine.style.textShadow = '0 0 20px rgba(255, 0, 0, 0.8)';
+    container.appendChild(finalLine);
+
+    if (onComplete) onComplete();
+  }, 2300);
 }
 
 function toggleKonamiCheats() {
@@ -1271,7 +1315,7 @@ function toggleKonamiCheats() {
       setTimeout(() => overlay.remove(), 500);
     }, 2500);
   } else {
-    // Deactivation - shutdown sequence
+    // Deactivation - corrupted shutdown
     overlay.innerHTML = `<div class="konami-content"></div>`;
 
     document.body.appendChild(overlay);
@@ -1279,11 +1323,11 @@ function toggleKonamiCheats() {
 
     const content = overlay.querySelector('.konami-content');
 
-    shutdownSequence(content, () => {
+    corruptedShutdown(content, overlay, () => {
       setTimeout(() => {
         overlay.classList.add('fade-out');
         setTimeout(() => overlay.remove(), 500);
-      }, 800);
+      }, 1000);
     });
   }
 
