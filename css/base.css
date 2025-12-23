@@ -931,6 +931,159 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   color: var(--middle-text-muted);
 }
 
+/* Contact Page Styles */
+.contact-page {
+  max-width: 800px;
+  padding: 3rem 2rem 5rem;
+  width: 100%;
+}
+
+.contact-page h1 {
+  font-family: "Archivo Black", serif;
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  margin: 0 0 0.5rem 0;
+  color: var(--middle-text);
+  letter-spacing: -1px;
+  transition: color 0.3s ease;
+}
+
+.contact-intro {
+  font-family: "Lexend", sans-serif;
+  font-size: 1rem;
+  font-weight: 300;
+  color: var(--middle-text-muted);
+  margin: 0 0 2.5rem 0;
+  transition: color 0.3s ease;
+}
+
+.contact-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group label {
+  font-family: "Lexend", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--middle-text);
+  transition: color 0.3s ease;
+}
+
+.form-group input,
+.form-group textarea {
+  font-family: "Lexend", sans-serif;
+  font-size: 0.95rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--middle-border);
+  border-radius: 6px;
+  background: var(--middle-bg);
+  color: var(--middle-text);
+  transition: border-color 0.2s ease, background 0.3s ease, color 0.3s ease;
+  resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--middle-text-muted);
+}
+
+.form-group textarea {
+  min-height: 120px;
+}
+
+.form-submit {
+  font-family: "Lexend", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.85rem 1.5rem;
+  background: var(--middle-text);
+  color: var(--middle-bg);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  align-self: flex-start;
+}
+
+.form-submit:hover {
+  transform: scale(1.03);
+  opacity: 0.9;
+}
+
+.form-submit:active {
+  transform: scale(0.97);
+}
+
+.contact-links-section h2 {
+  font-family: "Lexend", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--middle-text);
+  margin: 0 0 1.25rem 0;
+  transition: color 0.3s ease;
+}
+
+.contact-links-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.contact-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.25rem 1rem;
+  background: var(--middle-bg);
+  border: 1px solid var(--middle-border);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--middle-text);
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.3s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--middle-text-muted);
+}
+
+.contact-card:active {
+  transform: translateY(-1px);
+}
+
+.contact-card svg {
+  width: 28px;
+  height: 28px;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.contact-card:hover svg {
+  opacity: 1;
+}
+
+.contact-card span {
+  font-family: "Lexend", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
 /* Print styles */
 @media print {
   .panel,

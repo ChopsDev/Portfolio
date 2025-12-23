@@ -114,12 +114,16 @@
 
   .landing-page {
     flex-direction: column;
-    padding: 30px 20px 100px 20px;
+    padding: 2rem 1.5rem 8rem;
     gap: 30px;
     max-width: 100%;
     min-height: auto;
     height: auto;
     width: 100%;
+  }
+
+  .devlog-page {
+    padding: 2rem 1.5rem 8rem;
   }
 
   .landing-left {
@@ -248,6 +252,25 @@
   .spotify-grid {
     grid-template-columns: 1fr;
   }
+
+  /* ----- Contact Page ----- */
+
+  .contact-page {
+    padding: 2rem 1.5rem 8rem;
+  }
+
+  .contact-content {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .contact-links-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .form-submit {
+    width: 100%;
+  }
 }
 
 /* ----- 375px Minimum Width Adjustments ----- */
@@ -298,5 +321,26 @@
 
   .panel-divider h2 {
     font-size: 0.85rem;
+  }
+
+  .landing-page,
+  .devlog-page,
+  .contact-page {
+    padding: 1.5rem 1rem 8rem;
+  }
+
+  .contact-page h1 {
+    font-size: 2rem;
+  }
+
+  .contact-links-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-card {
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
   }
 }

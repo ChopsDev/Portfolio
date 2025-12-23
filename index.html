@@ -455,11 +455,68 @@
       </div>
     </div>
 
+    <!-- Page: Contact -->
+    <div class="page" data-page="contact">
+      <div class="contact-page">
+        <h1>Contact</h1>
+        <p class="contact-intro">Want to work together or just say hi? Reach out.</p>
+
+        <div class="contact-content">
+          <!--
+            FORMSPREE SETUP:
+            1. Go to https://formspree.io and create a free account
+            2. Create a new form and copy the endpoint URL
+               (looks like: https://formspree.io/f/xyzabcde)
+            3. Replace YOUR_FORM_ID below with your form ID (e.g. xyzabcde)
+          -->
+          <form class="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="form-submit">Send Message</button>
+          </form>
+
+          <div class="contact-links-section">
+            <h2>Or find me here</h2>
+            <div class="contact-links-grid">
+              <a href="https://github.com/ChopsDev" target="_blank" rel="noopener" class="contact-card">
+                <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                <span>GitHub</span>
+              </a>
+              <a href="https://chopsdev.itch.io/" target="_blank" rel="noopener" class="contact-card">
+                <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M3.13 1.338C2.08 1.96.02 4.328 0 4.95v1.03c0 1.303 1.22 2.45 2.325 2.45 1.33 0 2.436-1.102 2.436-2.41 0 1.308 1.07 2.41 2.4 2.41 1.328 0 2.362-1.102 2.362-2.41 0 1.308 1.137 2.41 2.466 2.41h.024c1.33 0 2.466-1.102 2.466-2.41 0 1.308 1.034 2.41 2.363 2.41 1.33 0 2.4-1.102 2.4-2.41 0 1.308 1.106 2.41 2.435 2.41C22.78 8.43 24 7.282 24 5.98V4.95c-.02-.62-2.082-2.99-3.13-3.612-3.253-.114-5.508-.134-8.87-.134-3.362 0-5.617.02-8.87.134zm6.59 6.71c-.463.503-1.12.822-1.858.822-.74 0-1.396-.32-1.86-.823-.468.503-1.124.823-1.863.823-.156 0-.308-.014-.455-.042v8.16c0 2.756 1.4 4.674 4.46 4.674h7.81c3.06 0 4.46-1.918 4.46-4.675v-8.16c-.147.028-.3.043-.456.043-.74 0-1.395-.32-1.862-.823-.466.503-1.12.822-1.86.822-.74 0-1.395-.32-1.86-.822-.463.503-1.12.822-1.857.822-.738 0-1.394-.32-1.858-.822zm-1.028 4.39h6.616c.076 0 .14.067.14.152v5.12c0 .085-.064.153-.14.153H8.692c-.076 0-.14-.068-.14-.153v-5.12c0-.085.064-.152.14-.152z"/></svg>
+                <span>itch.io</span>
+              </a>
+              <a href="https://www.youtube.com/@chops." target="_blank" rel="noopener" class="contact-card">
+                <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                <span>YouTube</span>
+              </a>
+              <a href="mailto:contact@chopsdev.com" class="contact-card">
+                <svg viewBox="0 0 24 24" width="32" height="32" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                <span>Email</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
     <!-- Page Navigation -->
     <nav class="page-nav" aria-label="Page navigation">
       <button class="page-btn active" data-target="home">Home</button>
       <button class="page-btn" data-target="resume">Resume</button>
       <button class="page-btn" data-target="devlog">Devlog</button>
+      <button class="page-btn" data-target="contact">Contact</button>
     </nav>
   </div>
 
