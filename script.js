@@ -1873,6 +1873,8 @@ const Terminal = {
       action: () => {
         let output = 'Available commands:\n\n';
         for (const [name, cmd] of Object.entries(Terminal.commands)) {
+          // Skip hidden commands
+          if (cmd.hidden) continue;
           output += `  ${name.padEnd(12)} - ${cmd.description}\n`;
         }
         output += '\nType a command and press Enter.';
@@ -1995,7 +1997,15 @@ Email:   contact@chopsdev.com`;
     //      }
     //    },
     //
-    // 2. EXAMPLES:
+    // 2. HIDDEN COMMANDS (not shown in help):
+    //
+    //    secretcmd: {
+    //      description: 'This won\'t show in help',
+    //      hidden: true,  // <-- Add this to hide from help
+    //      action: () => 'You found a secret!'
+    //    },
+    //
+    // 3. EXAMPLES:
     //
     //    // Simple command - no arguments
     //    hello: {
@@ -2010,14 +2020,76 @@ Email:   contact@chopsdev.com`;
     //    },
     //
     //    // Command that does something
-    //    hierarchyrandomcolour: {
-    //      description: 'Use a random colour for hierarchy',
+    //    randomcolour: {
+    //      description: 'Randomise background colour',
     //      action: () => {
     //        document.body.style.background = '#' + Math.floor(Math.random()*16777215).toString(16);
     //        return 'Randomised!';
     //      }
     //    },
     //
+    // =====================================================
+
+    // =====================================================
+    // HIDDEN COMMANDS (Easter eggs - not shown in help)
+    // =====================================================
+
+    sudo: {
+      description: 'Superuser do',
+      hidden: true,
+      action: (args) => {
+        if (args.length === 0) return 'Usage: sudo <command>';
+        if (args.join(' ').toLowerCase().includes('make me a sandwich')) {
+          return 'Okay.';
+        }
+        return 'Nice try, but you\'re not root here.';
+      }
+    },
+
+    rickroll: {
+      description: 'Never gonna give you up',
+      hidden: true,
+      action: () => {
+        window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
+        return 'Never gonna let you down...';
+      }
+    },
+
+    coffee: {
+      description: 'Make coffee',
+      hidden: true,
+      action: () => {
+        return `
+        ( (
+         ) )
+      ........
+      |      |]
+      \\      /
+       '----'
+
+  418 I'm a teapot`;
+      }
+    },
+
+    hello: {
+      description: 'Secret greeting',
+      hidden: true,
+      action: () => 'Hello, fellow hacker!'
+    },
+
+    secret: {
+      description: 'Find the secrets',
+      hidden: true,
+      action: () => {
+        return `You found one of the hidden commands!
+
+There are more secrets in this terminal...
+Try thinking like a hacker.
+
+Hints: coffee, sudo, or maybe something musical?`;
+      }
+    },
+
     // =====================================================
   },
 
