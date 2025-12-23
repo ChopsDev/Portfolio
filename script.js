@@ -433,6 +433,61 @@ function playKonamiDeactivate() {
   noise.stop(now + 0.8);
 }
 
+function playCRTPageSwitch() {
+  if (!cheatsEnabled) return;
+  const ctx = getUIAudioContext();
+  const now = ctx.currentTime;
+
+  // Channel change static burst
+  const bufferSize = ctx.sampleRate * 0.12;
+  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const output = noiseBuffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    output[i] = Math.random() * 2 - 1;
+  }
+  const noise = ctx.createBufferSource();
+  const noiseGain = ctx.createGain();
+  const noiseFilter = ctx.createBiquadFilter();
+  noise.buffer = noiseBuffer;
+  noiseFilter.type = 'bandpass';
+  noiseFilter.frequency.setValueAtTime(3000, now);
+  noiseFilter.frequency.exponentialRampToValueAtTime(800, now + 0.1);
+  noiseGain.gain.setValueAtTime(0.12, now);
+  noiseGain.gain.setValueAtTime(0.08, now + 0.03);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+  noise.connect(noiseFilter);
+  noiseFilter.connect(noiseGain);
+  noiseGain.connect(ctx.destination);
+  noise.start(now);
+  noise.stop(now + 0.12);
+
+  // Tuning blip
+  const blip = ctx.createOscillator();
+  const blipGain = ctx.createGain();
+  blip.type = 'square';
+  blip.frequency.setValueAtTime(600, now + 0.02);
+  blip.frequency.setValueAtTime(900, now + 0.05);
+  blip.frequency.setValueAtTime(750, now + 0.08);
+  blipGain.gain.setValueAtTime(0.06, now + 0.02);
+  blipGain.gain.exponentialRampToValueAtTime(0.001, now + 0.1);
+  blip.connect(blipGain);
+  blipGain.connect(ctx.destination);
+  blip.start(now + 0.02);
+  blip.stop(now + 0.1);
+
+  // Confirmation tone
+  const confirm = ctx.createOscillator();
+  const confirmGain = ctx.createGain();
+  confirm.type = 'square';
+  confirm.frequency.value = 1200;
+  confirmGain.gain.setValueAtTime(0.05, now + 0.1);
+  confirmGain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+  confirm.connect(confirmGain);
+  confirmGain.connect(ctx.destination);
+  confirm.start(now + 0.1);
+  confirm.stop(now + 0.15);
+}
+
 function playCRTEscape() {
   if (!cheatsEnabled) return;
   const ctx = getUIAudioContext();
@@ -1066,6 +1121,9 @@ function switchPage(targetPage) {
   const targetEl = document.querySelector(`.page[data-page="${targetPage}"]`);
 
   if (!targetEl || currentPage === targetEl) return;
+
+  // Play page switch sound
+  playCRTPageSwitch();
 
   // Switch active states
   currentPage.classList.remove('active');
