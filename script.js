@@ -807,8 +807,8 @@ document.documentElement.classList.remove('middle-dark-pending');
 // Toggle on click
 themeToggle.addEventListener('click', () => {
   const isDark = middle.classList.contains('dark-mode');
-  playCRTThemeToggle(!isDark);
   setTheme(isDark ? 'light' : 'dark');
+  playCRTThemeToggle(!isDark);
 });
 
 // Disco mode easter egg - click theme toggle 10 times rapidly
@@ -927,9 +927,7 @@ function toggleKonamiCheats() {
   cheatsEnabled = !cheatsEnabled;
 
   // Play activation/deactivation sound
-  if (cheatsEnabled) {
-    return;
-  } else {
+  if (!cheatsEnabled) {
     playKonamiDeactivate();
   }
 
