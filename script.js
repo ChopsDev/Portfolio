@@ -433,6 +433,71 @@ function playKonamiDeactivate() {
   noise.stop(now + 0.8);
 }
 
+function playCRTThemeToggle(toDark) {
+  if (!cheatsEnabled) return;
+  const ctx = getUIAudioContext();
+  const now = ctx.currentTime;
+
+  // Electric switch click
+  const click = ctx.createOscillator();
+  const clickGain = ctx.createGain();
+  click.type = 'square';
+  click.frequency.setValueAtTime(toDark ? 400 : 600, now);
+  click.frequency.setValueAtTime(toDark ? 200 : 800, now + 0.02);
+  clickGain.gain.setValueAtTime(0.1, now);
+  clickGain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+  click.connect(clickGain);
+  clickGain.connect(ctx.destination);
+  click.start(now);
+  click.stop(now + 0.04);
+
+  // Power surge hum
+  const hum = ctx.createOscillator();
+  const humGain = ctx.createGain();
+  hum.type = 'sawtooth';
+  hum.frequency.setValueAtTime(toDark ? 80 : 120, now + 0.02);
+  hum.frequency.exponentialRampToValueAtTime(toDark ? 50 : 150, now + 0.12);
+  humGain.gain.setValueAtTime(0.06, now + 0.02);
+  humGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+  hum.connect(humGain);
+  humGain.connect(ctx.destination);
+  hum.start(now + 0.02);
+  hum.stop(now + 0.12);
+
+  // Confirmation blip
+  const blip = ctx.createOscillator();
+  const blipGain = ctx.createGain();
+  blip.type = 'square';
+  blip.frequency.value = toDark ? 300 : 900;
+  blipGain.gain.setValueAtTime(0.07, now + 0.08);
+  blipGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+  blip.connect(blipGain);
+  blipGain.connect(ctx.destination);
+  blip.start(now + 0.08);
+  blip.stop(now + 0.12);
+
+  // Static crackle
+  const bufferSize = ctx.sampleRate * 0.05;
+  const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+  const output = noiseBuffer.getChannelData(0);
+  for (let i = 0; i < bufferSize; i++) {
+    output[i] = Math.random() * 2 - 1;
+  }
+  const noise = ctx.createBufferSource();
+  const noiseGain = ctx.createGain();
+  const noiseFilter = ctx.createBiquadFilter();
+  noise.buffer = noiseBuffer;
+  noiseFilter.type = 'highpass';
+  noiseFilter.frequency.value = 2000;
+  noiseGain.gain.setValueAtTime(0.04, now);
+  noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+  noise.connect(noiseFilter);
+  noiseFilter.connect(noiseGain);
+  noiseGain.connect(ctx.destination);
+  noise.start(now);
+  noise.stop(now + 0.05);
+}
+
 function playCRTPageSwitch() {
   if (!cheatsEnabled) return;
   const ctx = getUIAudioContext();
@@ -1043,6 +1108,7 @@ document.documentElement.classList.remove('middle-dark-pending');
 // Toggle on click
 themeToggle.addEventListener('click', () => {
   const isDark = middle.classList.contains('dark-mode');
+  playCRTThemeToggle(!isDark);
   setTheme(isDark ? 'light' : 'dark');
 });
 
