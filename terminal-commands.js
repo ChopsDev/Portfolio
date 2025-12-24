@@ -587,7 +587,7 @@ _-_-_-_-_-_-_-""  ""
     description: 'Open vim',
     action: () => `You are now trapped in vim.
 
-Just kidding. But the exit is :q!
+To exit write :q!
 ...or is it :wq? Or ZZ? Or :x?`
   },
 
@@ -652,7 +652,7 @@ Just kidding. This is a portfolio website.`;
 
 ---[ end Kernel panic ]---
 
-Just kidding. Everything is fine. Probably.`
+Just kidding. Everything is fine...`
   },
 
   reboot: {
@@ -961,12 +961,6 @@ node_modules/    (4.7 GB)
     action: () => 'You can\'t leave.'
   },
 
-  touch: {
-    hidden: true,
-    description: 'Create file',
-    action: () => 'Please don\'t touch anything.'
-  },
-
   mkdir: {
     hidden: true,
     description: 'Make directory',
@@ -1214,7 +1208,7 @@ node_modules/    (4.7 GB)
   ⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀
   ⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀
   ⠀⢿⣿⡆⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⡇⠀⠀
-  ⠀⠸⣿⣧⡀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⠃⠀⠀
+  ⠀⠸⣿⣧⡀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⡇⠀⠀
   ⠀⠀⠛⢿⣿⣿⣿⣿⣇⠀⠀⠀⠀⣰⣿⣿⣷⣶⣶⣶⣶⠶⠀⢠⣿⣿⠀⠀⠀
   ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⣽⣿⡏⠁⠀⠀⢸⣿⡇⠀⠀⠀
   ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⢹⣿⡆⠀⠀⠀⣸⣿⠇⠀⠀⠀
@@ -1479,6 +1473,37 @@ SUS`
     hidden: true,
     description: 'Spaces vs tabs',
     action: () => 'Spaces. I said what I said.'
-  }
+  },
+
+  essay: {
+    hidden: true,
+    description: "Essay I wrote",
+    action: () => `
+In the grand theatre of time wasting, writing an essay about the futility of writing said essay takes centre stage. It's a bit like entering a marathon, only to run in circles. The clock's hands march on, indifferent to my plight, as I sit here churning out words that serve little purpose other than to fill a page. Each sentence typed is a minute lost, a minute that could have been spent in far more rewarding pursuits. I could have been mastering the art of origami, learning to cook a gourmet meal, or perhaps engaging in the ancient art of napping. Instead, I find myself in a Sisyphean struggle against the keyboard, where every word is a step up the hill, only to roll back down again.
+
+Then there's the educational aspect, or rather, the lack thereof. This essay is akin to a culinary dish devoid of flavour; it fills the space but leaves you unsatisfied. It's not a deep exploration of philosophical thought, nor does it unravel the complexities of the universe. It's more like a meandering path through a forest of trivialities, where each turn leads not to enlightenment but to the realisation that maybe, just maybe, there was something better to do. Perhaps, in a parallel universe, I'm penning the next great literary masterpiece or uncovering the secrets of teleportation. But in this one, I'm here, discussing the art of wasting time through the very act of wasting it. And yet, there's something oddly human about this exercise. Perhaps it’s the allure of procrastination, the quiet rebellion against the constant drumbeat of productivity. We’re often told that every moment must be purposeful, every action must lead to a measurable outcome. But sometimes, the most pointless acts serve as a refuge from that relentless pressure. A small defiant statement that not everything must have value to be worth doing.
+
+Financially, this endeavour is a black hole sucking in resources and offering nothing in return. The electricity powering this futile exercise could have been put to better use, lighting up a room where actual learning occurs. Every click of the keyboard is a penny thrown into a well, a wish made for a more productive use of both energy and time. I imagine the pennies piling up, a metallic testament to wasted potential. In an alternate reality, those pennies fund a brilliant invention or a charitable cause. Here, they just fund my growing realisation of the absurdity of this task. But perhaps this absurdity mirrors a larger irony within the academic system itself. We are often set tasks that feel more like exercises in endurance than enlightenment, where the process is valued more than the outcome. It’s a curious dance of doing for the sake of doing, a ritual that keeps the wheels of education turning, regardless of how much or little progress is made. In this sense, the essay isn’t just a personal time sink; it’s a small act in a much grander play of societal expectations, where ticking boxes often takes precedence over genuine discovery.
+
+In conclusion, the true irony of this essay lies not in its content, but in its very existence. It's a paradox wrapped in an enigma, a lengthy monologue about the pointlessness of its own words. If essays were measured by their ability to capture the essence of their subject, then perhaps this one succeeds in being a shining example of its own thesis, a masterful waste of time. But as the final period is typed, one can't help but wonder: was there a lesson to be learned here, a hidden nugget of wisdom in this rambling stream of consciousness? Or was it, as suspected, just a long walk for a short drink of water?
+`
+    },
+
+    stats: {
+      hidden: true,
+      description: 'Show terminal statistics',
+      action: () => {
+        const commands = Object.values(TerminalCommands);
+        const total = commands.length;
+        const hidden = commands.filter(c => c.hidden).length;
+        const visible = total - hidden;
+
+        return `TERMINAL STATS
+--------------------
+    Total commands:    ${total}
+    Visible commands:  ${visible}
+    Hidden commands:   ${hidden}`;
+      }
+    },
 
 };
