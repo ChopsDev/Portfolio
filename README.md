@@ -16,7 +16,6 @@
 My portfolio site. Built it myself with vanilla HTML/CSS/JS because I wanted to.
 
 **Live:** https://chopsdev.github.io/Portfolio/
-**404 Page:** https://chopsdev.github.io/Portfolio/404
 
 ---
 
