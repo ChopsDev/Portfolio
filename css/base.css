@@ -1361,39 +1361,44 @@ html.middle-dark-pending .theme-toggle .icon-sun {
 .terminal-container {
   width: min(800px, 90vw);
   height: min(500px, 80vh);
-  background: #0a0a0a;
-  border: 2px solid #0f0;
-  border-radius: 8px;
+  background: linear-gradient(141deg, #0a0a0a, #0f1a0f, #0a0a0a);
+  border: 1px solid rgba(0, 255, 0, 0.3);
+  border-radius: 12px;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 0 20px rgba(0, 255, 0, 0.3), inset 0 0 60px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0 30px rgba(0, 200, 0, 0.15), inset 0 0 80px rgba(0, 0, 0, 0.6);
   overflow: hidden;
 }
 
 .terminal-header {
-  background: #0f0;
-  color: #000;
-  padding: 6px 12px;
+  background: linear-gradient(141deg, #0a1a0a, #1a2a1a, #0f1f0f);
+  color: #00cc00;
+  padding: 8px 14px;
   font-family: monospace;
   font-size: 12px;
   font-weight: bold;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid rgba(0, 255, 0, 0.2);
 }
 
 .terminal-close {
-  background: none;
-  border: none;
-  color: #000;
-  font-size: 18px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 255, 0, 0.2);
+  border-radius: 4px;
+  color: #00cc00;
+  font-size: 16px;
   cursor: pointer;
   line-height: 1;
-  padding: 0 4px;
+  padding: 2px 8px;
+  transition: all 0.2s ease;
 }
 
 .terminal-close:hover {
-  color: #600;
+  background: rgba(255, 0, 0, 0.2);
+  border-color: rgba(255, 0, 0, 0.4);
+  color: #ff4444;
 }
 
 .terminal-body {
@@ -1406,16 +1411,21 @@ html.middle-dark-pending .theme-toggle .icon-sun {
 }
 
 .terminal-body::-webkit-scrollbar {
-  width: 8px;
+  width: 6px;
 }
 
 .terminal-body::-webkit-scrollbar-track {
-  background: #0a0a0a;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 3px;
 }
 
 .terminal-body::-webkit-scrollbar-thumb {
-  background: #0f0;
-  border-radius: 4px;
+  background: rgba(0, 200, 0, 0.4);
+  border-radius: 3px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 200, 0, 0.6);
 }
 
 .terminal-output {
@@ -1477,18 +1487,20 @@ html.middle-dark-pending .theme-toggle .icon-sun {
 
 .terminal-nav-btn.visible {
   display: inline-block !important;
-  background: #0a0a0a !important;
-  color: #0f0 !important;
-  border-color: #0f0 !important;
-  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
-  box-shadow: 0 0 10px rgba(0, 255, 0, 0.2);
+  background: linear-gradient(141deg, #0a0a0a, #0f1a0f) !important;
+  color: #00cc00 !important;
+  border: 1px solid rgba(0, 255, 0, 0.3) !important;
+  border-radius: 12px !important;
+  text-shadow: 0 0 5px rgba(0, 200, 0, 0.3);
+  box-shadow: 0 0 15px rgba(0, 200, 0, 0.1);
+  transition: all 0.2s ease;
 }
 
 .terminal-nav-btn.visible:hover {
-  background: #0f0 !important;
-  color: #000 !important;
-  text-shadow: none;
-  box-shadow: 0 0 15px rgba(0, 255, 0, 0.4);
+  background: linear-gradient(141deg, #0f1a0f, #1a2a1a) !important;
+  color: #00ff00 !important;
+  border-color: rgba(0, 255, 0, 0.5) !important;
+  box-shadow: 0 0 20px rgba(0, 200, 0, 0.2);
 }
 
 /* Image Lightbox - add "lightbox-img" class to make images clickable */
