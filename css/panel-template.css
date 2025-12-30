@@ -554,3 +554,135 @@ Both systems work side by side - use whichever you prefer!
   --mask-bg: linear-gradient(141deg, #2a2a2a, #3a3a3a, #4a4a4a);
   --content-bg: linear-gradient(323deg, #1a1a1a, #2a2a2a);
 }
+
+/* Tinder Theme - Orange to Pink gradient */
+.panel-item.theme-tinder {
+  --accent: #FF6B81;
+  --accent-rgb: 255, 107, 129;
+  --mask-bg: linear-gradient(141deg, #3d1a2a, #5a2540, #6e3050);
+  --content-bg: linear-gradient(135deg, rgba(80, 25, 45, 1) 0%, rgba(100, 35, 55, 1) 50%, rgba(70, 20, 40, 1) 100%);
+}
+
+/* ============================================
+   TOY/PROTOTYPE PANEL VARIANT
+   ============================================
+
+   Specialized layout for small projects with:
+   - GitHub repo link in header
+   - Description area
+   - Responsive image/gif gallery
+
+   USAGE:
+   ------
+   <div class="panel-item toy-panel theme-purple">
+     <div class="panel-item-mask no-image collapsible button-like">
+       <div class="button-content">
+         <h2>Prototype Name</h2>
+         <a href="https://github.com/user/repo" target="_blank" rel="noopener">
+           <svg class="github-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+           View Repository
+         </a>
+       </div>
+     </div>
+     <div class="content">
+       <p>Description of the prototype...</p>
+       <div class="toy-gallery">
+         <img src="image1.gif" alt="Demo 1">
+         <img src="image2.png" alt="Screenshot">
+       </div>
+     </div>
+   </div>
+   ============================================ */
+
+/* Toy Panel - Header with GitHub link */
+.panel-item.toy-panel .panel-item-mask > .button-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  padding: 1.5vh 2vw;
+}
+
+/* Title size matches other panels */
+
+.panel-item.toy-panel .panel-item-mask > .button-content a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: clamp(12px, 2vw, 22px);
+  color: var(--accent);
+  text-decoration: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(var(--accent-rgb), 0.15);
+  width: fit-content;
+  transition: all 0.2s ease;
+}
+
+.panel-item.toy-panel .panel-item-mask > .button-content a:hover {
+  background: rgba(var(--accent-rgb), 0.3);
+  transform: translateY(-2px);
+}
+
+.panel-item.toy-panel .panel-item-mask > .button-content a .github-icon {
+  width: clamp(14px, 1.5vw, 20px);
+  height: clamp(14px, 1.5vw, 20px);
+  fill: var(--accent);
+}
+
+/* Toy Gallery - Responsive image/gif container */
+.panel-item .toy-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+  justify-content: center;
+}
+
+.panel-item .toy-gallery img,
+.panel-item .toy-gallery video {
+  max-width: 100%;
+  max-height: 300px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.2);
+  flex: 0 1 auto;
+}
+
+/* Single image takes full width */
+.panel-item .toy-gallery img:only-child,
+.panel-item .toy-gallery video:only-child {
+  max-width: 100%;
+  max-height: 400px;
+}
+
+/* Two items side by side */
+.panel-item .toy-gallery img:first-child:nth-last-child(2),
+.panel-item .toy-gallery img:first-child:nth-last-child(2) ~ img,
+.panel-item .toy-gallery video:first-child:nth-last-child(2),
+.panel-item .toy-gallery video:first-child:nth-last-child(2) ~ video {
+  max-width: calc(50% - 5px);
+}
+
+/* Three or more items - flexible grid */
+@media (min-width: 600px) {
+  .panel-item .toy-gallery img,
+  .panel-item .toy-gallery video {
+    max-width: calc(33.33% - 10px);
+  }
+}
+
+/* Mobile - stack vertically */
+@media (max-width: 599px) {
+  .panel-item .toy-gallery {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .panel-item .toy-gallery img,
+  .panel-item .toy-gallery video {
+    max-width: 100%;
+    max-height: 250px;
+  }
+}
