@@ -40,19 +40,14 @@
     order: 1;
   }
 
-  /* Right panel sticky at bottom */
+  /* Right panel sticky at bottom - extra height to stay above browser bars */
   .right-panel {
     order: 3;
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-  }
-
-  /* When left panel is expanded, right panel is the hide button at bottom */
-  /* Extra height to stay above Safari's bottom search bar */
-  .left-panel.expanded ~ .right-panel {
     min-height: calc(70px + 50px + env(safe-area-inset-bottom, 0px));
     height: calc(70px + 50px + env(safe-area-inset-bottom, 0px)) !important;
     max-height: calc(70px + 50px + env(safe-area-inset-bottom, 0px));
     flex: 0 0 calc(70px + 50px + env(safe-area-inset-bottom, 0px)) !important;
+    padding-bottom: calc(50px + env(safe-area-inset-bottom, 0px));
   }
 
   /* When right panel is expanded, protect bottom content from Safari bar */
