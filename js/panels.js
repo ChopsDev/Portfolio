@@ -260,3 +260,39 @@ for (let i = 0; i < dropdownHeaders.length; i++) {
     }
   });
 }
+
+// Project Filter System
+const filterButtons = document.querySelectorAll('.filter-btn');
+const projectItems = document.querySelectorAll('.project-item');
+const noProjectsMessage = document.querySelector('.no-projects-message');
+
+function filterProjects(engine) {
+  let visibleCount = 0;
+
+  projectItems.forEach(item => {
+    const itemEngine = item.dataset.engine;
+
+    if (engine === 'all' || itemEngine === engine) {
+      item.classList.remove('filtered-out');
+      visibleCount++;
+    } else {
+      item.classList.add('filtered-out');
+    }
+  });
+
+  // Show/hide "no projects" message
+  if (noProjectsMessage) {
+    noProjectsMessage.classList.toggle('visible', visibleCount === 0);
+  }
+}
+
+filterButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    // Update active state
+    filterButtons.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Filter projects
+    filterProjects(btn.dataset.filter);
+  });
+});

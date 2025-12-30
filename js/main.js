@@ -1,5 +1,28 @@
 // Main initialization and event coordination
 
+// Resume download - tries PDF first, falls back to print
+const RESUME_PDF_PATH = 'files/resume.pdf'; // Change this path when you add your PDF
+
+function downloadResume() {
+  fetch(RESUME_PDF_PATH, { method: 'HEAD' })
+    .then(response => {
+      if (response.ok) {
+        // PDF exists, download it
+        const link = document.createElement('a');
+        link.href = RESUME_PDF_PATH;
+        link.download = 'Bryn_Carter_Resume.pdf';
+        link.click();
+      } else {
+        // PDF doesn't exist, fall back to print
+        window.print();
+      }
+    })
+    .catch(() => {
+      // Network error or file doesn't exist, fall back to print
+      window.print();
+    });
+}
+
 // CRT click sound on any click (only in cheat mode)
 // Skip elements that have their own sound effects
 document.addEventListener('click', (e) => {

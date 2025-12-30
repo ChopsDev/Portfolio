@@ -240,3 +240,62 @@
   border: none;
   background-color: #2a2a2a;
   }
+
+/* Project Filter Tags */
+.project-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.filter-btn {
+  font-family: "Lexend", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.filter-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.filter-btn.active {
+  background: #fff;
+  color: #333;
+  border-color: #fff;
+}
+
+/* Hide filtered-out projects */
+.project-item.filtered-out {
+  display: none !important;
+}
+
+/* Message when no projects match filter */
+.no-projects-message {
+  padding: 2rem 1.5rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: "Lexend", sans-serif;
+  font-size: 0.9rem;
+  display: none;
+}
+
+.no-projects-message.visible {
+  display: block;
+}

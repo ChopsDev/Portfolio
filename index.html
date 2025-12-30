@@ -95,11 +95,21 @@
       <span>Click</span>
     </div>
     <div class="panel-content">
+      <!-- Project Filters - Add/remove buttons here as needed -->
+      <div class="project-filters">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="unity">Unity</button>
+        <button class="filter-btn" data-filter="godot">Godot</button>
+        <button class="filter-btn" data-filter="gamemaker">GameMaker</button>
+        <button class="filter-btn" data-filter="unreal">Unreal</button>
+      </div>
+      <p class="no-projects-message">No projects with this engine yet</p>
+
       <div class="panel-divider dropdown-header" data-target="personal-projects" role="button" tabindex="0" aria-expanded="true" aria-controls="personal-projects">
         <h2><span>Personal Projects</span><span class="dropdown-arrow" aria-hidden="true">▼</span></h2>
       </div>
       <div class="dropdown-content" id="personal-projects" role="region" aria-labelledby="personal-projects-label">
-        <div class="stepping-stones" id="stepping-stones">
+        <div class="stepping-stones project-item" id="stepping-stones" data-engine="unity">
           <div class="stepping-stones-mask collapsible button-like">
             <img src="images/stepping-stones-logo.png" alt="Stepping Stones logo" fetchpriority="high">
             <div class="button-content">
@@ -164,7 +174,7 @@
           </div>
         </div>
 
-        <div class="tilting-game" id="tilting-game">
+        <div class="tilting-game project-item" id="tilting-game" data-engine="unity">
           <div class="tilting-game-mask collapsible button-like">
             <img src="images/tilting-trouble-logo.png" alt="Tilting Game logo" loading="lazy">
             <div class="button-content">
@@ -197,7 +207,7 @@
         <h2><span>Uni Assignments</span><span class="dropdown-arrow" aria-hidden="true">▼</span></h2>
       </div>
       <div class="dropdown-content" id="uni-assignments" role="region" aria-labelledby="uni-assignments-label">
-        <div class="asteroid-overcharge" id="asteroid-overcharge">
+        <div class="asteroid-overcharge project-item" id="asteroid-overcharge" data-engine="gamemaker">
           <div class="asteroid-overcharge-mask collapsible button-like">
             <img src="images/asteroid-overcharge-logo.png" alt="Asteroid Overcharge logo" loading="lazy">
             <div class="button-content">
@@ -219,7 +229,7 @@
           </div>
         </div>
 
-        <div class="sync-or-sink" id="sync-or-sink">
+        <div class="sync-or-sink project-item" id="sync-or-sink" data-engine="unity">
           <div class="sync-or-sink-mask collapsible button-like">
             <img src="images/sync-or-sink-logo.png" alt="Sync Or Sink logo" loading="lazy">
             <div class="button-content">
@@ -263,7 +273,7 @@
       </div>
       <div class="dropdown-content" id="open-source" role="region" aria-labelledby="open-source-label">
 
-        <div class="panel-item toy-panel theme-tinder">
+        <div class="panel-item toy-panel theme-tinder project-item" data-engine="godot">
           <div class="panel-item-mask no-image collapsible button-like">
             <div class="button-content">
               <h2>Tinder Swipe - Godot</h2>
@@ -405,6 +415,14 @@
     <div class="page" data-page="resume">
       <div class="resume-page">
         <h1>Resume</h1>
+        <button class="resume-download-btn" onclick="downloadResume()" aria-label="Download Resume as PDF">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Download PDF
+        </button>
 
         <section class="resume-section">
           <h2>Skills</h2>

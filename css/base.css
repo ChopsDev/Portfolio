@@ -707,6 +707,12 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   background: rgba(255, 255, 255, 0.1);
 }
 
+.middle.dark-mode .page-btn.active,
+.middle.dark-mode .page-btn.active:hover {
+  background: var(--middle-accent);
+  color: var(--middle-bg);
+}
+
 .page-btn.active {
   background: var(--middle-accent);
   color: var(--middle-bg);
@@ -1867,6 +1873,19 @@ body.crt-active *:not(.cursor-trail-particle):not(.click-confetti) {
 
 /* Print styles for resume */
 @media print {
+  /* Force light mode colors for print */
+  :root,
+  .middle,
+  .middle.dark-mode,
+  html.middle-dark-pending .middle {
+    --middle-bg: #ffffff !important;
+    --middle-text: #333 !important;
+    --middle-text-secondary: #555 !important;
+    --middle-text-muted: #666 !important;
+    --middle-text-faint: #999 !important;
+    --middle-border: #ccc !important;
+  }
+
   /* Hide everything except the resume */
   body {
     background: white !important;
@@ -1877,14 +1896,18 @@ body.crt-active *:not(.cursor-trail-particle):not(.click-confetti) {
   .right-panel,
   .page-nav,
   .theme-toggle,
+  .resume-download-btn,
   #zoom-easter-egg,
+  .terminal-overlay,
   .page[data-page="home"],
-  .page[data-page="devlog"] {
+  .page[data-page="devlog"],
+  .page[data-page="contact"] {
     display: none !important;
   }
 
   .container {
     display: block !important;
+    background: white !important;
   }
 
   .middle {
@@ -1895,33 +1918,43 @@ body.crt-active *:not(.cursor-trail-particle):not(.click-confetti) {
     background: white !important;
     color: black !important;
     box-shadow: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  .page {
+    position: static !important;
+    transform: none !important;
+    filter: none !important;
   }
 
   .page[data-page="resume"] {
     display: block !important;
     opacity: 1 !important;
+    visibility: visible !important;
   }
 
   .resume-page {
     padding: 0 !important;
+    max-width: 100% !important;
   }
 
   .resume-page h1 {
     font-size: 24pt !important;
-    color: black !important;
+    color: #333 !important;
     margin-bottom: 0.5rem !important;
   }
 
   .resume-page h2 {
     font-size: 14pt !important;
-    color: black !important;
+    color: #333 !important;
     border-bottom: 1px solid #ccc !important;
     padding-bottom: 0.25rem !important;
   }
 
   .resume-page h3 {
     font-size: 12pt !important;
-    color: black !important;
+    color: #333 !important;
   }
 
   .resume-section {
@@ -1929,14 +1962,33 @@ body.crt-active *:not(.cursor-trail-particle):not(.click-confetti) {
     break-inside: avoid !important;
   }
 
+  .resume-section h2 {
+    color: #666 !important;
+  }
+
   .skills-grid {
     display: flex !important;
     gap: 2rem !important;
   }
 
+  .skill-category li {
+    color: #555 !important;
+  }
+
   .skill-category ul {
     margin: 0 !important;
     padding-left: 1.2rem !important;
+    list-style: disc !important;
+  }
+
+  .education-school,
+  .experience-company {
+    color: #666 !important;
+  }
+
+  .education-date,
+  .experience-date {
+    color: #999 !important;
   }
 
   /* Add contact info for print */
@@ -1945,7 +1997,43 @@ body.crt-active *:not(.cursor-trail-particle):not(.click-confetti) {
     display: block !important;
     font-size: 10pt !important;
     font-weight: normal !important;
+    font-family: "Lexend", sans-serif !important;
     color: #666 !important;
     margin-top: 0.25rem !important;
   }
+}
+
+/* Resume Download Button */
+.resume-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: "Lexend", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.6rem 1.2rem;
+  background: var(--middle-contact-bg);
+  color: var(--middle-text-secondary);
+  border: 1px solid var(--middle-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 2rem;
+}
+
+.resume-download-btn:hover {
+  background: var(--middle-accent);
+  color: var(--middle-bg);
+  border-color: var(--middle-accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.resume-download-btn:active {
+  transform: translateY(0);
+}
+
+.resume-download-btn svg {
+  width: 16px;
+  height: 16px;
 }
