@@ -45,6 +45,11 @@
     order: 3;
   }
 
+  /* When left panel is expanded, move hide button (right panel) to top */
+  .left-panel.expanded ~ .right-panel {
+    order: 0;
+  }
+
   /* Panel hover effects on mobile */
   .panel:not(.expanded):active {
     filter: brightness(1.1);
