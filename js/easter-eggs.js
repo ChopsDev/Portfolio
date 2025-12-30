@@ -542,6 +542,50 @@ function triggerDiscoMode() {
   });
 
   observer.observe(leftPanel, { attributes: true });
+
+  // Interactive elements inside the easter egg
+  const secrets = document.querySelectorAll('.ee-secret');
+  const clickCounter = document.querySelector('.ee-click-counter');
+  const counterNum = clickCounter?.querySelector('.counter-num');
+  let clickCount = 0;
+
+  // Secrets - click to reveal
+  secrets.forEach(secret => {
+    secret.addEventListener('click', () => {
+      if (!secret.classList.contains('found')) {
+        secret.classList.add('found');
+        const msg = secret.dataset.secret;
+        if (msg) {
+          secret.textContent = msg;
+        }
+      }
+    });
+  });
+
+  // Click counter
+  if (clickCounter && counterNum) {
+    clickCounter.addEventListener('click', () => {
+      clickCount++;
+      counterNum.textContent = clickCount;
+
+      // Milestone celebrations at certain numbers
+      if (clickCount % 10 === 0 || clickCount === 1 || clickCount === 69 || clickCount === 100 || clickCount === 420) {
+        clickCounter.classList.add('milestone');
+        setTimeout(() => clickCounter.classList.remove('milestone'), 300);
+      }
+
+      // Special messages at certain counts
+      if (clickCount === 50) {
+        counterNum.textContent = '50!';
+      } else if (clickCount === 69) {
+        counterNum.textContent = 'nice';
+      } else if (clickCount === 100) {
+        counterNum.textContent = '💯';
+      } else if (clickCount === 420) {
+        counterNum.textContent = '🌿';
+      }
+    });
+  }
 })();
 
 // Name click easter egg (Rick Roll)
