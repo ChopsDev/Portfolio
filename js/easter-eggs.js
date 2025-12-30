@@ -458,6 +458,92 @@ function triggerDiscoMode() {
   }, 150);
 }
 
+// Filter Hold Easter Egg - hold on filter bar to reveal hidden section
+(function initFilterHoldEasterEgg() {
+  const leftPanel = document.querySelector('.left-panel');
+  const projectFilters = document.querySelector('.project-filters');
+  const easterEggSection = document.querySelector('.filter-easter-egg');
+  const progressBar = document.querySelector('.filter-hold-progress');
+  const leftContent = leftPanel?.querySelector('.panel-content');
+
+  if (!projectFilters || !easterEggSection || !progressBar) return;
+
+  const HOLD_DURATION = 3000; // 3 seconds to trigger
+  const FEEDBACK_DELAY = 1000; // Show progress after 1 second
+  let holdTimer = null;
+  let feedbackTimer = null;
+  let isRevealed = false;
+
+  function showProgress() {
+    progressBar.classList.add('active');
+  }
+
+  function hideProgress() {
+    progressBar.classList.remove('active');
+  }
+
+  function revealEasterEgg() {
+    isRevealed = true;
+    hideProgress();
+    projectFilters.classList.add('easter-egg-active');
+    easterEggSection.classList.add('revealed');
+    leftContent.classList.add('filter-easter-egg-mode');
+  }
+
+  function resetEasterEgg() {
+    isRevealed = false;
+    hideProgress();
+    projectFilters.classList.remove('easter-egg-active');
+    easterEggSection.classList.remove('revealed');
+    leftContent.classList.remove('filter-easter-egg-mode');
+  }
+
+  function startHold() {
+    // Show progress indicator after 1 second
+    feedbackTimer = setTimeout(showProgress, FEEDBACK_DELAY);
+    // Reveal after full duration
+    holdTimer = setTimeout(revealEasterEgg, HOLD_DURATION);
+  }
+
+  function cancelHold() {
+    clearTimeout(holdTimer);
+    clearTimeout(feedbackTimer);
+    hideProgress();
+  }
+
+  // Mouse events
+  projectFilters.addEventListener('mousedown', (e) => {
+    if (e.target.closest('.filter-btn') || isRevealed) return;
+    startHold();
+  });
+
+  projectFilters.addEventListener('mouseup', cancelHold);
+  projectFilters.addEventListener('mouseleave', cancelHold);
+
+  // Touch events for mobile
+  projectFilters.addEventListener('touchstart', (e) => {
+    if (e.target.closest('.filter-btn') || isRevealed) return;
+    startHold();
+  }, { passive: true });
+
+  projectFilters.addEventListener('touchend', cancelHold);
+  projectFilters.addEventListener('touchcancel', cancelHold);
+
+  // Reset when panel is closed
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.attributeName === 'class') {
+        const isExpanded = leftPanel.classList.contains('expanded');
+        if (!isExpanded && isRevealed) {
+          resetEasterEgg();
+        }
+      }
+    });
+  });
+
+  observer.observe(leftPanel, { attributes: true });
+})();
+
 // Name click easter egg (Rick Roll)
 function initNameClickEasterEgg() {
   const nameHeading = document.querySelector('.landing-left h1');

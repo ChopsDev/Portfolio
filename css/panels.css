@@ -313,3 +313,98 @@
 .no-projects-message.visible {
   display: block;
 }
+
+/* Filter Hold Easter Egg */
+.filter-hold-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  background: rgba(255, 255, 255, 0.6);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.filter-hold-progress.active {
+  opacity: 1;
+  animation: holdProgress 2s linear forwards;
+}
+
+@keyframes holdProgress {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.filter-easter-egg {
+  display: none;
+  width: 100%;
+  opacity: 0;
+}
+
+.filter-easter-egg.revealed {
+  display: block;
+  min-height: calc(100vh - 50px);
+  padding: 2rem;
+  opacity: 1;
+  animation: filterEasterEggFadeIn 0.3s ease-out;
+}
+
+.filter-easter-egg p {
+  font-family: "Lexend", sans-serif;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  margin: 0;
+}
+
+/* Expand filter bar to cover panel content when easter egg is active */
+.project-filters.easter-egg-active {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  flex-direction: column;
+  overflow-y: auto;
+  animation: filterExpand 0.3s ease-out;
+}
+
+/* Hide filter buttons when easter egg is active */
+.project-filters.easter-egg-active .filter-btn {
+  display: none;
+}
+
+/* Hide other panel content when in easter egg mode */
+.panel-content.filter-easter-egg-mode {
+  overflow: hidden;
+}
+
+.panel-content.filter-easter-egg-mode > *:not(.project-filters) {
+  display: none;
+}
+
+@keyframes filterExpand {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes filterEasterEggFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
