@@ -40,19 +40,9 @@
     order: 1;
   }
 
-  /* Right panel sticky at bottom - extra height to stay above browser bars */
+  /* Right panel sticky at bottom */
   .right-panel {
     order: 3;
-    min-height: calc(70px + 50px + env(safe-area-inset-bottom, 0px));
-    height: calc(70px + 50px + env(safe-area-inset-bottom, 0px)) !important;
-    max-height: calc(70px + 50px + env(safe-area-inset-bottom, 0px));
-    flex: 0 0 calc(70px + 50px + env(safe-area-inset-bottom, 0px)) !important;
-    padding-bottom: calc(50px + env(safe-area-inset-bottom, 0px));
-  }
-
-  /* When right panel is expanded, protect bottom content from Safari bar */
-  .right-panel.expanded {
-    padding-bottom: calc(50px + env(safe-area-inset-bottom, 0px));
   }
 
   /* Panel hover effects on mobile */
@@ -85,7 +75,6 @@
     max-height: none;
     flex: 1 1 auto !important;
     overflow-y: auto;
-    padding-bottom: env(safe-area-inset-bottom, 0px);
   }
 
   .panel.expanded h1 {
@@ -306,7 +295,6 @@
     gap: 0.25rem;
     padding: 0.3rem;
     bottom: 15px;
-    bottom: calc(15px + env(safe-area-inset-bottom, 0px));
   }
 
   .page-btn {
@@ -401,7 +389,6 @@
     gap: 0.15rem;
     padding: 0.25rem;
     bottom: 10px;
-    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
   }
 
   .page-btn {
