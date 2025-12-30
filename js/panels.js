@@ -269,6 +269,7 @@ const noProjectsMessage = document.querySelector('.no-projects-message');
 function filterProjects(engine) {
   let visibleCount = 0;
 
+  // Filter individual projects
   projectItems.forEach(item => {
     const itemEngine = item.dataset.engine;
 
@@ -277,6 +278,27 @@ function filterProjects(engine) {
       visibleCount++;
     } else {
       item.classList.add('filtered-out');
+    }
+  });
+
+  // Hide/show category sections based on visible projects
+  const dropdownSections = document.querySelectorAll('.left-panel .dropdown-header');
+
+  dropdownSections.forEach(header => {
+    const targetId = header.dataset.target;
+    const content = document.getElementById(targetId);
+
+    if (content) {
+      // Check if any visible projects in this section
+      const visibleInSection = content.querySelectorAll('.project-item:not(.filtered-out)').length;
+
+      if (visibleInSection === 0) {
+        header.classList.add('filtered-out');
+        content.classList.add('filtered-out');
+      } else {
+        header.classList.remove('filtered-out');
+        content.classList.remove('filtered-out');
+      }
     }
   });
 

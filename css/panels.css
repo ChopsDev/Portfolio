@@ -281,8 +281,10 @@
   border-color: #fff;
 }
 
-/* Hide filtered-out projects */
-.project-item.filtered-out {
+/* Hide filtered-out projects and empty categories */
+.project-item.filtered-out,
+.dropdown-header.filtered-out,
+.dropdown-content.filtered-out {
   display: none !important;
 }
 
