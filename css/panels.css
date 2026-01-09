@@ -147,6 +147,7 @@
 
 .panel.expanding {
   /* Smooth transition for opening */
+  animation: none; /* Stop pulse animation so transition can take over */
   transition: width var(--transition-duration) var(--transition-timing);
   }
 

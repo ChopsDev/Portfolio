@@ -62,10 +62,11 @@ function expandLeft() {
   closeAll(true);
   toggleScroll(true);
   leftHeading.classList.add('slide-left');
-  leftPanel.classList.add('expanding', 'expanded');
 
-  // Hide hint for this panel after first interaction
+  // Stop animation first and force reflow so transition has a starting point
   leftPanel.classList.add('hint-hidden');
+  leftPanel.offsetWidth; // Force reflow
+  leftPanel.classList.add('expanding', 'expanded');
 
   rightHeading.textContent = HIDE_TEXT;
   leftContent.classList.add('visible');
@@ -80,10 +81,11 @@ function expandRight() {
   closeAll(true);
   toggleScroll(true);
   rightHeading.classList.add('slide-right');
-  rightPanel.classList.add('expanding', 'expanded');
 
-  // Hide hint for this panel after first interaction
+  // Stop animation first and force reflow so transition has a starting point
   rightPanel.classList.add('hint-hidden');
+  rightPanel.offsetWidth; // Force reflow
+  rightPanel.classList.add('expanding', 'expanded');
 
   leftHeading.textContent = HIDE_TEXT;
   rightContent.classList.add('visible');
