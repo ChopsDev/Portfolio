@@ -7,32 +7,17 @@
   cursor: pointer;
 }
 
-/* Flash animation to draw attention to clickable panels */
-.panel:not(.expanded):not(.hint-hidden)::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.15) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  opacity: 0;
-  animation: panel-flash 3s ease-in-out infinite;
-  pointer-events: none;
-  z-index: 1;
+/* Pulse effect to show panels are clickable */
+.panel:not(.expanded):not(.hint-hidden) {
+  animation: panel-pulse 2s ease-in-out infinite;
 }
 
-@keyframes panel-flash {
-  0%, 70%, 100% {
-    opacity: 0;
+@keyframes panel-pulse {
+  0%, 100% {
+    filter: brightness(1);
   }
-  80%, 90% {
-    opacity: 1;
+  50% {
+    filter: brightness(1.2);
   }
 }
 
