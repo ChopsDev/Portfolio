@@ -7,6 +7,35 @@
   cursor: pointer;
 }
 
+/* Flash animation to draw attention to clickable panels */
+.panel:not(.expanded):not(.hint-hidden)::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  opacity: 0;
+  animation: panel-flash 3s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes panel-flash {
+  0%, 70%, 100% {
+    opacity: 0;
+  }
+  80%, 90% {
+    opacity: 1;
+  }
+}
+
 /* Hint arrow animation for discoverability */
 .panel-hint {
   position: absolute;
