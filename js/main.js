@@ -1,5 +1,23 @@
 // Main initialization and event coordination
 
+// Loading screen - hide when page is ready
+(function() {
+  const loadingScreen = document.querySelector('.loading-screen');
+  if (!loadingScreen) return;
+
+  const minDisplayTime = 1200; // Minimum time to show loading screen
+  const startTime = Date.now();
+
+  window.addEventListener('load', () => {
+    const elapsed = Date.now() - startTime;
+    const remainingTime = Math.max(0, minDisplayTime - elapsed);
+
+    setTimeout(() => {
+      loadingScreen.classList.add('hidden');
+    }, remainingTime);
+  });
+})();
+
 // Resume download - tries PDF first, falls back to print
 const RESUME_PDF_PATH = 'files/resume.pdf'; // Change this path when you add your PDF
 
