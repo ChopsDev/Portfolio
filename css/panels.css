@@ -15,9 +15,11 @@
 @keyframes panel-pulse {
   0%, 100% {
     filter: brightness(1);
+    width: var(--panel-width);
   }
   50% {
     filter: brightness(1.2);
+    width: calc(var(--panel-width) + 15px);
   }
 }
 
