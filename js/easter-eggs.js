@@ -545,9 +545,6 @@ function triggerDiscoMode() {
 
   // Interactive elements inside the easter egg
   const secrets = document.querySelectorAll('.ee-secret');
-  const clickCounter = document.querySelector('.ee-click-counter');
-  const counterNum = clickCounter?.querySelector('.counter-num');
-  let clickCount = 0;
 
   // Secrets - click to reveal
   secrets.forEach(secret => {
@@ -562,29 +559,320 @@ function triggerDiscoMode() {
     });
   });
 
-  // Click counter
-  if (clickCounter && counterNum) {
-    clickCounter.addEventListener('click', () => {
-      clickCount++;
-      counterNum.textContent = clickCount;
+  // ========== CLICKER GAME ==========
+  const clickCounter = document.querySelector('.ee-click-counter');
+  const counterNum = clickCounter?.querySelector('.counter-num');
+  const clickPowerDisplay = clickCounter?.querySelector('.click-power');
+  const autoRateDisplay = clickCounter?.querySelector('.auto-rate');
+  const shopToggle = clickCounter?.querySelector('.shop-toggle');
+  const shopPanel = document.querySelector('.clicker-shop');
+  const shopItems = document.querySelectorAll('.shop-item');
+  const slotsContainer = document.querySelector('.clicker-slots');
+  const slotsDisplay = document.querySelectorAll('.slots-display .slot');
+  const spinBtn = document.querySelector('.slots-spin');
+  const slotsResult = document.querySelector('.slots-result');
 
-      // Milestone celebrations at certain numbers
-      if (clickCount % 10 === 0 || clickCount === 1 || clickCount === 69 || clickCount === 100 || clickCount === 420) {
-        clickCounter.classList.add('milestone');
-        setTimeout(() => clickCounter.classList.remove('milestone'), 300);
+  // Game state
+  let gameState = {
+    clicks: 0,
+    clickPower: 1,
+    autoClickRate: 0,
+    upgrades: {},
+    shopRevealed: false,
+    shopOpen: false
+  };
+
+  const CLICKS_TO_REVEAL_SHOP = 10; // Clicks needed to reveal shop button
+
+  // Load saved state
+  function loadGame() {
+    const saved = localStorage.getItem('clicker-game-save');
+    if (saved) {
+      try {
+        gameState = JSON.parse(saved);
+      } catch (e) {
+        console.log('Failed to load save');
+      }
+    }
+  }
+
+  // Save game state
+  function saveGame() {
+    localStorage.setItem('clicker-game-save', JSON.stringify(gameState));
+  }
+
+  // Update UI
+  function updateUI() {
+    if (counterNum) counterNum.textContent = Math.floor(gameState.clicks);
+
+    // Show click power once shop is revealed
+    if (clickPowerDisplay) {
+      if (gameState.shopRevealed) {
+        clickPowerDisplay.classList.remove('hidden');
+        clickPowerDisplay.textContent = `+${gameState.clickPower} per click`;
+      }
+    }
+
+    if (autoRateDisplay) {
+      autoRateDisplay.textContent = gameState.autoClickRate > 0
+        ? `+${gameState.autoClickRate}/sec auto`
+        : '';
+    }
+
+    // Show shop button once threshold reached
+    if (shopToggle) {
+      if (gameState.clicks >= CLICKS_TO_REVEAL_SHOP || gameState.shopRevealed) {
+        shopToggle.classList.remove('hidden');
+        gameState.shopRevealed = true;
+      }
+      shopToggle.classList.toggle('active', gameState.shopOpen);
+    }
+
+    // Show/hide shop panel
+    if (shopPanel) {
+      shopPanel.classList.toggle('hidden', !gameState.shopOpen);
+    }
+
+    // Update shop items
+    shopItems.forEach(item => {
+      const upgrade = item.dataset.upgrade;
+      const cost = parseInt(item.dataset.cost);
+      const requires = item.dataset.requires;
+
+      // Check if purchased
+      if (gameState.upgrades[upgrade]) {
+        item.classList.add('purchased');
+        item.classList.remove('affordable', 'locked');
+        return;
       }
 
-      // Special messages at certain counts
-      if (clickCount === 50) {
-        counterNum.textContent = '50!';
-      } else if (clickCount === 69) {
-        counterNum.textContent = 'nice';
-      } else if (clickCount === 100) {
-        counterNum.textContent = '💯';
-      } else if (clickCount === 420) {
-        counterNum.textContent = '🌿';
+      // Check if locked (requires another upgrade)
+      if (requires && !gameState.upgrades[requires]) {
+        item.classList.add('locked');
+        item.classList.remove('affordable', 'purchased');
+        return;
+      }
+
+      item.classList.remove('locked', 'purchased');
+
+      // Check if affordable
+      if (gameState.clicks >= cost) {
+        item.classList.add('affordable');
+      } else {
+        item.classList.remove('affordable');
       }
     });
+
+    // Show/hide slot machine
+    if (slotsContainer) {
+      if (gameState.upgrades.slots) {
+        slotsContainer.classList.remove('locked');
+      } else {
+        slotsContainer.classList.add('locked');
+      }
+    }
+
+    // Update spin button
+    if (spinBtn) {
+      spinBtn.disabled = gameState.clicks < 10;
+    }
+  }
+
+  // Toggle shop visibility
+  function toggleShop() {
+    gameState.shopOpen = !gameState.shopOpen;
+    updateUI();
+    saveGame();
+  }
+
+  // Handle click
+  function handleClick(e) {
+    // Don't count clicks on shop toggle button
+    if (e.target === shopToggle) return;
+
+    let power = gameState.clickPower;
+
+    // Golden click chance (10% for 10x)
+    if (gameState.upgrades.golden && Math.random() < 0.1) {
+      power *= 10;
+    }
+
+    gameState.clicks += power;
+
+    // Milestone animation
+    if (Math.floor(gameState.clicks) % 100 === 0) {
+      clickCounter?.classList.add('milestone');
+      setTimeout(() => clickCounter?.classList.remove('milestone'), 300);
+    }
+
+    updateUI();
+    saveGame();
+  }
+
+  // Purchase upgrade
+  function purchaseUpgrade(upgrade, cost) {
+    if (gameState.clicks < cost || gameState.upgrades[upgrade]) return false;
+
+    gameState.clicks -= cost;
+    gameState.upgrades[upgrade] = true;
+
+    // Apply upgrade effects
+    switch (upgrade) {
+      case 'power1': gameState.clickPower += 1; break;
+      case 'power2': gameState.clickPower += 2; break;
+      case 'power3': gameState.clickPower += 3; break;
+      case 'power4': gameState.clickPower += 5; break;
+      case 'auto1': gameState.autoClickRate += 1; break;
+      case 'auto2': gameState.autoClickRate += 2; break;
+      case 'auto3': gameState.autoClickRate += 5; break;
+    }
+
+    updateUI();
+    saveGame();
+    return true;
+  }
+
+  // Slot machine
+  const slotSymbols = ['🍒', '🍋', '🍊', '🍇', '⭐', '💎'];
+  let isSpinning = false;
+
+  function spinSlots() {
+    if (isSpinning || gameState.clicks < 10) return;
+
+    gameState.clicks -= 10;
+    isSpinning = true;
+    updateUI();
+
+    // Clear previous result
+    if (slotsResult) {
+      slotsResult.textContent = '';
+      slotsResult.className = 'slots-result';
+    }
+
+    // Start spinning animation
+    slotsDisplay.forEach(slot => {
+      slot.classList.add('spinning');
+      slot.classList.remove('winner');
+    });
+
+    // Determine results
+    const results = [];
+    const hasLucky = gameState.upgrades.lucky;
+    const hasJackpot = gameState.upgrades.jackpot;
+
+    for (let i = 0; i < 3; i++) {
+      // Lucky mode increases chance of matching
+      if (hasLucky && i > 0 && Math.random() < 0.3) {
+        results.push(results[0]);
+      } else {
+        results.push(slotSymbols[Math.floor(Math.random() * slotSymbols.length)]);
+      }
+    }
+
+    // Animate slots stopping one by one
+    slotsDisplay.forEach((slot, i) => {
+      setTimeout(() => {
+        slot.classList.remove('spinning');
+        slot.textContent = results[i];
+
+        // Check for win on last slot
+        if (i === 2) {
+          isSpinning = false;
+          evaluateSlots(results, hasJackpot);
+        }
+      }, 500 + (i * 400));
+    });
+  }
+
+  function evaluateSlots(results, hasJackpot) {
+    const [a, b, c] = results;
+    let winAmount = 0;
+    let resultClass = 'lose';
+    let resultText = 'No match...';
+
+    if (a === b && b === c) {
+      // Three of a kind
+      if (a === '💎') {
+        winAmount = hasJackpot ? 1000 : 500;
+        resultClass = 'jackpot';
+        resultText = `JACKPOT! +${winAmount}!`;
+      } else if (a === '⭐') {
+        winAmount = hasJackpot ? 300 : 150;
+        resultClass = 'jackpot';
+        resultText = `STARS! +${winAmount}!`;
+      } else {
+        winAmount = hasJackpot ? 150 : 100;
+        resultClass = 'win';
+        resultText = `Triple ${a}! +${winAmount}!`;
+      }
+      slotsDisplay.forEach(slot => slot.classList.add('winner'));
+    } else if (a === b || b === c || a === c) {
+      // Two of a kind
+      winAmount = hasJackpot ? 30 : 20;
+      resultClass = 'win';
+      resultText = `Pair! +${winAmount}`;
+    }
+
+    if (winAmount > 0) {
+      gameState.clicks += winAmount;
+    }
+
+    if (slotsResult) {
+      slotsResult.textContent = resultText;
+      slotsResult.className = `slots-result ${resultClass}`;
+    }
+
+    updateUI();
+    saveGame();
+  }
+
+  // Auto clicker interval
+  let autoClickInterval = null;
+
+  function startAutoClicker() {
+    if (autoClickInterval) clearInterval(autoClickInterval);
+
+    autoClickInterval = setInterval(() => {
+      if (gameState.autoClickRate > 0) {
+        gameState.clicks += gameState.autoClickRate;
+        updateUI();
+        saveGame();
+      }
+    }, 1000);
+  }
+
+  // Initialize clicker game
+  if (clickCounter) {
+    loadGame();
+    updateUI();
+    startAutoClicker();
+
+    clickCounter.addEventListener('click', handleClick);
+
+    // Shop toggle button
+    if (shopToggle) {
+      shopToggle.addEventListener('click', (e) => {
+        e.stopPropagation();
+        toggleShop();
+      });
+    }
+
+    shopItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const upgrade = item.dataset.upgrade;
+        const cost = parseInt(item.dataset.cost);
+        const requires = item.dataset.requires;
+
+        if (item.classList.contains('purchased')) return;
+        if (requires && !gameState.upgrades[requires]) return;
+
+        purchaseUpgrade(upgrade, cost);
+      });
+    });
+
+    if (spinBtn) {
+      spinBtn.addEventListener('click', spinSlots);
+    }
   }
 })();
 

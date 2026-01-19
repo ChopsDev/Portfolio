@@ -507,6 +507,277 @@
   100% { transform: scale(1); }
 }
 
+/* Clicker Game - Click Power & Auto Rate */
+.ee-click-counter .click-power {
+  display: block;
+  font-size: 0.6rem;
+  color: rgba(255, 255, 255, 0.3);
+  margin-top: 0.3rem;
+}
+
+.ee-click-counter .click-power.hidden {
+  display: none;
+}
+
+.ee-click-counter .auto-rate {
+  display: block;
+  font-size: 0.55rem;
+  color: rgba(100, 255, 100, 0.4);
+}
+
+.ee-click-counter .auto-rate:empty {
+  display: none;
+}
+
+/* Shop Toggle Button */
+.shop-toggle {
+  margin-top: 0.5rem;
+  padding: 0.3rem 0.8rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: "Lexend", sans-serif;
+  font-size: 0.65rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.shop-toggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+  transform: scale(1.05);
+}
+
+.shop-toggle.hidden {
+  display: none;
+}
+
+.shop-toggle.active {
+  background: rgba(100, 255, 100, 0.2);
+  border-color: rgba(100, 255, 100, 0.3);
+  color: rgba(100, 255, 100, 0.8);
+}
+
+/* Shop */
+.clicker-shop {
+  position: absolute;
+  bottom: 20px;
+  right: 100px;
+  background: rgba(0, 0, 0, 0.85);
+  padding: 1rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  min-width: 180px;
+  max-height: 400px;
+  overflow-y: auto;
+  z-index: 6;
+  animation: shopSlideIn 0.3s ease;
+}
+
+.clicker-shop.hidden {
+  display: none;
+}
+
+@keyframes shopSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.shop-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.shop-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: "Lexend", sans-serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.shop-item:hover:not(:disabled):not(.purchased):not(.locked) {
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.9);
+  transform: translateX(3px);
+}
+
+.shop-item:active:not(:disabled):not(.purchased):not(.locked) {
+  transform: scale(0.98);
+}
+
+.shop-item .item-icon {
+  font-size: 1.1rem;
+}
+
+.shop-item .item-name {
+  flex: 1;
+  text-align: left;
+}
+
+.shop-item .item-cost {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+}
+
+.shop-item.affordable .item-cost {
+  background: rgba(100, 255, 100, 0.2);
+  color: rgba(100, 255, 100, 0.9);
+}
+
+.shop-item.purchased {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: rgba(100, 255, 100, 0.1);
+  border-color: rgba(100, 255, 100, 0.2);
+}
+
+.shop-item.purchased .item-cost {
+  display: none;
+}
+
+.shop-item.purchased::after {
+  content: '✓';
+  color: rgba(100, 255, 100, 0.8);
+}
+
+.shop-item.locked {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.shop-item.locked .item-cost::before {
+  content: '🔒 ';
+}
+
+/* Slot Machine */
+.clicker-slots {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  margin-top: 0.5rem;
+}
+
+.clicker-slots.locked {
+  display: none;
+}
+
+.clicker-slots hr {
+  margin-bottom: 0.75rem;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.clicker-slots h4 {
+  margin: 0 0 0.75rem 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.slots-display {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.slots-display .slot {
+  width: 40px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  transition: all 0.1s ease;
+}
+
+.slots-display .slot.spinning {
+  animation: slotSpin 0.1s linear infinite;
+}
+
+@keyframes slotSpin {
+  0% { transform: translateY(-2px); }
+  50% { transform: translateY(2px); }
+  100% { transform: translateY(-2px); }
+}
+
+.slots-display .slot.winner {
+  border-color: rgba(255, 215, 0, 0.8);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+}
+
+.slots-spin {
+  padding: 0.5rem 1rem;
+  background: linear-gradient(135deg, rgba(255, 100, 100, 0.3), rgba(255, 50, 50, 0.3));
+  border: 1px solid rgba(255, 100, 100, 0.3);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: "Lexend", sans-serif;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.slots-spin:hover:not(:disabled) {
+  background: linear-gradient(135deg, rgba(255, 100, 100, 0.5), rgba(255, 50, 50, 0.5));
+  transform: scale(1.05);
+}
+
+.slots-spin:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.slots-result {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  min-height: 1.2em;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.slots-result.win {
+  color: rgba(100, 255, 100, 0.9);
+}
+
+.slots-result.jackpot {
+  color: rgba(255, 215, 0, 0.9);
+  font-weight: bold;
+  animation: jackpotPulse 0.5s ease infinite;
+}
+
+.slots-result.lose {
+  color: rgba(255, 100, 100, 0.7);
+}
+
+@keyframes jackpotPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
 /* Expand filter bar to cover panel content when easter egg is active */
 .project-filters.easter-egg-active {
   position: absolute;

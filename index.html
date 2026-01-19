@@ -119,10 +119,77 @@
         <div class="filter-easter-egg">
           <h2>Games That Inspired Me</h2>
 
-          <!-- Hidden interactive elements -->
+          <!-- Click Counter (reveals shop after clicking) -->
           <div class="ee-click-counter">
             <span class="counter-num">0</span>
             <span class="counter-label">clicks</span>
+            <span class="click-power hidden">+1 per click</span>
+            <span class="auto-rate"></span>
+            <button class="shop-toggle hidden">Shop</button>
+          </div>
+
+          <!-- Hidden Shop Panel (revealed by shop button) -->
+          <div class="clicker-shop hidden">
+            <div class="shop-items">
+              <!-- Click Power Upgrades -->
+              <button class="shop-item" data-upgrade="power1" data-cost="50">
+                <span class="item-icon">👆</span>
+                <span class="item-name">Click +1</span>
+                <span class="item-cost">50</span>
+              </button>
+              <button class="shop-item" data-upgrade="power2" data-cost="150" data-requires="power1">
+                <span class="item-icon">✌️</span>
+                <span class="item-name">Click +2</span>
+                <span class="item-cost">150</span>
+              </button>
+              <button class="shop-item" data-upgrade="power3" data-cost="400" data-requires="power2">
+                <span class="item-icon">🖐️</span>
+                <span class="item-name">Click +3</span>
+                <span class="item-cost">400</span>
+              </button>
+              <button class="shop-item" data-upgrade="power4" data-cost="1000" data-requires="power3">
+                <span class="item-icon">💪</span>
+                <span class="item-name">Click +5</span>
+                <span class="item-cost">1000</span>
+              </button>
+              <!-- Auto Clickers -->
+              <button class="shop-item" data-upgrade="auto1" data-cost="300">
+                <span class="item-icon">🤖</span>
+                <span class="item-name">Auto Lv1</span>
+                <span class="item-cost">300</span>
+              </button>
+              <button class="shop-item" data-upgrade="auto2" data-cost="800" data-requires="auto1">
+                <span class="item-icon">⚙️</span>
+                <span class="item-name">Auto Lv2</span>
+                <span class="item-cost">800</span>
+              </button>
+              <button class="shop-item" data-upgrade="auto3" data-cost="2000" data-requires="auto2">
+                <span class="item-icon">🚀</span>
+                <span class="item-name">Auto Lv3</span>
+                <span class="item-cost">2000</span>
+              </button>
+              <!-- Unlockables -->
+              <button class="shop-item" data-upgrade="slots" data-cost="200">
+                <span class="item-icon">🎰</span>
+                <span class="item-name">Slot Machine</span>
+                <span class="item-cost">200</span>
+              </button>
+              <button class="shop-item" data-upgrade="lucky" data-cost="500" data-requires="slots">
+                <span class="item-icon">🍀</span>
+                <span class="item-name">Lucky Mode</span>
+                <span class="item-cost">500</span>
+              </button>
+              <button class="shop-item" data-upgrade="golden" data-cost="1000">
+                <span class="item-icon">✨</span>
+                <span class="item-name">Golden Click</span>
+                <span class="item-cost">1000</span>
+              </button>
+              <button class="shop-item" data-upgrade="jackpot" data-cost="3000" data-requires="slots">
+                <span class="item-icon">💎</span>
+                <span class="item-name">Jackpot Mode</span>
+                <span class="item-cost">3000</span>
+              </button>
+            </div>
           </div>
 
           <div class="easter-egg-layout">
@@ -143,6 +210,19 @@
               <h4>Secret Confession</h4>
               I still don't fully understand quaternions.
               <br>
+
+              <!-- Slot Machine (hidden until bought) -->
+              <div class="clicker-slots locked">
+                <hr>
+                <h4>Slot Machine</h4>
+                <div class="slots-display">
+                  <span class="slot">?</span>
+                  <span class="slot">?</span>
+                  <span class="slot">?</span>
+                </div>
+                <button class="slots-spin">Spin (10 clicks)</button>
+                <div class="slots-result"></div>
+              </div>
 
               <hr>
 
