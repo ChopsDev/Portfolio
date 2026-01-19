@@ -592,6 +592,28 @@
   }
 }
 
+.shop-category {
+  margin-bottom: 0.75rem;
+}
+
+.shop-category:last-child {
+  margin-bottom: 0;
+}
+
+.shop-category.hidden {
+  display: none;
+}
+
+.shop-category h5 {
+  margin: 0 0 0.4rem 0;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.25rem;
+}
+
 .shop-items {
   display: flex;
   flex-direction: column;

@@ -567,6 +567,7 @@ function triggerDiscoMode() {
   const shopToggle = clickCounter?.querySelector('.shop-toggle');
   const shopPanel = document.querySelector('.clicker-shop');
   const shopItems = document.querySelectorAll('.shop-item');
+  const shopSlotsCategory = document.querySelector('.shop-slots-upgrades');
   const slotsContainer = document.querySelector('.clicker-slots');
   const slotsDisplay = document.querySelectorAll('.slots-display .slot');
   const spinBtn = document.querySelector('.slots-spin');
@@ -663,13 +664,13 @@ function triggerDiscoMode() {
       }
     });
 
-    // Show/hide slot machine
-    if (slotsContainer) {
-      if (gameState.upgrades.slots) {
-        slotsContainer.classList.remove('locked');
-      } else {
-        slotsContainer.classList.add('locked');
-      }
+    // Show/hide slot machine and slot upgrades category
+    if (gameState.upgrades.slots) {
+      if (slotsContainer) slotsContainer.classList.remove('locked');
+      if (shopSlotsCategory) shopSlotsCategory.classList.remove('hidden');
+    } else {
+      if (slotsContainer) slotsContainer.classList.add('locked');
+      if (shopSlotsCategory) shopSlotsCategory.classList.add('hidden');
     }
 
     // Update spin button
