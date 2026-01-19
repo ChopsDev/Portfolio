@@ -41,7 +41,7 @@ let scrollResetTimer = null;
 
 const scrollCooldown = 600; // ms between scroll switches
 const scrollThreshold = 5; // pixels from edge to trigger
-const requiredOverscroll = 1200; // accumulated scroll needed to trigger switch
+const requiredOverscroll = 500; // accumulated scroll needed to trigger switch
 
 function getCurrentTabIndex() {
   const activeBtn = document.querySelector('.page-btn.active[data-target]');
@@ -49,12 +49,7 @@ function getCurrentTabIndex() {
 }
 
 function switchToTabByIndex(index) {
-  // Loop around if at boundaries
-  if (index < 0) {
-    index = navigableBtns.length - 1;
-  } else if (index >= navigableBtns.length) {
-    index = 0;
-  }
+  if (index < 0 || index >= navigableBtns.length) return;
   const targetPage = navigableBtns[index].dataset.target;
   switchPage(targetPage);
 }
