@@ -1,11 +1,11 @@
 // Dark mode toggle for middle section
 const themeToggle = document.querySelector('.theme-toggle');
 
-// Check for saved preference or system preference
+// Check for saved preference, default to dark mode
 function getPreferredTheme() {
   const saved = localStorage.getItem('middle-theme');
   if (saved) return saved;
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  return 'dark';
 }
 
 function setTheme(theme) {
