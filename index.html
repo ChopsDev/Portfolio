@@ -174,20 +174,41 @@
                 <span class="item-name">Slot Machine</span>
                 <span class="item-cost">200</span>
               </button>
-              <button class="shop-item" data-upgrade="lucky" data-cost="500" data-requires="slots">
-                <span class="item-icon">🍀</span>
-                <span class="item-name">Lucky Mode</span>
-                <span class="item-cost">500</span>
-              </button>
               <button class="shop-item" data-upgrade="golden" data-cost="1000">
                 <span class="item-icon">✨</span>
                 <span class="item-name">Golden Click</span>
                 <span class="item-cost">1000</span>
               </button>
-              <button class="shop-item" data-upgrade="jackpot" data-cost="3000" data-requires="slots">
+              <!-- Slot Machine Upgrades -->
+              <button class="shop-item" data-upgrade="cheapspins" data-cost="400" data-requires="slots">
+                <span class="item-icon">🏷️</span>
+                <span class="item-name">Cheap Spins</span>
+                <span class="item-cost">400</span>
+              </button>
+              <button class="shop-item" data-upgrade="lucky" data-cost="600" data-requires="slots">
+                <span class="item-icon">🍀</span>
+                <span class="item-name">Lucky Mode</span>
+                <span class="item-cost">600</span>
+              </button>
+              <button class="shop-item" data-upgrade="freespin" data-cost="1000" data-requires="slots">
+                <span class="item-icon">🎁</span>
+                <span class="item-name">Free Spin Chance</span>
+                <span class="item-cost">1000</span>
+              </button>
+              <button class="shop-item" data-upgrade="wildcard" data-cost="1500" data-requires="lucky">
+                <span class="item-icon">🃏</span>
+                <span class="item-name">Wild Card</span>
+                <span class="item-cost">1500</span>
+              </button>
+              <button class="shop-item" data-upgrade="jackpot" data-cost="2500" data-requires="slots">
                 <span class="item-icon">💎</span>
                 <span class="item-name">Jackpot Mode</span>
-                <span class="item-cost">3000</span>
+                <span class="item-cost">2500</span>
+              </button>
+              <button class="shop-item" data-upgrade="autospin" data-cost="4000" data-requires="jackpot">
+                <span class="item-icon">🔄</span>
+                <span class="item-name">Auto-Spin</span>
+                <span class="item-cost">4000</span>
               </button>
             </div>
           </div>
@@ -220,7 +241,10 @@
                   <span class="slot">?</span>
                   <span class="slot">?</span>
                 </div>
-                <button class="slots-spin">Spin (10 clicks)</button>
+                <div class="slots-controls">
+                  <button class="slots-spin">Spin (10)</button>
+                  <button class="slots-autospin locked">Auto</button>
+                </div>
                 <div class="slots-result"></div>
               </div>
 

@@ -673,9 +673,7 @@ function triggerDiscoMode() {
     }
 
     // Update spin button
-    if (spinBtn) {
-      spinBtn.disabled = gameState.clicks < 10;
-    }
+    updateSpinButton();
   }
 
   // Toggle shop visibility
@@ -734,14 +732,41 @@ function triggerDiscoMode() {
 
   // Slot machine
   const slotSymbols = ['🍒', '🍋', '🍊', '🍇', '⭐', '💎'];
+  const wildSymbol = '🃏';
   let isSpinning = false;
+  let autoSpinInterval = null;
+  let autoSpinEnabled = false;
+  const autoSpinBtn = document.querySelector('.slots-autospin');
+
+  function getSpinCost() {
+    return gameState.upgrades.cheapspins ? 5 : 10;
+  }
+
+  function updateSpinButton() {
+    if (spinBtn) {
+      const cost = getSpinCost();
+      spinBtn.textContent = `Spin (${cost})`;
+      spinBtn.disabled = gameState.clicks < cost || isSpinning;
+    }
+    // Show/hide autospin button
+    if (autoSpinBtn) {
+      if (gameState.upgrades.autospin) {
+        autoSpinBtn.classList.remove('locked');
+        autoSpinBtn.classList.toggle('active', autoSpinEnabled);
+      } else {
+        autoSpinBtn.classList.add('locked');
+      }
+    }
+  }
 
   function spinSlots() {
-    if (isSpinning || gameState.clicks < 10) return;
+    const cost = getSpinCost();
+    if (isSpinning || gameState.clicks < cost) return;
 
-    gameState.clicks -= 10;
+    gameState.clicks -= cost;
     isSpinning = true;
     updateUI();
+    updateSpinButton();
 
     // Clear previous result
     if (slotsResult) {
@@ -758,14 +783,18 @@ function triggerDiscoMode() {
     // Determine results
     const results = [];
     const hasLucky = gameState.upgrades.lucky;
+    const hasWild = gameState.upgrades.wildcard;
     const hasJackpot = gameState.upgrades.jackpot;
+
+    // Build symbol pool (add wild if unlocked)
+    const symbolPool = hasWild ? [...slotSymbols, wildSymbol] : slotSymbols;
 
     for (let i = 0; i < 3; i++) {
       // Lucky mode increases chance of matching
-      if (hasLucky && i > 0 && Math.random() < 0.3) {
+      if (hasLucky && i > 0 && Math.random() < 0.25) {
         results.push(results[0]);
       } else {
-        results.push(slotSymbols[Math.floor(Math.random() * slotSymbols.length)]);
+        results.push(symbolPool[Math.floor(Math.random() * symbolPool.length)]);
       }
     }
 
@@ -779,38 +808,70 @@ function triggerDiscoMode() {
         if (i === 2) {
           isSpinning = false;
           evaluateSlots(results, hasJackpot);
+          updateSpinButton();
         }
-      }, 500 + (i * 400));
+      }, 400 + (i * 300));
     });
   }
 
   function evaluateSlots(results, hasJackpot) {
-    const [a, b, c] = results;
+    let [a, b, c] = results;
     let winAmount = 0;
     let resultClass = 'lose';
     let resultText = 'No match...';
+    const cost = getSpinCost();
 
-    if (a === b && b === c) {
-      // Three of a kind
-      if (a === '💎') {
+    // Handle wild cards - they match anything
+    const isWild = (s) => s === wildSymbol;
+
+    // Check for matches considering wilds
+    const match3 = (a === b && b === c) ||
+                   (isWild(a) && b === c) ||
+                   (isWild(b) && a === c) ||
+                   (isWild(c) && a === b) ||
+                   (isWild(a) && isWild(b)) ||
+                   (isWild(b) && isWild(c)) ||
+                   (isWild(a) && isWild(c)) ||
+                   (isWild(a) && isWild(b) && isWild(c));
+
+    const match2 = (a === b || b === c || a === c) ||
+                   isWild(a) || isWild(b) || isWild(c);
+
+    // Get the non-wild symbol for determining payout
+    const mainSymbol = [a, b, c].find(s => !isWild(s)) || '💎';
+
+    if (match3 && (a === b || isWild(a) || isWild(b)) && (b === c || isWild(b) || isWild(c))) {
+      // Three of a kind (or wilds)
+      if (mainSymbol === '💎' || (isWild(a) && isWild(b) && isWild(c))) {
         winAmount = hasJackpot ? 1000 : 500;
         resultClass = 'jackpot';
         resultText = `JACKPOT! +${winAmount}!`;
-      } else if (a === '⭐') {
+      } else if (mainSymbol === '⭐') {
         winAmount = hasJackpot ? 300 : 150;
         resultClass = 'jackpot';
         resultText = `STARS! +${winAmount}!`;
       } else {
         winAmount = hasJackpot ? 150 : 100;
         resultClass = 'win';
-        resultText = `Triple ${a}! +${winAmount}!`;
+        resultText = `Triple! +${winAmount}!`;
       }
       slotsDisplay.forEach(slot => slot.classList.add('winner'));
-    } else if (a === b || b === c || a === c) {
-      // Two of a kind
-      winAmount = hasJackpot ? 30 : 20;
+    } else if (a === b || b === c || a === c || isWild(a) || isWild(b) || isWild(c)) {
+      // Two of a kind or has a wild
+      if (isWild(a) || isWild(b) || isWild(c)) {
+        winAmount = hasJackpot ? 40 : 25;
+        resultText = `Wild! +${winAmount}`;
+      } else {
+        winAmount = hasJackpot ? 30 : 20;
+        resultText = `Pair! +${winAmount}`;
+      }
       resultClass = 'win';
-      resultText = `Pair! +${winAmount}`;
+    }
+
+    // Free spin chance - refund the cost
+    if (gameState.upgrades.freespin && Math.random() < 0.2) {
+      gameState.clicks += cost;
+      resultText += ' 🎁 FREE!';
     }
 
     if (winAmount > 0) {
@@ -824,6 +885,27 @@ function triggerDiscoMode() {
 
     updateUI();
     saveGame();
+  }
+
+  function toggleAutoSpin() {
+    autoSpinEnabled = !autoSpinEnabled;
+    updateSpinButton();
+
+    if (autoSpinEnabled) {
+      // Start auto-spinning every 2 seconds
+      autoSpinInterval = setInterval(() => {
+        if (!isSpinning && gameState.clicks >= getSpinCost()) {
+          spinSlots();
+        } else if (gameState.clicks < getSpinCost()) {
+          // Stop auto-spin if out of clicks
+          autoSpinEnabled = false;
+          clearInterval(autoSpinInterval);
+          updateSpinButton();
+        }
+      }, 2000);
+    } else {
+      clearInterval(autoSpinInterval);
+    }
   }
 
   // Auto clicker interval
@@ -872,6 +954,10 @@ function triggerDiscoMode() {
 
     if (spinBtn) {
       spinBtn.addEventListener('click', spinSlots);
+    }
+
+    if (autoSpinBtn) {
+      autoSpinBtn.addEventListener('click', toggleAutoSpin);
     }
   }
 })();
