@@ -568,6 +568,10 @@ function triggerDiscoMode() {
   const shopPanel = document.querySelector('.clicker-shop');
   const shopItems = document.querySelectorAll('.shop-item');
   const shopSlotsCategory = document.querySelector('.shop-slots-upgrades');
+  const shopRebirthCategory = document.querySelector('.shop-rebirth');
+  const rebirthBtn = document.querySelector('.rebirth-btn');
+  const rebirthMultiplierDisplay = document.querySelector('.rebirth-multiplier');
+  const rebirthGainDisplay = document.querySelector('.rebirth-gain');
   const slotsContainer = document.querySelector('.clicker-slots');
   const slotsDisplay = document.querySelectorAll('.slots-display .slot');
   const spinBtn = document.querySelector('.slots-spin');
@@ -580,17 +584,33 @@ function triggerDiscoMode() {
     autoClickRate: 0,
     upgrades: {},
     shopRevealed: false,
-    shopOpen: false
+    shopOpen: false,
+    rebirths: 0,
+    rebirthMultiplier: 1,
+    lifetimeClicks: 0
   };
 
   const CLICKS_TO_REVEAL_SHOP = 10; // Clicks needed to reveal shop button
+  const CLICKS_TO_REBIRTH = 5000; // Clicks needed to unlock rebirth
 
   // Load saved state
   function loadGame() {
     const saved = localStorage.getItem('clicker-game-save');
     if (saved) {
       try {
-        gameState = JSON.parse(saved);
+        const loadedState = JSON.parse(saved);
+        // Merge with defaults to handle missing fields from old saves
+        gameState = {
+          clicks: loadedState.clicks || 0,
+          clickPower: loadedState.clickPower || 1,
+          autoClickRate: loadedState.autoClickRate || 0,
+          upgrades: loadedState.upgrades || {},
+          shopRevealed: loadedState.shopRevealed || false,
+          shopOpen: loadedState.shopOpen || false,
+          rebirths: loadedState.rebirths || 0,
+          rebirthMultiplier: loadedState.rebirthMultiplier || 1,
+          lifetimeClicks: loadedState.lifetimeClicks || loadedState.clicks || 0
+        };
       } catch (e) {
         console.log('Failed to load save');
       }
@@ -673,8 +693,69 @@ function triggerDiscoMode() {
       if (shopSlotsCategory) shopSlotsCategory.classList.add('hidden');
     }
 
+    // Show/hide rebirth section (show if lifetime OR current clicks hit threshold, or already rebirthed)
+    const canSeeRebirth = gameState.lifetimeClicks >= CLICKS_TO_REBIRTH ||
+                          gameState.clicks >= CLICKS_TO_REBIRTH ||
+                          gameState.rebirths > 0;
+    if (canSeeRebirth) {
+      if (shopRebirthCategory) shopRebirthCategory.classList.remove('hidden');
+      updateRebirthUI();
+    } else {
+      if (shopRebirthCategory) shopRebirthCategory.classList.add('hidden');
+    }
+
     // Update spin button
     updateSpinButton();
+  }
+
+  // Calculate rebirth gain based on current clicks
+  function calculateRebirthGain() {
+    if (gameState.clicks < CLICKS_TO_REBIRTH) return 0;
+    // Gain is based on sqrt of clicks / 1000, diminishing returns
+    return Math.floor(Math.sqrt(gameState.clicks / 1000) * 10) / 10;
+  }
+
+  // Update rebirth UI
+  function updateRebirthUI() {
+    const gain = calculateRebirthGain();
+
+    if (rebirthMultiplierDisplay) {
+      rebirthMultiplierDisplay.textContent = `${gameState.rebirthMultiplier.toFixed(1)}x`;
+    }
+
+    if (rebirthGainDisplay) {
+      rebirthGainDisplay.textContent = `+${gain.toFixed(1)}x`;
+    }
+
+    if (rebirthBtn) {
+      rebirthBtn.disabled = gameState.clicks < CLICKS_TO_REBIRTH;
+    }
+  }
+
+  // Perform rebirth
+  function doRebirth() {
+    const gain = calculateRebirthGain();
+    if (gain <= 0) return;
+
+    // Add to multiplier
+    gameState.rebirthMultiplier += gain;
+    gameState.rebirths++;
+
+    // Reset progress but keep rebirth stats
+    gameState.clicks = 0;
+    gameState.clickPower = 1;
+    gameState.autoClickRate = 0;
+    gameState.upgrades = {};
+    gameState.shopOpen = false;
+
+    // Stop auto-spin if running
+    if (autoSpinEnabled) {
+      autoSpinEnabled = false;
+      clearInterval(autoSpinInterval);
+    }
+
+    updateUI();
+    saveGame();
   }
 
   // Toggle shop visibility
@@ -696,7 +777,11 @@ function triggerDiscoMode() {
       power *= 10;
     }
 
+    // Apply rebirth multiplier
+    power = Math.floor(power * gameState.rebirthMultiplier);
+
     gameState.clicks += power;
+    gameState.lifetimeClicks += power;
 
     // Milestone animation
     if (Math.floor(gameState.clicks) % 100 === 0) {
@@ -917,7 +1002,9 @@ function triggerDiscoMode() {
 
     autoClickInterval = setInterval(() => {
       if (gameState.autoClickRate > 0) {
-        gameState.clicks += gameState.autoClickRate;
+        const autoGain = Math.floor(gameState.autoClickRate * gameState.rebirthMultiplier);
+        gameState.clicks += autoGain;
+        gameState.lifetimeClicks += autoGain;
         updateUI();
         saveGame();
       }
@@ -959,6 +1046,10 @@ function triggerDiscoMode() {
 
     if (autoSpinBtn) {
       autoSpinBtn.addEventListener('click', toggleAutoSpin);
+    }
+
+    if (rebirthBtn) {
+      rebirthBtn.addEventListener('click', doRebirth);
     }
   }
 })();
