@@ -35,7 +35,13 @@ pageNav.addEventListener('click', (e) => {
 
 // Scroll-based tab navigation
 let isScrolling = false;
-const scrollCooldown = 500; // ms between scroll switches
+let accumulatedScroll = 0;
+let lastScrollDirection = 0;
+let scrollResetTimer = null;
+
+const scrollCooldown = 600; // ms between scroll switches
+const scrollThreshold = 5; // pixels from edge to trigger
+const requiredOverscroll = 1200; // accumulated scroll needed to trigger switch
 
 function getCurrentTabIndex() {
   const activeBtn = document.querySelector('.page-btn.active[data-target]');
@@ -43,42 +49,101 @@ function getCurrentTabIndex() {
 }
 
 function switchToTabByIndex(index) {
-  if (index >= 0 && index < navigableBtns.length) {
-    const targetPage = navigableBtns[index].dataset.target;
-    switchPage(targetPage);
+  // Loop around if at boundaries
+  if (index < 0) {
+    index = navigableBtns.length - 1;
+  } else if (index >= navigableBtns.length) {
+    index = 0;
   }
+  const targetPage = navigableBtns[index].dataset.target;
+  switchPage(targetPage);
+}
+
+// Find the scrollable element within the active page
+function getScrollableElement() {
+  const activePage = document.querySelector('.page.active');
+  if (!activePage) return null;
+
+  // Check if the middle section itself is scrollable
+  const middle = document.querySelector('.middle');
+  if (middle && middle.scrollHeight > middle.clientHeight) {
+    return middle;
+  }
+
+  // Check for scrollable content within the page
+  const scrollable = activePage.querySelector('.page-content, .scrollable, [data-scrollable]');
+  if (scrollable && scrollable.scrollHeight > scrollable.clientHeight) {
+    return scrollable;
+  }
+
+  return null;
+}
+
+function isAtTop(el) {
+  if (!el) return true;
+  return el.scrollTop <= scrollThreshold;
+}
+
+function isAtBottom(el) {
+  if (!el) return true;
+  return el.scrollTop + el.clientHeight >= el.scrollHeight - scrollThreshold;
+}
+
+function resetScrollAccumulator() {
+  accumulatedScroll = 0;
+  lastScrollDirection = 0;
 }
 
 // Listen for wheel events on the middle section
 const middleSection = document.querySelector('.middle');
 if (middleSection) {
   middleSection.addEventListener('wheel', (e) => {
-    // Don't interfere if user is scrolling inside a scrollable element
-    const scrollableParent = e.target.closest('.page-content, .scrollable, [data-scrollable]');
-    if (scrollableParent && scrollableParent.scrollHeight > scrollableParent.clientHeight) {
-      return;
-    }
-
     // Prevent rapid switching
     if (isScrolling) return;
 
+    const scrollable = getScrollableElement();
     const currentIndex = getCurrentTabIndex();
+    const direction = e.deltaY > 0 ? 1 : -1;
+
+    // Reset accumulator if direction changed or after timeout
+    if (direction !== lastScrollDirection) {
+      resetScrollAccumulator();
+    }
+    lastScrollDirection = direction;
+
+    // Clear and reset the timeout
+    clearTimeout(scrollResetTimer);
+    scrollResetTimer = setTimeout(resetScrollAccumulator, 300);
 
     if (e.deltaY > 0) {
-      // Scrolling down - go to next tab (right)
-      if (currentIndex < navigableBtns.length - 1) {
-        e.preventDefault();
-        isScrolling = true;
-        switchToTabByIndex(currentIndex + 1);
-        setTimeout(() => { isScrolling = false; }, scrollCooldown);
+      // Scrolling down - only accumulate if at bottom
+      if (isAtBottom(scrollable)) {
+        accumulatedScroll += Math.abs(e.deltaY);
+
+        if (accumulatedScroll >= requiredOverscroll) {
+          e.preventDefault();
+          isScrolling = true;
+          resetScrollAccumulator();
+          switchToTabByIndex(currentIndex + 1);
+          setTimeout(() => { isScrolling = false; }, scrollCooldown);
+        }
+      } else {
+        resetScrollAccumulator();
       }
     } else if (e.deltaY < 0) {
-      // Scrolling up - go to previous tab (left)
-      if (currentIndex > 0) {
-        e.preventDefault();
-        isScrolling = true;
-        switchToTabByIndex(currentIndex - 1);
-        setTimeout(() => { isScrolling = false; }, scrollCooldown);
+      // Scrolling up - only accumulate if at top
+      if (isAtTop(scrollable)) {
+        accumulatedScroll += Math.abs(e.deltaY);
+
+        if (accumulatedScroll >= requiredOverscroll) {
+          e.preventDefault();
+          isScrolling = true;
+          resetScrollAccumulator();
+          switchToTabByIndex(currentIndex - 1);
+          setTimeout(() => { isScrolling = false; }, scrollCooldown);
+        }
+      } else {
+        resetScrollAccumulator();
       }
     }
   }, { passive: false });
