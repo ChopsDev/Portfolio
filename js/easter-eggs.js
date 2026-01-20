@@ -817,8 +817,8 @@ function triggerDiscoMode() {
   }
 
   // Slot machine
-  const slotSymbols = ['🍒', '🍋', '🍊', '🍇', '⭐', '💎'];
-  const wildSymbol = '🃏';
+  const slotSymbols = ['#', '@', '$', '%', '*', '<>'];
+  const wildSymbol = '?';
   let isSpinning = false;
   let autoSpinInterval = null;
   let autoSpinEnabled = false;
@@ -924,15 +924,15 @@ function triggerDiscoMode() {
                    isWild(a) || isWild(b) || isWild(c);
 
     // Get the non-wild symbol for determining payout
-    const mainSymbol = [a, b, c].find(s => !isWild(s)) || '💎';
+    const mainSymbol = [a, b, c].find(s => !isWild(s)) || '<>';
 
     if (match3 && (a === b || isWild(a) || isWild(b)) && (b === c || isWild(b) || isWild(c))) {
       // Three of a kind (or wilds)
-      if (mainSymbol === '💎' || (isWild(a) && isWild(b) && isWild(c))) {
+      if (mainSymbol === '<>' || (isWild(a) && isWild(b) && isWild(c))) {
         winAmount = hasJackpot ? 1000 : 500;
         resultClass = 'jackpot';
         resultText = `JACKPOT! +${winAmount}!`;
-      } else if (mainSymbol === '⭐') {
+      } else if (mainSymbol === '*') {
         winAmount = hasJackpot ? 300 : 150;
         resultClass = 'jackpot';
         resultText = `STARS! +${winAmount}!`;
@@ -957,7 +957,7 @@ function triggerDiscoMode() {
     // Free spin chance - refund the cost
     if (gameState.upgrades.freespin && Math.random() < 0.2) {
       gameState.clicks += cost;
-      resultText += ' 🎁 FREE!';
+      resultText += ' +FREE!';
     }
 
     if (winAmount > 0) {

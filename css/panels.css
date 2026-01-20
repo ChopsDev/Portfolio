@@ -607,6 +607,7 @@
 .shop-category h5 {
   margin: 0 0 0.4rem 0;
   font-size: 0.65rem;
+  font-family: monospace;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: rgba(255, 255, 255, 0.4);
@@ -658,7 +659,7 @@
   border: 1px solid rgba(255, 100, 50, 0.4);
   border-radius: 8px;
   color: rgba(255, 200, 150, 0.9);
-  font-family: "Lexend", sans-serif;
+  font-family: monospace;
   font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -709,7 +710,7 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   color: rgba(255, 255, 255, 0.6);
-  font-family: "Lexend", sans-serif;
+  font-family: monospace;
   font-size: 0.8rem;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -726,7 +727,10 @@
 }
 
 .shop-item .item-icon {
-  font-size: 1.1rem;
+  font-size: 1rem;
+  font-weight: bold;
+  min-width: 2ch;
+  text-align: center;
 }
 
 .shop-item .item-name {
@@ -768,7 +772,7 @@
 }
 
 .shop-item.locked .item-cost::before {
-  content: '🔒 ';
+  content: '[x] ';
 }
 
 /* Slot Machine */
