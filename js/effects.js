@@ -1,4 +1,4 @@
-// Profile Image Shake Effect + DVD Bounce Easter Egg
+// Profile Image Shake Effect + DVD Bounce Easter Egg + Screensaver Mode
 (function initProfileShake() {
   const profileContainer = document.querySelector('.profile-image-container');
   if (!profileContainer) return;
@@ -7,8 +7,39 @@
   let clickCount = 0;
   let clickTimer = null;
   let dvdBounceActive = false;
+  let screensaverMode = false;
+  let screensaverBouncer = null;
+  let screensaverAnimationId = null;
   const SPAM_THRESHOLD = 15; // Clicks needed to trigger
   const SPAM_WINDOW = 3000; // Time window in ms
+
+  // Idle detection for screensaver
+  const IDLE_TIMEOUT = 120000; // 2 minutes
+  let lastActivity = Date.now();
+  let idleCheckInterval = null;
+
+  function resetIdleTimer() {
+    lastActivity = Date.now();
+    // If screensaver is active, stop it
+    if (screensaverMode) {
+      stopScreensaver();
+    }
+  }
+
+  function checkIdle() {
+    if (dvdBounceActive || screensaverMode) return;
+    if (Date.now() - lastActivity >= IDLE_TIMEOUT) {
+      startScreensaver();
+    }
+  }
+
+  // Track user activity
+  ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll'].forEach(event => {
+    document.addEventListener(event, resetIdleTimer, { passive: true });
+  });
+
+  // Start idle check interval
+  idleCheckInterval = setInterval(checkIdle, 5000);
 
   profileContainer.addEventListener('click', () => {
     // Track spam clicks
@@ -19,14 +50,14 @@
     }, SPAM_WINDOW);
 
     // Trigger DVD bounce easter egg
-    if (clickCount >= SPAM_THRESHOLD && !dvdBounceActive) {
+    if (clickCount >= SPAM_THRESHOLD && !dvdBounceActive && !screensaverMode) {
       clickCount = 0;
       triggerDVDBounce();
       return;
     }
 
     // Don't shake if DVD bounce is active
-    if (dvdBounceActive) return;
+    if (dvdBounceActive || screensaverMode) return;
 
     // Don't restart if already shaking
     if (profileContainer.classList.contains('shaking')) {
@@ -155,6 +186,100 @@
 
     // Start the bounce animation
     requestAnimationFrame(animate);
+  }
+
+  // Screensaver mode - bounces indefinitely until user interaction
+  function startScreensaver() {
+    if (screensaverMode || dvdBounceActive) return;
+
+    // Only start if on home page and profile is visible
+    const homePage = document.querySelector('.page[data-page="home"]');
+    if (!homePage || !homePage.classList.contains('active')) return;
+
+    screensaverMode = true;
+
+    const originalRect = profileContainer.getBoundingClientRect();
+
+    // Create bouncer
+    screensaverBouncer = profileContainer.cloneNode(true);
+    screensaverBouncer.classList.add('dvd-bouncing', 'screensaver');
+    screensaverBouncer.style.position = 'fixed';
+    screensaverBouncer.style.left = originalRect.left + 'px';
+    screensaverBouncer.style.top = originalRect.top + 'px';
+    screensaverBouncer.style.width = originalRect.width + 'px';
+    screensaverBouncer.style.height = originalRect.height + 'px';
+    screensaverBouncer.style.margin = '0';
+    screensaverBouncer.style.zIndex = '10000';
+    screensaverBouncer.style.pointerEvents = 'none';
+    document.body.appendChild(screensaverBouncer);
+
+    profileContainer.style.visibility = 'hidden';
+
+    // Slower bounce for screensaver
+    let x = originalRect.left;
+    let y = originalRect.top;
+    let vx = (1.5 + Math.random()) * (Math.random() > 0.5 ? 1 : -1);
+    let vy = (1.5 + Math.random()) * (Math.random() > 0.5 ? 1 : -1);
+    const size = originalRect.width;
+
+    function animate() {
+      if (!screensaverMode) return;
+
+      x += vx;
+      y += vy;
+
+      // Bounce off edges
+      if (x <= 0) {
+        x = 0;
+        vx = Math.abs(vx);
+      } else if (x + size >= window.innerWidth) {
+        x = window.innerWidth - size;
+        vx = -Math.abs(vx);
+      }
+
+      if (y <= 0) {
+        y = 0;
+        vy = Math.abs(vy);
+      } else if (y + size >= window.innerHeight) {
+        y = window.innerHeight - size;
+        vy = -Math.abs(vy);
+      }
+
+      screensaverBouncer.style.left = x + 'px';
+      screensaverBouncer.style.top = y + 'px';
+
+      screensaverAnimationId = requestAnimationFrame(animate);
+    }
+
+    screensaverAnimationId = requestAnimationFrame(animate);
+  }
+
+  function stopScreensaver() {
+    if (!screensaverMode) return;
+
+    screensaverMode = false;
+
+    if (screensaverAnimationId) {
+      cancelAnimationFrame(screensaverAnimationId);
+      screensaverAnimationId = null;
+    }
+
+    if (screensaverBouncer) {
+      const originalRect = profileContainer.getBoundingClientRect();
+
+      // Animate back to origin
+      screensaverBouncer.style.transition = 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      screensaverBouncer.style.left = originalRect.left + 'px';
+      screensaverBouncer.style.top = originalRect.top + 'px';
+
+      setTimeout(() => {
+        if (screensaverBouncer) {
+          screensaverBouncer.remove();
+          screensaverBouncer = null;
+        }
+        profileContainer.style.visibility = 'visible';
+      }, 500);
+    }
   }
 })();
 
