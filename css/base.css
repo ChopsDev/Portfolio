@@ -151,7 +151,58 @@ html.middle-dark-pending .middle {
   --middle-hr: #444;
 }
 
-  
+/* Secret theme - unlocked by finding all easter eggs */
+.middle.secret-mode {
+  --middle-bg: #0a0f0a;
+  --middle-text: #00ff00;
+  --middle-text-secondary: #00cc00;
+  --middle-text-muted: #009900;
+  --middle-text-faint: #006600;
+  --middle-border: #003300;
+  --middle-border-hover: #004400;
+  --middle-card-bg: #0d140d;
+  --middle-contact-bg: #0f180f;
+  --middle-accent: #00ff00;
+  --middle-hr: #003300;
+}
+
+.middle.secret-mode .profile-image {
+  filter: grayscale(100%) brightness(1.2) sepia(100%) hue-rotate(70deg) saturate(200%) contrast(1.1);
+}
+
+.middle.secret-mode .profile-image-container::after {
+  border-color: #00ff00;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+}
+
+.middle.secret-mode a {
+  color: #00ff00;
+}
+
+.middle.secret-mode a:hover {
+  color: #00cc00;
+  text-shadow: 0 0 8px rgba(0, 255, 0, 0.5);
+}
+
+.middle.secret-mode .project-card {
+  border-color: #003300;
+}
+
+.middle.secret-mode .project-card:hover {
+  border-color: #00ff00;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.15);
+}
+
+.middle.secret-mode ::selection {
+  background: #00ff00;
+  color: #0a0f0a;
+}
+
+/* Secret theme toggle button glow */
+.middle.secret-mode .theme-toggle {
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+}
+
 /* Middle Section */
 .middle {
   flex: 1;
@@ -1965,6 +2016,28 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   flex-shrink: 0;
   padding-left: 0.5rem;
   border-left: 1px solid var(--middle-border, #333);
+}
+
+/* Completion toast - special styling for 100% */
+.achievement-toast.completion-toast {
+  border-color: #00ff00;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 0, 0.2);
+}
+
+.achievement-toast.completion-toast .achievement-icon {
+  background: #0a1a0a;
+  border-color: #00ff00;
+  color: #00ff00;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+}
+
+.achievement-toast.completion-toast .achievement-title {
+  color: #00ff00;
+}
+
+.achievement-toast.completion-toast .achievement-progress {
+  color: #00ff00;
+  border-left-color: #003300;
 }
 
 /* Cursor trail (konami code cheat) */

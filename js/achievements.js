@@ -7,7 +7,7 @@ const Achievements = (function() {
     console: {
       id: 'console',
       title: 'Console Curious',
-      description: 'Opened the developer console',
+      description: 'Opened the secret terminal',
       icon: '>'
     },
     konami: {
@@ -89,7 +89,41 @@ const Achievements = (function() {
     saveUnlocked(unlocked);
 
     showToast(achievements[id]);
+
+    // Check for 100% completion
+    if (unlocked.length === Object.keys(achievements).length) {
+      setTimeout(() => {
+        showCompletionToast();
+      }, 4500); // Show after the achievement toast fades
+    }
+
     return true;
+  }
+
+  // Special completion toast
+  function showCompletionToast() {
+    const toast = document.createElement('div');
+    toast.className = 'achievement-toast completion-toast';
+    toast.innerHTML = `
+      <div class="achievement-icon">*</div>
+      <div class="achievement-info">
+        <div class="achievement-label">100% Complete</div>
+        <div class="achievement-title">Secret Theme Unlocked</div>
+        <div class="achievement-desc">Toggle your theme to find it</div>
+      </div>
+      <div class="achievement-progress">9/9</div>
+    `;
+
+    document.body.appendChild(toast);
+
+    requestAnimationFrame(() => {
+      toast.classList.add('visible');
+    });
+
+    setTimeout(() => {
+      toast.classList.remove('visible');
+      setTimeout(() => toast.remove(), 400);
+    }, 5000);
   }
 
   // Show achievement toast notification
@@ -144,38 +178,18 @@ const Achievements = (function() {
     localStorage.removeItem(STORAGE_KEY);
   }
 
-  // Console achievement - detect devtools, show on return
-  let consoleDetected = false;
-  let consoleAchievementGiven = false;
-  const consoleDetect = new Image();
-  Object.defineProperty(consoleDetect, 'id', {
-    get: function() {
-      if (!consoleDetected && !isUnlocked('console')) {
-        consoleDetected = true;
-      }
+  // Rick roll achievement - show when returning from YouTube
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible' && pendingRickRoll) {
+      pendingRickRoll = false;
+      setTimeout(() => unlock('rickroll'), 500);
     }
   });
 
-  // Periodically check (devtools detection)
-  setInterval(() => {
-    if (!consoleDetected && !isUnlocked('console')) {
-      console.log('%c', consoleDetect);
-    }
-  }, 2000);
-
-  // Show console achievement when user returns to page after opening devtools
-  document.addEventListener('visibilitychange', () => {
-    if (document.visibilityState === 'visible') {
-      // Console achievement - delayed after closing devtools
-      if (consoleDetected && !consoleAchievementGiven) {
-        consoleAchievementGiven = true;
-        setTimeout(() => unlock('console'), 500);
-      }
-      // Rick roll achievement - when returning from YouTube
-      if (pendingRickRoll) {
-        pendingRickRoll = false;
-        setTimeout(() => unlock('rickroll'), 500);
-      }
+  window.addEventListener('focus', () => {
+    if (pendingRickRoll) {
+      pendingRickRoll = false;
+      setTimeout(() => unlock('rickroll'), 500);
     }
   });
 

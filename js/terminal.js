@@ -84,6 +84,11 @@ const Terminal = {
     this.input.disabled = false;
     this.input.focus();
     document.body.style.overflow = 'hidden';
+
+    // Unlock achievement
+    if (typeof Achievements !== 'undefined') {
+      Achievements.unlock('console');
+    }
   },
 
   close() {
