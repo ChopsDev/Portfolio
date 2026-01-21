@@ -364,8 +364,7 @@ html.middle-dark-pending .middle {
 }
 
 .profile-image-container.dvd-bouncing .profile-image {
-  filter: grayscale(0%) contrast(1.1) saturate(1.2);
-  transition: filter 0.15s ease;
+  filter: grayscale(0%) contrast(1);
 }
 
 /* Dark mode profile adjustments */

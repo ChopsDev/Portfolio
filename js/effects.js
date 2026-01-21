@@ -34,10 +34,14 @@
       void profileContainer.offsetWidth; // Force reflow
     }
 
-    // Randomize shake parameters
-    const intensity = 3 + Math.random() * 5; // 3-8px base movement
-    const rotation = 2 + Math.random() * 4;  // 2-6 degree rotation
-    const duration = 0.3 + Math.random() * 0.2; // 0.3-0.5s duration
+    // Shake intensity scales with click count (builds up as you spam)
+    const spamMultiplier = 1 + (clickCount / SPAM_THRESHOLD) * 2; // 1x to 3x intensity
+    const baseIntensity = 3 + Math.random() * 5; // 3-8px base movement
+    const baseRotation = 2 + Math.random() * 4;  // 2-6 degree rotation
+
+    const intensity = baseIntensity * spamMultiplier;
+    const rotation = baseRotation * spamMultiplier;
+    const duration = Math.max(0.15, 0.3 - (clickCount / SPAM_THRESHOLD) * 0.15) + Math.random() * 0.1; // Gets faster as you spam
 
     // Random direction bias
     const xBias = Math.random() > 0.5 ? 1 : -1;
@@ -86,20 +90,8 @@
     let vx = (3 + Math.random() * 2) * (Math.random() > 0.5 ? 1 : -1);
     let vy = (3 + Math.random() * 2) * (Math.random() > 0.5 ? 1 : -1);
     const size = originalRect.width;
-    let hue = Math.random() * 360;
     let bounceCount = 0;
     const maxBounces = 8 + Math.floor(Math.random() * 5); // 8-12 bounces
-
-    // DVD colors - classic style
-    const dvdColors = [
-      'hue-rotate(0deg) saturate(2)',
-      'hue-rotate(60deg) saturate(2)',
-      'hue-rotate(120deg) saturate(2)',
-      'hue-rotate(180deg) saturate(2)',
-      'hue-rotate(240deg) saturate(2)',
-      'hue-rotate(300deg) saturate(2)'
-    ];
-    let colorIndex = 0;
 
     function animate() {
       x += vx;
@@ -128,14 +120,8 @@
         hitEdge = true;
       }
 
-      // Change color on bounce (classic DVD style)
       if (hitEdge) {
         bounceCount++;
-        colorIndex = (colorIndex + 1) % dvdColors.length;
-        const bouncerImg = bouncer.querySelector('.profile-image');
-        if (bouncerImg) {
-          bouncerImg.style.filter = dvdColors[colorIndex];
-        }
       }
 
       bouncer.style.left = x + 'px';
@@ -143,7 +129,6 @@
 
       // Check if done bouncing
       if (bounceCount >= maxBounces) {
-        // Animate back to original position
         returnToOrigin();
         return;
       }
@@ -156,15 +141,7 @@
       bouncer.style.left = originalRect.left + 'px';
       bouncer.style.top = originalRect.top + 'px';
 
-      // Reset filter
-      const bouncerImg = bouncer.querySelector('.profile-image');
-      if (bouncerImg) {
-        bouncerImg.style.transition = 'filter 0.6s ease';
-        bouncerImg.style.filter = '';
-      }
-
       setTimeout(() => {
-        // Remove bouncer and show original
         bouncer.remove();
         profileContainer.style.visibility = 'visible';
         dvdBounceActive = false;
