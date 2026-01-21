@@ -356,6 +356,18 @@ html.middle-dark-pending .middle {
   animation: profileShake var(--shake-duration) cubic-bezier(0.36, 0.07, 0.19, 0.97);
 }
 
+/* DVD Bounce Easter Egg */
+.profile-image-container.dvd-bouncing {
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  transition: none;
+}
+
+.profile-image-container.dvd-bouncing .profile-image {
+  filter: grayscale(0%) contrast(1.1) saturate(1.2);
+  transition: filter 0.15s ease;
+}
+
 /* Dark mode profile adjustments */
 .middle.dark-mode .profile-image-container {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);

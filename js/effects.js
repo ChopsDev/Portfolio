@@ -1,9 +1,33 @@
-// Profile Image Shake Effect
+// Profile Image Shake Effect + DVD Bounce Easter Egg
 (function initProfileShake() {
   const profileContainer = document.querySelector('.profile-image-container');
   if (!profileContainer) return;
 
+  // Spam detection for DVD bounce easter egg
+  let clickCount = 0;
+  let clickTimer = null;
+  let dvdBounceActive = false;
+  const SPAM_THRESHOLD = 15; // Clicks needed to trigger
+  const SPAM_WINDOW = 3000; // Time window in ms
+
   profileContainer.addEventListener('click', () => {
+    // Track spam clicks
+    clickCount++;
+    clearTimeout(clickTimer);
+    clickTimer = setTimeout(() => {
+      clickCount = 0;
+    }, SPAM_WINDOW);
+
+    // Trigger DVD bounce easter egg
+    if (clickCount >= SPAM_THRESHOLD && !dvdBounceActive) {
+      clickCount = 0;
+      triggerDVDBounce();
+      return;
+    }
+
+    // Don't shake if DVD bounce is active
+    if (dvdBounceActive) return;
+
     // Don't restart if already shaking
     if (profileContainer.classList.contains('shaking')) {
       profileContainer.classList.remove('shaking');
@@ -31,6 +55,125 @@
       profileContainer.classList.remove('shaking');
     }, duration * 1000);
   });
+
+  function triggerDVDBounce() {
+    dvdBounceActive = true;
+
+    // Get original position
+    const originalRect = profileContainer.getBoundingClientRect();
+    const originalParent = profileContainer.parentElement;
+    const profileImage = profileContainer.querySelector('.profile-image');
+
+    // Create a clone for the bouncing effect
+    const bouncer = profileContainer.cloneNode(true);
+    bouncer.classList.add('dvd-bouncing');
+    bouncer.style.position = 'fixed';
+    bouncer.style.left = originalRect.left + 'px';
+    bouncer.style.top = originalRect.top + 'px';
+    bouncer.style.width = originalRect.width + 'px';
+    bouncer.style.height = originalRect.height + 'px';
+    bouncer.style.margin = '0';
+    bouncer.style.zIndex = '10000';
+    bouncer.style.pointerEvents = 'none';
+    document.body.appendChild(bouncer);
+
+    // Hide original
+    profileContainer.style.visibility = 'hidden';
+
+    // Bounce physics
+    let x = originalRect.left;
+    let y = originalRect.top;
+    let vx = (3 + Math.random() * 2) * (Math.random() > 0.5 ? 1 : -1);
+    let vy = (3 + Math.random() * 2) * (Math.random() > 0.5 ? 1 : -1);
+    const size = originalRect.width;
+    let hue = Math.random() * 360;
+    let bounceCount = 0;
+    const maxBounces = 8 + Math.floor(Math.random() * 5); // 8-12 bounces
+
+    // DVD colors - classic style
+    const dvdColors = [
+      'hue-rotate(0deg) saturate(2)',
+      'hue-rotate(60deg) saturate(2)',
+      'hue-rotate(120deg) saturate(2)',
+      'hue-rotate(180deg) saturate(2)',
+      'hue-rotate(240deg) saturate(2)',
+      'hue-rotate(300deg) saturate(2)'
+    ];
+    let colorIndex = 0;
+
+    function animate() {
+      x += vx;
+      y += vy;
+
+      let hitEdge = false;
+
+      // Bounce off edges
+      if (x <= 0) {
+        x = 0;
+        vx = Math.abs(vx);
+        hitEdge = true;
+      } else if (x + size >= window.innerWidth) {
+        x = window.innerWidth - size;
+        vx = -Math.abs(vx);
+        hitEdge = true;
+      }
+
+      if (y <= 0) {
+        y = 0;
+        vy = Math.abs(vy);
+        hitEdge = true;
+      } else if (y + size >= window.innerHeight) {
+        y = window.innerHeight - size;
+        vy = -Math.abs(vy);
+        hitEdge = true;
+      }
+
+      // Change color on bounce (classic DVD style)
+      if (hitEdge) {
+        bounceCount++;
+        colorIndex = (colorIndex + 1) % dvdColors.length;
+        const bouncerImg = bouncer.querySelector('.profile-image');
+        if (bouncerImg) {
+          bouncerImg.style.filter = dvdColors[colorIndex];
+        }
+      }
+
+      bouncer.style.left = x + 'px';
+      bouncer.style.top = y + 'px';
+
+      // Check if done bouncing
+      if (bounceCount >= maxBounces) {
+        // Animate back to original position
+        returnToOrigin();
+        return;
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    function returnToOrigin() {
+      bouncer.style.transition = 'all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)';
+      bouncer.style.left = originalRect.left + 'px';
+      bouncer.style.top = originalRect.top + 'px';
+
+      // Reset filter
+      const bouncerImg = bouncer.querySelector('.profile-image');
+      if (bouncerImg) {
+        bouncerImg.style.transition = 'filter 0.6s ease';
+        bouncerImg.style.filter = '';
+      }
+
+      setTimeout(() => {
+        // Remove bouncer and show original
+        bouncer.remove();
+        profileContainer.style.visibility = 'visible';
+        dvdBounceActive = false;
+      }, 600);
+    }
+
+    // Start the bounce animation
+    requestAnimationFrame(animate);
+  }
 })();
 
 // Cursor Trail Effect
