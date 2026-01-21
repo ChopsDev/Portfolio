@@ -193,6 +193,27 @@ html.middle-dark-pending .middle {
   box-shadow: 0 0 20px rgba(0, 255, 0, 0.15);
 }
 
+/* Secret mode game card text - use dark shadows for readability */
+.middle.secret-mode .game-card.has-bg h3 {
+  text-shadow:
+    -1px -1px 0 rgba(0, 0, 0, 0.9),
+    1px -1px 0 rgba(0, 0, 0, 0.9),
+    -1px 1px 0 rgba(0, 0, 0, 0.9),
+    1px 1px 0 rgba(0, 0, 0, 0.9),
+    0 0 8px rgba(0, 255, 0, 0.4);
+}
+
+.middle.secret-mode .game-card.has-bg span,
+.middle.secret-mode .game-card.has-bg p {
+  font-weight: 500;
+  text-shadow:
+    -1px -1px 0 rgba(0, 0, 0, 0.9),
+    1px -1px 0 rgba(0, 0, 0, 0.9),
+    -1px 1px 0 rgba(0, 0, 0, 0.9),
+    1px 1px 0 rgba(0, 0, 0, 0.9),
+    0 0 6px rgba(0, 255, 0, 0.3);
+}
+
 .middle.secret-mode ::selection {
   background: #00ff00;
   color: #0a0f0a;
@@ -200,7 +221,12 @@ html.middle-dark-pending .middle {
 
 /* Secret theme toggle button glow */
 .middle.secret-mode .theme-toggle {
-  text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+  border: 1px solid #00ff00;
+  box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+}
+
+.middle.secret-mode .theme-toggle .icon-terminal {
+  filter: drop-shadow(0 0 4px rgba(0, 255, 0, 0.8));
 }
 
 /* Middle Section */
@@ -764,11 +790,13 @@ hr {
 }
 
 .theme-toggle .icon-sun,
-.theme-toggle .icon-moon {
+.theme-toggle .icon-moon,
+.theme-toggle .icon-terminal {
   position: absolute;
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
+/* Light mode: show moon */
 .theme-toggle .icon-moon {
   opacity: 1;
 }
@@ -778,6 +806,12 @@ hr {
   transform: rotate(-90deg);
 }
 
+.theme-toggle .icon-terminal {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+/* Dark mode: show sun */
 .middle.dark-mode .theme-toggle .icon-moon,
 html.middle-dark-pending .theme-toggle .icon-moon {
   opacity: 0;
@@ -788,6 +822,27 @@ html.middle-dark-pending .theme-toggle .icon-moon {
 html.middle-dark-pending .theme-toggle .icon-sun {
   opacity: 1;
   transform: rotate(0);
+}
+
+.middle.dark-mode .theme-toggle .icon-terminal {
+  opacity: 0;
+  transform: scale(0.5);
+}
+
+/* Secret mode: show terminal icon */
+.middle.secret-mode .theme-toggle .icon-moon {
+  opacity: 0;
+  transform: rotate(90deg);
+}
+
+.middle.secret-mode .theme-toggle .icon-sun {
+  opacity: 0;
+  transform: rotate(-90deg);
+}
+
+.middle.secret-mode .theme-toggle .icon-terminal {
+  opacity: 1;
+  transform: scale(1);
 }
 
 /* Responsive Design */
