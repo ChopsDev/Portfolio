@@ -317,6 +317,45 @@ html.middle-dark-pending .middle {
   filter: grayscale(0%) contrast(1);
 }
 
+/* Profile image shake animation */
+.profile-image-container {
+  cursor: pointer;
+}
+
+@keyframes profileShake {
+  0%, 100% {
+    transform: translate(0, 0) rotate(0deg) scale(1.05);
+  }
+  10% {
+    transform: translate(calc(var(--shake-x) * 1px), calc(var(--shake-y) * -0.5px)) rotate(calc(var(--shake-rot) * 1deg)) scale(1.05);
+  }
+  20% {
+    transform: translate(calc(var(--shake-x) * -0.8px), calc(var(--shake-y) * 1px)) rotate(calc(var(--shake-rot) * -0.8deg)) scale(1.05);
+  }
+  30% {
+    transform: translate(calc(var(--shake-x) * 0.6px), calc(var(--shake-y) * -0.8px)) rotate(calc(var(--shake-rot) * 0.6deg)) scale(1.05);
+  }
+  40% {
+    transform: translate(calc(var(--shake-x) * -0.4px), calc(var(--shake-y) * 0.6px)) rotate(calc(var(--shake-rot) * -0.4deg)) scale(1.05);
+  }
+  50% {
+    transform: translate(calc(var(--shake-x) * 0.3px), calc(var(--shake-y) * -0.4px)) rotate(calc(var(--shake-rot) * 0.3deg)) scale(1.05);
+  }
+  60% {
+    transform: translate(calc(var(--shake-x) * -0.2px), calc(var(--shake-y) * 0.3px)) rotate(calc(var(--shake-rot) * -0.2deg)) scale(1.05);
+  }
+  70% {
+    transform: translate(calc(var(--shake-x) * 0.1px), calc(var(--shake-y) * -0.2px)) rotate(calc(var(--shake-rot) * 0.1deg)) scale(1.05);
+  }
+  80%, 90% {
+    transform: translate(0, 0) rotate(0deg) scale(1.05);
+  }
+}
+
+.profile-image-container.shaking {
+  animation: profileShake var(--shake-duration) cubic-bezier(0.36, 0.07, 0.19, 0.97);
+}
+
 /* Dark mode profile adjustments */
 .middle.dark-mode .profile-image-container {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);

@@ -1,3 +1,38 @@
+// Profile Image Shake Effect
+(function initProfileShake() {
+  const profileContainer = document.querySelector('.profile-image-container');
+  if (!profileContainer) return;
+
+  profileContainer.addEventListener('click', () => {
+    // Don't restart if already shaking
+    if (profileContainer.classList.contains('shaking')) {
+      profileContainer.classList.remove('shaking');
+      void profileContainer.offsetWidth; // Force reflow
+    }
+
+    // Randomize shake parameters
+    const intensity = 3 + Math.random() * 5; // 3-8px base movement
+    const rotation = 2 + Math.random() * 4;  // 2-6 degree rotation
+    const duration = 0.3 + Math.random() * 0.2; // 0.3-0.5s duration
+
+    // Random direction bias
+    const xBias = Math.random() > 0.5 ? 1 : -1;
+    const yBias = Math.random() > 0.5 ? 1 : -1;
+
+    profileContainer.style.setProperty('--shake-x', intensity * xBias);
+    profileContainer.style.setProperty('--shake-y', intensity * yBias);
+    profileContainer.style.setProperty('--shake-rot', rotation * xBias);
+    profileContainer.style.setProperty('--shake-duration', duration + 's');
+
+    profileContainer.classList.add('shaking');
+
+    // Remove class after animation completes
+    setTimeout(() => {
+      profileContainer.classList.remove('shaking');
+    }, duration * 1000);
+  });
+})();
+
 // Cursor Trail Effect
 let trailEnabled = false;
 const trailParticles = [];
