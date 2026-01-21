@@ -1889,6 +1889,84 @@ html.middle-dark-pending .theme-toggle .icon-sun {
   transition: opacity 0.5s ease;
 }
 
+/* Achievement Toast */
+.achievement-toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(120%);
+  background: var(--middle-card-bg, #242424);
+  border: 1px solid var(--middle-border, #333);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 10002;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+  max-width: min(400px, 90vw);
+}
+
+.achievement-toast.visible {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.achievement-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--middle-bg, #1a1a1a);
+  border: 1px solid var(--middle-border, #333);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: monospace;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--middle-text, #f0f0f0);
+  flex-shrink: 0;
+}
+
+.achievement-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.achievement-label {
+  font-family: monospace;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--middle-text-muted, #888);
+  margin-bottom: 2px;
+}
+
+.achievement-title {
+  font-family: "Archivo Black", sans-serif;
+  font-size: 1rem;
+  color: var(--middle-text, #f0f0f0);
+  line-height: 1.2;
+}
+
+.achievement-desc {
+  font-family: "Lexend", sans-serif;
+  font-size: 0.75rem;
+  color: var(--middle-text-muted, #888);
+  margin-top: 2px;
+}
+
+.achievement-progress {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: var(--middle-text-faint, #666);
+  flex-shrink: 0;
+  padding-left: 0.5rem;
+  border-left: 1px solid var(--middle-border, #333);
+}
+
 /* Cursor trail (konami code cheat) */
 .cursor-trail-particle {
   position: fixed;

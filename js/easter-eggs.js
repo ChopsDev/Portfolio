@@ -27,6 +27,11 @@ console.log('%cSince you\'re here... try out the Konami code', 'color: #666; fon
 })();
 
 function triggerMatrixRain() {
+  // Unlock achievement
+  if (typeof Achievements !== 'undefined') {
+    Achievements.unlock('matrix');
+  }
+
   const canvas = document.createElement('canvas');
   canvas.className = 'matrix-canvas';
   canvas.width = window.innerWidth;
@@ -172,6 +177,11 @@ function checkZoomLevel() {
     void easterEggOverlay.offsetWidth;
     easterEggOverlay.classList.add('visible');
     easterEggShown = true;
+
+    // Unlock achievement
+    if (typeof Achievements !== 'undefined') {
+      Achievements.unlock('void');
+    }
   } else if ((!isZoomedWayOut || isContactPage) && easterEggShown) {
     if (easterEggOverlay) {
       easterEggOverlay.classList.remove('visible');
@@ -347,6 +357,11 @@ function toggleKonamiCheats() {
   overlay.className = 'konami-overlay';
 
   if (cheatsEnabled) {
+    // Unlock achievement
+    if (typeof Achievements !== 'undefined') {
+      Achievements.unlock('konami');
+    }
+
     // Activation - decrypt animation
     overlay.innerHTML = `
       <div class="konami-content">
@@ -422,6 +437,11 @@ function handleDiscoClick() {
 function triggerDiscoMode() {
   discoActive = true;
 
+  // Unlock achievement
+  if (typeof Achievements !== 'undefined') {
+    Achievements.unlock('disco');
+  }
+
   const discoOverlay = document.createElement('div');
   discoOverlay.className = 'disco-overlay';
   document.body.appendChild(discoOverlay);
@@ -488,6 +508,11 @@ function triggerDiscoMode() {
     projectFilters.classList.add('easter-egg-active');
     easterEggSection.classList.add('revealed');
     leftContent.classList.add('filter-easter-egg-mode');
+
+    // Unlock achievement
+    if (typeof Achievements !== 'undefined') {
+      Achievements.unlock('clicker');
+    }
   }
 
   function resetEasterEgg() {
@@ -644,6 +669,10 @@ function triggerDiscoMode() {
     if (shopToggle) {
       if (gameState.clicks >= CLICKS_TO_REVEAL_SHOP || gameState.shopRevealed) {
         shopToggle.classList.remove('hidden');
+        // Unlock achievement on first reveal
+        if (!gameState.shopRevealed && typeof Achievements !== 'undefined') {
+          Achievements.unlock('clickergame');
+        }
         gameState.shopRevealed = true;
       }
       shopToggle.classList.toggle('active', gameState.shopOpen);
@@ -1073,6 +1102,12 @@ function initNameClickEasterEgg() {
 
     if (nameClickCount >= 3) {
       nameClickCount = 0;
+
+      // Set pending achievement - will show when user returns
+      if (typeof Achievements !== 'undefined') {
+        Achievements.setPendingRickRoll();
+      }
+
       window.open('https://youtu.be/23e4r2VL0gY?si=EyRaLlF4zjYuOI_f', '_blank');
     }
   });

@@ -63,6 +63,11 @@
   function triggerDVDBounce() {
     dvdBounceActive = true;
 
+    // Unlock achievement
+    if (typeof Achievements !== 'undefined') {
+      Achievements.unlock('dvdbounce');
+    }
+
     // Get original position
     const originalRect = profileContainer.getBoundingClientRect();
     const originalParent = profileContainer.parentElement;
