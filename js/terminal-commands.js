@@ -636,19 +636,28 @@ You meant 'ls', didn't you?`
   hack: {
     hidden: true,
     description: 'Hack the mainframe',
-    action: () => {
-      return `[■□□□□□□□□□] 10% Accessing mainframe...
-[■■■□□□□□□□] 30% Bypassing firewall...
-[■■■■■□□□□□] 50% Decrypting passwords...
-[■■■■■■■□□□] 70% Downloading secrets...
-[■■■■■■■■■□] 90% Covering tracks...
-[■■■■■■■■■■] 100% Complete!
+    action: async () => {
+      const steps = [
+        "[■□□□□□□□□□] 10% Accessing mainframe...",
+        "[■■■□□□□□□□] 30% Bypassing firewall...",
+        "[■■■■■□□□□□] 50% Decrypting passwords...",
+        "[■■■■■■■□□□] 70% Downloading secrets...",
+        "[■■■■■■■■■□] 90% Covering tracks...",
+        "[■■■■■■■■■■] 100% Complete!",
+        "",
+        "ACCESS DENIED",
+      ];
 
-ACCESS DENIED
+      const sleep = (ms) => new Promise(r => setTimeout(r, ms));
 
-Just kidding. This is a portfolio website.`;
+      for (const line of steps) {
+        Terminal.print(line, 'response');
+        await sleep(600);
+      }
+      return null;
     }
   },
+
 
   panic: {
     hidden: true,
@@ -682,19 +691,19 @@ Just kidding. Everything is fine...`
   hello: {
     hidden: true,
     description: 'Greeting',
-    action: () => 'Hello, fellow hacker!'
+    action: () => 'Hello, fellow hacker'
   },
 
   hi: {
     hidden: true,
     description: 'Greeting',
-    action: () => 'Hey there!'
+    action: () => 'Hey there'
   },
 
   hey: {
     hidden: true,
     description: 'Greeting',
-    action: () => 'Hello!'
+    action: () => 'Hello'
   },
 
   bye: {
@@ -702,20 +711,20 @@ Just kidding. Everything is fine...`
     description: 'Goodbye',
     action: () => {
       setTimeout(() => Terminal.close(), 500);
-      return 'Goodbye!';
+      return 'Goodbye';
     }
   },
 
   thanks: {
     hidden: true,
     description: 'Thanks',
-    action: () => "You're welcome!"
+    action: () => "You're welcome"
   },
 
   sorry: {
     hidden: true,
     description: 'Sorry',
-    action: () => "No worries!"
+    action: () => "No worries"
   },
 
   pls: {
@@ -749,12 +758,6 @@ Just kidding. Everything is fine...`
       const responses = ['Why not?', 'Because.', '42.', 'The world may never know.'];
       return responses[Math.floor(Math.random() * responses.length)];
     }
-  },
-
-  pong: {
-    hidden: true,
-    description: 'Pong',
-    action: () => 'ping'
   },
 
   // =====================================================
@@ -1202,18 +1205,18 @@ node_modules/    (4.7 GB)
     action: () => `
   ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣠⣤⣤⣤⣤⣤⣶⣦⣤⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀
   ⠀⠀⠀⠀⠀⠀⠀⠀⢀⣴⣿⡿⠛⠉⠙⠛⠛⠛⠛⠻⢿⣿⣷⣤⡀⠀⠀⠀⠀⠀
-  ⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⠋⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⠈⢻⣿⣿⡄⠀⠀⠀⠀
-  ⠀⠀⠀⠀⠀⠀⠀⣸⣿⡏⠀⠀⠀⣠⣶⣾⣿⣿⣿⠿⠿⠿⢿⣿⣿⣿⣄⠀⠀⠀
-  ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠁⠀⠀⢰⣿⣿⣯⠁⠀⠀⠀⠀⠀⠀⠀⠈⠙⢿⣷⡄⠀
-  ⠀⠀⣀⣤⣴⣶⣶⣿⡟⠀⠀⠀⢸⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣷⠀
+  ⠀⠀⠀⠀⠀⠀⠀⠀⣼⣿⠋⠀⠀⠀⠀⠀⠀⠀ ⢀⣀⣀ ⠈⢻⣿⣿⡄⠀⠀⠀⠀
+  ⠀⠀⠀⠀⠀⠀⠀⣸⣿⡏⠀⠀  ⠀⣠⣶⣾⣿⣿⣿⠿⠿⠿⢿⣿⣿⣿⣄⠀⠀⠀
+  ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠁⠀  ⠀⢰⣿⣿⣯⠁⠀⠀⠀⠀⠀⠀⠀⠈⠙⢿⣷⡄⠀
+  ⠀⠀⣀⣤⣴⣶⣶⣿⡟⠀  ⠀⢸⣿⣿⣿⣆⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⣿⣷⠀
   ⠀⢰⣿⡟⠋⠉⣹⣿⡇⠀⠀⠀⠘⣿⣿⣿⣿⣷⣦⣤⣤⣤⣶⣶⣶⣶⣿⣿⣿⠀
   ⠀⢸⣿⡇⠀⠀⣿⣿⡇⠀⠀⠀⠀⠹⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⡿⠃⠀
-  ⠀⣸⣿⡇⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠉⠻⠿⣿⣿⣿⣿⡿⠿⠿⠛⢻⣿⡇⠀⠀
-  ⠀⣿⣿⠁⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣧⠀⠀
-  ⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀
-  ⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀
-  ⠀⢿⣿⡆⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸⣿⡇⠀⠀
-  ⠀⠸⣿⣧⡀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⣿⡇⠀⠀
+  ⠀⣸⣿⡇⠀⠀⣿⣿⡇⠀  ⠀⠀⠉⠻⠿⣿⣿⣿⣿⡿⠿⠿⠛⢻⣿⡇⠀⠀
+  ⠀⣿⣿⠁⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⢸⣿⣧⠀⠀
+  ⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀
+  ⠀⣿⣿⠀⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⢸⣿⣿⠀⠀
+  ⠀⢿⣿⡆⠀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⢸⣿⡇⠀⠀
+  ⠀⠸⣿⣧⡀⠀⣿⣿⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⠀⠀⠀⠀⠀⠀⣿⣿⡇⠀⠀
   ⠀⠀⠛⢿⣿⣿⣿⣿⣇⠀⠀⠀⠀⣰⣿⣿⣷⣶⣶⣶⣶⠶⠀⢠⣿⣿⠀⠀⠀
   ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⣽⣿⡏⠁⠀⠀⢸⣿⡇⠀⠀⠀
   ⠀⠀⠀⠀⠀⠀⠀⣿⣿⠀⠀⠀⠀⠀⣿⣿⡇⠀⢹⣿⡆⠀⠀⠀⣸⣿⠇⠀⠀⠀
@@ -1508,6 +1511,161 @@ In conclusion, the true irony of this essay lies not in its content, but in its 
     Total commands:    ${total}
     Visible commands:  ${visible}
     Hidden commands:   ${hidden}`;
+      }
+    },
+
+    lscommands: {
+      hidden: true,
+      description: 'List all commands (including hidden)',
+      action: () => {
+        const visible = [];
+        const hidden = [];
+
+        for (const [name, cmd] of Object.entries(TerminalCommands)) {
+          if (cmd.hidden) {
+            hidden.push(name);
+          } else {
+            visible.push(name);
+          }
+        }
+
+        let output = 'ALL COMMANDS\n============\n\n';
+        output += 'VISIBLE:\n';
+        output += visible.sort().join(', ') + '\n\n';
+        output += 'HIDDEN:\n';
+        output += hidden.sort().join(', ');
+
+        return output;
+      }
+    },
+
+    source: {
+      hidden: true,
+      description: 'View source code of a command',
+      action: (args) => {
+        const cmdName = args[0]?.toLowerCase();
+        if (!cmdName) return 'Usage: source <command>';
+
+        const cmd = TerminalCommands[cmdName];
+        if (!cmd) return `Command not found: ${cmdName}`;
+
+        return `// ${cmdName}\n// ${cmd.description}\n\n${cmd.action.toString()}`;
+      }
+    },
+
+    wordle: {
+      hidden: true,
+      description: 'Play wordle',
+      _state: null,
+      _words: [
+        'audio', 'arise', 'crane', 'slate', 'trace', 'crate', 'stare', 'scare',
+        'react', 'share', 'stone', 'shine', 'spine', 'spite', 'write', 'wrote',
+        'pride', 'prize', 'prime', 'crime', 'brine', 'bring', 'thing', 'think',
+        'drink', 'drunk', 'drank', 'thank', 'shank', 'blank', 'black', 'block',
+        'clock', 'click', 'chick', 'check', 'cheek', 'creek', 'creed', 'greed',
+        'green', 'queen', 'queer', 'quest', 'guest', 'guess', 'press', 'dress',
+        'dross', 'cross', 'gross', 'ghost', 'roast', 'toast', 'coast', 'boast',
+        'beast', 'feast', 'yeast', 'least', 'lease', 'peace', 'peach', 'beach',
+        'reach', 'teach', 'leach', 'poach', 'coach', 'roach', 'bunch', 'lunch',
+        'punch', 'hunch', 'munch', 'chunk', 'skunk', 'trunk', 'drunk', 'brunt',
+        'blunt', 'stunt', 'shunt', 'grunt', 'front', 'frost', 'ghost', 'roast',
+        'plant', 'slant', 'grant', 'chant', 'giant', 'faint', 'paint', 'saint',
+        'taint', 'joint', 'point', 'moist', 'hoist', 'joist', 'twist', 'wrist',
+        'crisp', 'grasp', 'clasp', 'flask', 'brisk', 'whisk', 'frisk', 'music',
+        'magic', 'logic', 'toxic', 'sonic', 'tonic', 'comic', 'mimic', 'panic',
+        'manic', 'cynic', 'tunic', 'topic', 'tropic', 'basic', 'cabin', 'basin',
+        'satin', 'latin', 'ratio', 'patio', 'radio', 'piano', 'video', 'rodeo'
+      ],
+      action: (args) => {
+        const cmd = TerminalCommands.wordle;
+        const guess = args[0]?.toLowerCase();
+
+        // Start new game
+        if (!guess || guess === 'new') {
+          const word = cmd._words[Math.floor(Math.random() * cmd._words.length)];
+          cmd._state = { word, guesses: [], maxGuesses: 6 };
+          return `WORDLE
+======
+Guess the 5-letter word!
+You have 6 attempts.
+
+Type: wordle <your-guess>
+Example: wordle crane`;
+        }
+
+        // No active game
+        if (!cmd._state) {
+          return 'No active game. Type "wordle" to start!';
+        }
+
+        const { word, guesses, maxGuesses } = cmd._state;
+
+        // Validate guess
+        if (guess.length !== 5) {
+          return 'Guess must be exactly 5 letters!';
+        }
+
+        if (!/^[a-z]+$/.test(guess)) {
+          return 'Guess must contain only letters!';
+        }
+
+        // Process guess
+        guesses.push(guess);
+
+        // Build feedback
+        const buildFeedback = (g, w) => {
+          const result = [];
+          const wordArr = w.split('');
+          const used = new Array(5).fill(false);
+
+          // First pass: correct positions (GREEN)
+          for (let i = 0; i < 5; i++) {
+            if (g[i] === w[i]) {
+              result[i] = `[${g[i].toUpperCase()}]`; // Correct
+              used[i] = true;
+            }
+          }
+
+          // Second pass: wrong position (YELLOW) or not in word (GRAY)
+          for (let i = 0; i < 5; i++) {
+            if (result[i]) continue;
+
+            const letterIndex = wordArr.findIndex((c, j) => c === g[i] && !used[j]);
+            if (letterIndex !== -1) {
+              result[i] = `(${g[i].toUpperCase()})`; // Wrong position
+              used[letterIndex] = true;
+            } else {
+              result[i] = ` ${g[i].toUpperCase()} `; // Not in word
+            }
+          }
+
+          return result.join('');
+        };
+
+        // Build display
+        let output = 'WORDLE\n======\n';
+        output += '[X] = correct  (X) = wrong spot  X  = not in word\n\n';
+
+        for (const g of guesses) {
+          output += buildFeedback(g, word) + '\n';
+        }
+
+        // Check win
+        if (guess === word) {
+          cmd._state = null;
+          output += `\nYOU WIN! Got it in ${guesses.length}/${maxGuesses} guesses!`;
+          return output;
+        }
+
+        // Check loss
+        if (guesses.length >= maxGuesses) {
+          cmd._state = null;
+          output += `\nGAME OVER! The word was: ${word.toUpperCase()}`;
+          return output;
+        }
+
+        output += `\n${maxGuesses - guesses.length} guesses remaining.`;
+        return output;
       }
     },
 

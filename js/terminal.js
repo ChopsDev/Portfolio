@@ -106,7 +106,7 @@ const Terminal = {
     this.output.parentElement.scrollTop = this.output.parentElement.scrollHeight;
   },
 
-  execute(input) {
+  async execute(input) {
     const trimmed = input.trim();
     if (!trimmed) return;
 
@@ -124,7 +124,7 @@ const Terminal = {
 
     // Execute
     if (this.commands[cmd]) {
-      const result = this.commands[cmd].action(args);
+      const result = await this.commands[cmd].action(args);
       if (result !== null && result !== undefined) {
         this.print(result, 'response');
       }
