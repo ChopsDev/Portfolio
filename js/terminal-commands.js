@@ -1669,4 +1669,289 @@ Example: wordle crane`;
       }
     },
 
+    boot: {
+      hidden: true,
+      description: 'Fake BIOS boot sequence',
+      action: async () => {
+        const sleep = (ms) => new Promise(r => setTimeout(r, ms));
+
+        const lines = [
+          { text: 'BRYNBIOS (C) 2024 Chops Industries, Inc.', delay: 100 },
+          { text: 'BIOS Date: 04/20/69   Ver: 13.37', delay: 100 },
+          { text: '', delay: 200 },
+          { text: 'Press DEL to run Setup', delay: 300 },
+          { text: 'Press F12 for Boot Menu', delay: 300 },
+          { text: '', delay: 400 },
+          { text: 'Detecting SATA Port 0... None', delay: 200 },
+          { text: 'Detecting SATA Port 1... None', delay: 200 },
+          { text: 'Detecting SATA Port 2... QUANTUM BIGFOOT 2.5GB', delay: 300 },
+          { text: 'Detecting SATA Port 3... None', delay: 200 },
+          { text: '', delay: 300 },
+          { text: 'CPU: Intel Pentium III @ 450MHz', delay: 200 },
+          { text: 'Memory Test: 640K OK', delay: 100 },
+          { text: 'Memory Test: 65536K OK', delay: 400 },
+          { text: 'Memory Test: 131072K OK', delay: 400 },
+          { text: '', delay: 200 },
+          { text: 'USB Device(s): 1 Keyboard, 1 Mouse, 1 Unknown', delay: 300 },
+          { text: '', delay: 300 },
+          { text: 'Initializing USB Controllers... Done', delay: 400 },
+          { text: 'Initializing Plug and Play Cards... Done', delay: 400 },
+          { text: '', delay: 200 },
+          { text: 'Verifying DMI Pool Data........', delay: 800 },
+          { text: 'Boot from CD: FAILURE - No System Disk', delay: 400 },
+          { text: '', delay: 200 },
+          { text: 'Loading BrynOS v4.20...', delay: 600 },
+          { text: '', delay: 300 },
+          { text: '  ____                    ___  ____  ', delay: 50 },
+          { text: ' | __ ) _ __ _   _ _ __  / _ \\/ ___| ', delay: 50 },
+          { text: " |  _ \\| '__| | | | '_ \\| | | \\___ \\ ", delay: 50 },
+          { text: ' | |_) | |  | |_| | | | | |_| |___) |', delay: 50 },
+          { text: ' |____/|_|   \\__, |_| |_|\\___/|____/ ', delay: 50 },
+          { text: '             |___/                   ', delay: 50 },
+          { text: '', delay: 300 },
+          { text: 'Starting kernel...', delay: 400 },
+          { text: '[    0.000000] Linux version 6.9.420-generic', delay: 150 },
+          { text: '[    0.000001] Command line: BOOT_IMAGE=/boot/vmlinuz', delay: 150 },
+          { text: '[    0.000420] Calibrating delay loop... 8999999.99 BogoMIPS', delay: 200 },
+          { text: '[    0.004200] Security: Loading HACKERMAN module', delay: 200 },
+          { text: '[    0.006969] ACPI: Nice.', delay: 300 },
+          { text: '[    0.013370] systemd[1]: Reached target: Vibe Check', delay: 200 },
+          { text: '[    0.042069] systemd[1]: Starting Coffee Daemon...', delay: 300 },
+          { text: '[    0.042070] systemd[1]: Coffee Daemon ready. Productivity unlocked.', delay: 200 },
+          { text: '', delay: 400 },
+          { text: 'Boot complete. Welcome back.', delay: 100 },
+        ];
+
+        for (const line of lines) {
+          Terminal.print(line.text, 'response');
+          await sleep(line.delay);
+        }
+
+        return null;
+      }
+    },
+
+    loading: {
+      hidden: true,
+      description: 'Loading bar that never finishes',
+      action: async () => {
+        const sleep = (ms, checkStop) => new Promise(r => {
+          const interval = 50;
+          let elapsed = 0;
+          const check = setInterval(() => {
+            elapsed += interval;
+            if (checkStop() || elapsed >= ms) {
+              clearInterval(check);
+              r();
+            }
+          }, interval);
+        });
+
+        const messages = [
+          'Downloading more RAM...',
+          'Reticulating splines...',
+          'Generating witty loading message...',
+          'Convincing AI to cooperate...',
+          'Mining bitcoin (jk)...',
+          'Loading loading screen...',
+          'Waiting for Godot...',
+          'Dividing by zero...',
+          'Proving P=NP...',
+          'Solving halting problem...',
+          'Compiling feelings...',
+          'Deleting System32... (jk)...',
+          'Asking ChatGPT for help...',
+          'Caffeinating developers...',
+        ];
+
+        let running = true;
+        const stopHandler = () => {
+          running = false;
+          Terminal.input.removeEventListener('keydown', stopHandler);
+        };
+        Terminal.input.addEventListener('keydown', stopHandler);
+
+        const checkStop = () => !running;
+
+        let msgIndex = 0;
+        Terminal.print(messages[msgIndex], 'response');
+        const outputEl = Terminal.output.lastChild;
+
+        for (let i = 0; i <= 100 && running; i++) {
+          const filled = Math.floor(i / 5);
+          const empty = 20 - filled;
+          const bar = '█'.repeat(filled) + '░'.repeat(empty);
+
+          outputEl.textContent = `${messages[msgIndex]}\n[${bar}] ${i}%`;
+
+          if (i === 42 && running) {
+            await sleep(1500, checkStop);
+            if (!running) break;
+            outputEl.textContent += '\nEncountered error 42. Retrying...';
+            await sleep(1000, checkStop);
+            i = 30;
+            msgIndex = (msgIndex + 1) % messages.length;
+          } else if (i === 69 && running) {
+            await sleep(500, checkStop);
+            if (!running) break;
+            outputEl.textContent += '\nNice.';
+            await sleep(1000, checkStop);
+          } else if (i === 87 && running) {
+            await sleep(2000, checkStop);
+            if (!running) break;
+            outputEl.textContent += '\nAlmost there...';
+            await sleep(1500, checkStop);
+          } else if (i === 99 && running) {
+            outputEl.textContent += '\nFinalizing...';
+            await sleep(2000, checkStop);
+            if (!running) break;
+            outputEl.textContent += '\nJust a moment...';
+            await sleep(2000, checkStop);
+            if (!running) break;
+            outputEl.textContent += '\nAny second now...';
+            await sleep(2500, checkStop);
+            if (!running) break;
+            outputEl.textContent += '\nOkay this is taking a while...';
+            await sleep(2000, checkStop);
+            if (!running) break;
+            outputEl.textContent += '\n\nERROR: Success not found.';
+            outputEl.textContent += '\nTask failed successfully.';
+            Terminal.input.removeEventListener('keydown', stopHandler);
+            return null;
+          } else {
+            await sleep(80 + Math.random() * 120, checkStop);
+          }
+        }
+
+        Terminal.input.removeEventListener('keydown', stopHandler);
+        if (!running) {
+          outputEl.textContent += '\n\nLoading cancelled by user.';
+        }
+        return null;
+      }
+    },
+
+    whatday: {
+      hidden: true,
+      description: 'Dramatically tells you what day it is',
+      action: () => {
+        const days = {
+          0: {
+            name: 'SUNDAY',
+            message: `
+╔═══════════════════════════════════════╗
+║             S U N D A Y               ║
+╠═══════════════════════════════════════╣
+║  The day of rest. The calm before     ║
+║  the storm. Tomorrow, the grind       ║
+║  returns. But today? Today we rest.   ║
+║                                       ║
+║  Scaries level: ████████░░ 80%        ║
+║  Motivation: ██░░░░░░░░ 20%           ║
+║  Dread: █████████░ 90%                ║
+╚═══════════════════════════════════════╝`
+          },
+          1: {
+            name: 'MONDAY',
+            message: `
+╔═══════════════════════════════════════╗
+║            M O N D A Y                ║
+╠═══════════════════════════════════════╣
+║  It has begun. The week stretches     ║
+║  before you like an endless void.     ║
+║  Coffee is mandatory. Survival is     ║
+║  the only goal.                       ║
+║                                       ║
+║  Will to live: ██░░░░░░░░ 20%         ║
+║  Coffee needed: ██████████ 100%       ║
+║  Emails: ∞                            ║
+╚═══════════════════════════════════════╝`
+          },
+          2: {
+            name: 'TUESDAY',
+            message: `
+╔═══════════════════════════════════════╗
+║           T U E S D A Y               ║
+╠═══════════════════════════════════════╣
+║  The forgotten day. Not Monday's      ║
+║  chaos, not Wednesday's hope.         ║
+║  Tuesday simply... exists. Like you.  ║
+║  Just vibing in the void.             ║
+║                                       ║
+║  Relevance: ███░░░░░░░ 30%            ║
+║  Vibes: █████░░░░░ 50%                ║
+║  Existence: Questionable              ║
+╚═══════════════════════════════════════╝`
+          },
+          3: {
+            name: 'WEDNESDAY',
+            message: `
+╔═══════════════════════════════════════╗
+║        W E D N E S D A Y              ║
+╠═══════════════════════════════════════╣
+║  HUMP DAY. The peak of the mountain.  ║
+║  It's all downhill from here.         ║
+║  You're halfway to freedom.           ║
+║                                       ║
+║  🐫 It is Wednesday, my dudes. 🐫     ║
+║                                       ║
+║  Hope: █████░░░░░ 50%                 ║
+║  Energy: ████░░░░░░ 40%               ║
+╚═══════════════════════════════════════╝`
+          },
+          4: {
+            name: 'THURSDAY',
+            message: `
+╔═══════════════════════════════════════╗
+║         T H U R S D A Y               ║
+╠═══════════════════════════════════════╣
+║  Friday Eve. So close yet so far.     ║
+║  The anticipation builds. The end     ║
+║  is in sight. One more sleep.         ║
+║  You can almost taste the weekend.    ║
+║                                       ║
+║  Anticipation: ███████░░░ 70%         ║
+║  Patience: ██░░░░░░░░ 20%             ║
+║  Friday checks: 47 today              ║
+╚═══════════════════════════════════════╝`
+          },
+          5: {
+            name: 'FRIDAY',
+            message: `
+╔═══════════════════════════════════════╗
+║           F R I D A Y                 ║
+╠═══════════════════════════════════════╣
+║  ★ THE PROMISED DAY HAS ARRIVED ★    ║
+║                                       ║
+║  Productivity has left the building.  ║
+║  Weekend mode: ACTIVATED.             ║
+║  Touch grass: SCHEDULED.              ║
+║                                       ║
+║  Vibes: ██████████ 100%               ║
+║  Work ethic: █░░░░░░░░░ 10%           ║
+║  Plans: Yes                           ║
+╚═══════════════════════════════════════╝`
+          },
+          6: {
+            name: 'SATURDAY',
+            message: `
+╔═══════════════════════════════════════╗
+║         S A T U R D A Y               ║
+╠═══════════════════════════════════════╣
+║  FREEDOM. Pure, unfiltered freedom.   ║
+║  No alarms. No meetings. No pants     ║
+║  required. This is what we live for.  ║
+║                                       ║
+║  Happiness: ██████████ 100%           ║
+║  Responsibilities: ░░░░░░░░░░ 0%      ║
+║  Regrets: None (yet)                  ║
+╚═══════════════════════════════════════╝`
+          }
+        };
+
+        const today = new Date().getDay();
+        return days[today].message;
+      }
+    },
+
 };
