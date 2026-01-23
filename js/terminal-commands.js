@@ -1954,4 +1954,528 @@ Example: wordle crane`;
       }
     },
 
+    dungeon: {
+      hidden: true,
+      description: 'Roguelike dungeon crawler',
+      _state: null,
+
+      _config: {
+        mapWidth: 20,
+        mapHeight: 12,
+        enemies: {
+          G: { name: 'Goblin', hp: 15, maxHp: 15, atk: 3, def: 1, xp: 10, gold: 5 },
+          S: { name: 'Skeleton', hp: 25, maxHp: 25, atk: 5, def: 2, xp: 20, gold: 10 },
+          O: { name: 'Orc', hp: 40, maxHp: 40, atk: 8, def: 4, xp: 35, gold: 20 },
+          V: { name: 'Vampire', hp: 50, maxHp: 50, atk: 10, def: 5, xp: 50, gold: 30 },
+          D: { name: 'DRAGON', hp: 150, maxHp: 150, atk: 15, def: 8, xp: 200, gold: 100 }
+        },
+        items: {
+          '!': { name: 'Health Potion', category: 'consumable', effect: 'heal', value: 25 },
+          '*': { name: 'Strength Elixir', category: 'consumable', effect: 'buff_atk', value: 2 },
+          '[': { name: 'Iron Shield', category: 'armor', def: 3 },
+          '/': { name: 'Steel Sword', category: 'weapon', atk: 5 },
+          'K': { name: 'Rusty Key', category: 'key' }
+        }
+      },
+
+      _generateMap: function(floor) {
+        const { mapWidth, mapHeight } = this._config;
+        const map = [];
+
+        // Fill with walls
+        for (let y = 0; y < mapHeight; y++) {
+          map[y] = [];
+          for (let x = 0; x < mapWidth; x++) {
+            map[y][x] = '#';
+          }
+        }
+
+        // Generate rooms
+        const rooms = [];
+        const numRooms = 4 + Math.floor(Math.random() * 3);
+
+        for (let i = 0; i < numRooms; i++) {
+          const roomW = 4 + Math.floor(Math.random() * 4);
+          const roomH = 3 + Math.floor(Math.random() * 3);
+          const roomX = 1 + Math.floor(Math.random() * (mapWidth - roomW - 2));
+          const roomY = 1 + Math.floor(Math.random() * (mapHeight - roomH - 2));
+
+          // Check overlap
+          let overlap = false;
+          for (const room of rooms) {
+            if (roomX < room.x + room.w + 1 && roomX + roomW + 1 > room.x &&
+                roomY < room.y + room.h + 1 && roomY + roomH + 1 > room.y) {
+              overlap = true;
+              break;
+            }
+          }
+
+          if (!overlap) {
+            rooms.push({ x: roomX, y: roomY, w: roomW, h: roomH });
+            for (let y = roomY; y < roomY + roomH; y++) {
+              for (let x = roomX; x < roomX + roomW; x++) {
+                map[y][x] = '.';
+              }
+            }
+          }
+        }
+
+        // Connect rooms with corridors
+        for (let i = 1; i < rooms.length; i++) {
+          const prev = rooms[i - 1];
+          const curr = rooms[i];
+          const prevCenterX = Math.floor(prev.x + prev.w / 2);
+          const prevCenterY = Math.floor(prev.y + prev.h / 2);
+          const currCenterX = Math.floor(curr.x + curr.w / 2);
+          const currCenterY = Math.floor(curr.y + curr.h / 2);
+
+          // Horizontal then vertical
+          if (Math.random() < 0.5) {
+            for (let x = Math.min(prevCenterX, currCenterX); x <= Math.max(prevCenterX, currCenterX); x++) {
+              map[prevCenterY][x] = '.';
+            }
+            for (let y = Math.min(prevCenterY, currCenterY); y <= Math.max(prevCenterY, currCenterY); y++) {
+              map[y][currCenterX] = '.';
+            }
+          } else {
+            for (let y = Math.min(prevCenterY, currCenterY); y <= Math.max(prevCenterY, currCenterY); y++) {
+              map[y][prevCenterX] = '.';
+            }
+            for (let x = Math.min(prevCenterX, currCenterX); x <= Math.max(prevCenterX, currCenterX); x++) {
+              map[currCenterY][x] = '.';
+            }
+          }
+        }
+
+        // Place stairs in last room (not on floor 5)
+        const lastRoom = rooms[rooms.length - 1];
+        const stairsX = lastRoom.x + Math.floor(lastRoom.w / 2);
+        const stairsY = lastRoom.y + Math.floor(lastRoom.h / 2);
+        if (floor < 5) {
+          map[stairsY][stairsX] = '>';
+        }
+
+        // Place player in first room
+        const firstRoom = rooms[0];
+        const playerX = firstRoom.x + Math.floor(firstRoom.w / 2);
+        const playerY = firstRoom.y + Math.floor(firstRoom.h / 2);
+
+        return { map, rooms, playerX, playerY, stairsX, stairsY };
+      },
+
+      _spawnEnemies: function(map, rooms, floor, playerX, playerY) {
+        const enemies = [];
+        const enemyTypes = floor < 2 ? ['G'] :
+                          floor < 3 ? ['G', 'S'] :
+                          floor < 4 ? ['G', 'S', 'O'] :
+                          floor < 5 ? ['S', 'O', 'V'] : ['O', 'V'];
+
+        const numEnemies = 2 + floor + Math.floor(Math.random() * 2);
+
+        for (let i = 0; i < numEnemies; i++) {
+          const room = rooms[Math.floor(Math.random() * rooms.length)];
+          const x = room.x + Math.floor(Math.random() * room.w);
+          const y = room.y + Math.floor(Math.random() * room.h);
+
+          if (map[y][x] === '.' && !(x === playerX && y === playerY)) {
+            const type = enemyTypes[Math.floor(Math.random() * enemyTypes.length)];
+            const template = this._config.enemies[type];
+            enemies.push({
+              x, y, type,
+              ...JSON.parse(JSON.stringify(template))
+            });
+          }
+        }
+
+        // Spawn boss on floor 5
+        if (floor === 5) {
+          const room = rooms[rooms.length - 1];
+          const template = this._config.enemies['D'];
+          enemies.push({
+            x: room.x + Math.floor(room.w / 2),
+            y: room.y + Math.floor(room.h / 2),
+            type: 'D',
+            ...JSON.parse(JSON.stringify(template))
+          });
+        }
+
+        return enemies;
+      },
+
+      _spawnItems: function(map, rooms, playerX, playerY) {
+        const items = [];
+        const itemTypes = ['!', '!', '!', '*', '[', '/', 'K'];
+        const numItems = 2 + Math.floor(Math.random() * 3);
+
+        for (let i = 0; i < numItems; i++) {
+          const room = rooms[Math.floor(Math.random() * rooms.length)];
+          const x = room.x + Math.floor(Math.random() * room.w);
+          const y = room.y + Math.floor(Math.random() * room.h);
+
+          if (map[y][x] === '.' && !(x === playerX && y === playerY)) {
+            const type = itemTypes[Math.floor(Math.random() * itemTypes.length)];
+            items.push({ x, y, type, ...this._config.items[type] });
+          }
+        }
+
+        // Always spawn some gold
+        for (let i = 0; i < 3; i++) {
+          const room = rooms[Math.floor(Math.random() * rooms.length)];
+          const x = room.x + Math.floor(Math.random() * room.w);
+          const y = room.y + Math.floor(Math.random() * room.h);
+          if (map[y][x] === '.') {
+            items.push({ x, y, type: '$', name: 'Gold', value: 5 + Math.floor(Math.random() * 10) });
+          }
+        }
+
+        return items;
+      },
+
+      _renderMap: function(state) {
+        const { map, player, enemies, items } = state;
+        let display = [];
+
+        for (let y = 0; y < map.length; y++) {
+          let row = '';
+          for (let x = 0; x < map[y].length; x++) {
+            if (x === player.x && y === player.y) {
+              row += '@';
+            } else if (enemies.find(e => e.x === x && e.y === y)) {
+              row += enemies.find(e => e.x === x && e.y === y).type;
+            } else if (items.find(i => i.x === x && i.y === y)) {
+              row += items.find(i => i.x === x && i.y === y).type;
+            } else {
+              row += map[y][x];
+            }
+          }
+          display.push(row);
+        }
+
+        return display.join('\n');
+      },
+
+      _getStatus: function(state) {
+        const { player, floor } = state;
+        const hpBar = '█'.repeat(Math.ceil(player.hp / player.maxHp * 10)) +
+                      '░'.repeat(10 - Math.ceil(player.hp / player.maxHp * 10));
+        return `Floor ${floor} | HP [${hpBar}] ${player.hp}/${player.maxHp} | ATK ${player.atk} | DEF ${player.def} | Gold ${player.gold} | XP ${player.xp}`;
+      },
+
+      _combat: function(state, enemy) {
+        const { player } = state;
+        let log = [];
+
+        // Player attacks
+        const playerDmg = Math.max(1, player.atk - enemy.def + Math.floor(Math.random() * 3));
+        enemy.hp -= playerDmg;
+        log.push(`You hit ${enemy.name} for ${playerDmg} damage!`);
+
+        if (enemy.hp <= 0) {
+          log.push(`${enemy.name} defeated! +${enemy.xp} XP, +${enemy.gold} gold`);
+          player.xp += enemy.xp;
+          player.gold += enemy.gold;
+          state.enemies = state.enemies.filter(e => e !== enemy);
+
+          // Level up check
+          const levelThreshold = player.level * 50;
+          if (player.xp >= levelThreshold) {
+            player.level++;
+            player.maxHp += 10;
+            player.hp = Math.min(player.hp + 10, player.maxHp);
+            player.atk += 2;
+            player.def += 1;
+            log.push(`LEVEL UP! You are now level ${player.level}!`);
+          }
+
+          return { log, victory: enemy.type === 'D' };
+        }
+
+        // Enemy attacks
+        const enemyDmg = Math.max(1, enemy.atk - player.def + Math.floor(Math.random() * 3));
+        player.hp -= enemyDmg;
+        log.push(`${enemy.name} hits you for ${enemyDmg} damage!`);
+
+        if (player.hp <= 0) {
+          return { log, death: true };
+        }
+
+        return { log };
+      },
+
+      action: function(args) {
+        const cmd = this;
+        const input = args[0]?.toLowerCase();
+        const input2 = args[1]?.toLowerCase();
+
+        // Start new game
+        if (!input || input === 'new') {
+          const generated = cmd._generateMap(1);
+          cmd._state = {
+            map: generated.map,
+            rooms: generated.rooms,
+            floor: 1,
+            player: {
+              x: generated.playerX,
+              y: generated.playerY,
+              hp: 50,
+              maxHp: 50,
+              atk: 5,
+              def: 2,
+              gold: 0,
+              xp: 0,
+              level: 1,
+              inventory: [],
+              keys: 0
+            },
+            enemies: [],
+            items: [],
+            log: ['You descend into the dungeon...', 'Find the stairs (>) to go deeper.', 'Defeat the DRAGON on floor 5 to win!']
+          };
+          cmd._state.enemies = cmd._spawnEnemies(cmd._state.map, cmd._state.rooms, 1, cmd._state.player.x, cmd._state.player.y);
+          cmd._state.items = cmd._spawnItems(cmd._state.map, cmd._state.rooms, cmd._state.player.x, cmd._state.player.y);
+
+          let output = 'DUNGEON CRAWLER\n===============\n\n';
+          output += cmd._renderMap(cmd._state) + '\n\n';
+          output += cmd._getStatus(cmd._state) + '\n\n';
+          output += cmd._state.log.join('\n') + '\n\n';
+          output += 'Commands: [w/a/s/d] move, [attack], [use #], [inventory], [look], [help]';
+          return output;
+        }
+
+        // Help
+        if (input === 'help' || input === '?') {
+          return `DUNGEON COMMANDS
+================
+Movement:  w/a/s/d or north/south/east/west
+attack     Attack adjacent enemy
+use <#>    Use item from inventory (by number)
+inventory  Show inventory (or just 'i')
+look       Describe your surroundings
+stats      Show detailed stats
+new        Start a new game
+
+SYMBOLS
+=======
+@  You          #  Wall         .  Floor
+>  Stairs       $  Gold         !  Potion
+/  Weapon       [  Armor        K  Key
+G  Goblin       S  Skeleton     O  Orc
+V  Vampire      D  DRAGON (boss)`;
+        }
+
+        // Check for active game
+        if (!cmd._state) {
+          return 'No active game. Type "dungeon" to start!';
+        }
+
+        const state = cmd._state;
+        const { map, player, enemies, items } = state;
+        state.log = [];
+
+        // Movement
+        const moves = {
+          'w': [0, -1], 'north': [0, -1], 'n': [0, -1],
+          's': [0, 1], 'south': [0, 1],
+          'a': [-1, 0], 'west': [-1, 0],
+          'd': [1, 0], 'east': [1, 0], 'e': [1, 0]
+        };
+
+        if (moves[input]) {
+          const [dx, dy] = moves[input];
+          const newX = player.x + dx;
+          const newY = player.y + dy;
+
+          // Check bounds and walls
+          if (newX < 0 || newX >= map[0].length || newY < 0 || newY >= map.length) {
+            state.log.push("You can't go that way.");
+          } else if (map[newY][newX] === '#') {
+            state.log.push("You bump into a wall.");
+          } else {
+            // Check for enemy
+            const enemy = enemies.find(e => e.x === newX && e.y === newY);
+            if (enemy) {
+              state.log.push(`A ${enemy.name} blocks your path! Use 'attack' to fight.`);
+            } else {
+              player.x = newX;
+              player.y = newY;
+
+              // Check for items
+              const item = items.find(i => i.x === newX && i.y === newY);
+              if (item) {
+                if (item.type === '$') {
+                  player.gold += item.value;
+                  state.log.push(`Found ${item.value} gold!`);
+                } else if (item.type === 'K') {
+                  player.keys++;
+                  state.log.push(`Found a ${item.name}!`);
+                } else {
+                  player.inventory.push(item);
+                  state.log.push(`Picked up ${item.name}!`);
+                }
+                state.items = items.filter(i => i !== item);
+              }
+
+              // Check for stairs
+              if (map[newY][newX] === '>') {
+                state.log.push('You found stairs going down! Moving to next floor...');
+                state.floor++;
+                const generated = cmd._generateMap(state.floor);
+                state.map = generated.map;
+                state.rooms = generated.rooms;
+                player.x = generated.playerX;
+                player.y = generated.playerY;
+                state.enemies = cmd._spawnEnemies(state.map, state.rooms, state.floor, player.x, player.y);
+                state.items = cmd._spawnItems(state.map, state.rooms, player.x, player.y);
+                state.log.push(`Welcome to floor ${state.floor}!`);
+                if (state.floor === 5) {
+                  state.log.push('You sense a powerful presence... The DRAGON awaits!');
+                }
+              }
+            }
+          }
+        }
+
+        // Attack
+        else if (input === 'attack' || input === 'a' && !moves[input]) {
+          // Find adjacent enemy
+          const adjacent = [[-1,0],[1,0],[0,-1],[0,1]];
+          let targetEnemy = null;
+          for (const [dx, dy] of adjacent) {
+            targetEnemy = enemies.find(e => e.x === player.x + dx && e.y === player.y + dy);
+            if (targetEnemy) break;
+          }
+
+          if (!targetEnemy) {
+            state.log.push('No enemy in range! Move next to an enemy first.');
+          } else {
+            const result = cmd._combat(state, targetEnemy);
+            state.log.push(...result.log);
+
+            if (result.death) {
+              cmd._state = null;
+              let output = 'DUNGEON CRAWLER\n===============\n\n';
+              output += cmd._renderMap(state) + '\n\n';
+              output += state.log.join('\n') + '\n\n';
+              output += '══════════════════════════════\n';
+              output += '         YOU DIED\n';
+              output += `  Reached floor ${state.floor}\n`;
+              output += `  Gold collected: ${player.gold}\n`;
+              output += '══════════════════════════════\n';
+              output += 'Type "dungeon" to try again.';
+              return output;
+            }
+
+            if (result.victory) {
+              cmd._state = null;
+              let output = 'DUNGEON CRAWLER\n===============\n\n';
+              output += '══════════════════════════════════════\n';
+              output += '            VICTORY!\n';
+              output += '   You have slain the DRAGON!\n';
+              output += '══════════════════════════════════════\n\n';
+              output += `  Final Level: ${player.level}\n`;
+              output += `  Gold collected: ${player.gold}\n`;
+              output += `  Total XP: ${player.xp}\n\n`;
+              output += 'You emerge from the dungeon a hero!\n';
+              output += 'Type "dungeon" to play again.';
+              return output;
+            }
+          }
+        }
+
+        // Inventory
+        else if (input === 'inventory' || input === 'i' || input === 'inv') {
+          if (player.inventory.length === 0) {
+            state.log.push('Inventory is empty.');
+          } else {
+            state.log.push('INVENTORY:');
+            player.inventory.forEach((item, idx) => {
+              state.log.push(`  ${idx + 1}. ${item.name}`);
+            });
+          }
+          if (player.keys > 0) {
+            state.log.push(`Keys: ${player.keys}`);
+          }
+        }
+
+        // Use item
+        else if (input === 'use') {
+          const itemNum = parseInt(input2) - 1;
+          if (isNaN(itemNum) || itemNum < 0 || itemNum >= player.inventory.length) {
+            state.log.push('Usage: use <item number> (check inventory first)');
+          } else {
+            const item = player.inventory[itemNum];
+            if (item.category === 'consumable') {
+              if (item.effect === 'heal') {
+                const healed = Math.min(item.value, player.maxHp - player.hp);
+                player.hp += healed;
+                state.log.push(`Used ${item.name}. Healed ${healed} HP!`);
+              } else if (item.effect === 'buff_atk') {
+                player.atk += item.value;
+                state.log.push(`Used ${item.name}. Attack increased by ${item.value}!`);
+              }
+              player.inventory.splice(itemNum, 1);
+            } else if (item.category === 'weapon') {
+              player.atk += item.atk;
+              state.log.push(`Equipped ${item.name}. Attack +${item.atk}!`);
+              player.inventory.splice(itemNum, 1);
+            } else if (item.category === 'armor') {
+              player.def += item.def;
+              state.log.push(`Equipped ${item.name}. Defense +${item.def}!`);
+              player.inventory.splice(itemNum, 1);
+            } else {
+              state.log.push("You can't use that item.");
+            }
+          }
+        }
+
+        // Look
+        else if (input === 'look' || input === 'l') {
+          const nearbyEnemies = enemies.filter(e =>
+            Math.abs(e.x - player.x) <= 3 && Math.abs(e.y - player.y) <= 3
+          );
+          const nearbyItems = items.filter(i =>
+            Math.abs(i.x - player.x) <= 3 && Math.abs(i.y - player.y) <= 3
+          );
+
+          state.log.push(`You are on floor ${state.floor} of the dungeon.`);
+          if (nearbyEnemies.length > 0) {
+            state.log.push('Nearby enemies:');
+            nearbyEnemies.forEach(e => {
+              state.log.push(`  ${e.name} (HP: ${e.hp}/${e.maxHp})`);
+            });
+          } else {
+            state.log.push('No enemies nearby.');
+          }
+          if (nearbyItems.length > 0) {
+            state.log.push('Nearby items: ' + nearbyItems.map(i => i.name).join(', '));
+          }
+        }
+
+        // Stats
+        else if (input === 'stats') {
+          state.log.push(`PLAYER STATS`);
+          state.log.push(`  Level: ${player.level}`);
+          state.log.push(`  HP: ${player.hp}/${player.maxHp}`);
+          state.log.push(`  Attack: ${player.atk}`);
+          state.log.push(`  Defense: ${player.def}`);
+          state.log.push(`  Gold: ${player.gold}`);
+          state.log.push(`  XP: ${player.xp}/${player.level * 50}`);
+          state.log.push(`  Keys: ${player.keys}`);
+        }
+
+        else {
+          state.log.push(`Unknown command: ${input}. Type 'dungeon help' for commands.`);
+        }
+
+        // Render output
+        let output = 'DUNGEON CRAWLER\n===============\n\n';
+        output += cmd._renderMap(state) + '\n\n';
+        output += cmd._getStatus(state) + '\n\n';
+        if (state.log.length > 0) {
+          output += state.log.join('\n');
+        }
+        return output;
+      }
+    },
+
 };
