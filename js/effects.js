@@ -196,6 +196,10 @@
     const homePage = document.querySelector('.page[data-page="home"]');
     if (!homePage || !homePage.classList.contains('active')) return;
 
+    // Only start if middle section is fully visible (no panel expanded)
+    const middle = document.querySelector('.middle');
+    if (middle?.classList.contains('shrink')) return;
+
     screensaverMode = true;
 
     const originalRect = profileContainer.getBoundingClientRect();
